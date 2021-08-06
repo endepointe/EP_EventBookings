@@ -2,24 +2,42 @@ import * as React from "react"
 import Layout from "../components/layout";
 import SphereVideo from "../assets/video.mp4";
 import * as styles from "../components/styles/index.module.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faBars
+} from '@fortawesome/free-solid-svg-icons';
 
 const IndexPage = () => {
 
   const openMenu = () => {
-    const menuToggle = document.querySelector('.toggle');
-    const showcase = document.querySelector('.showcase');
+    // const menuToggle = document.querySelector('.toggle');
+    const menuToggle = document.getElementById('toggle');
+    // const showcase = document.querySelector('.showcase');
+    const showcase = document.getElementById('showcase');
     menuToggle.classList.toggle('active');
     showcase.classList.toggle('active'); 
   }
+
   return (
     <Layout pageTitle="Event Bookings">
-      <section className={styles.showcase}>
+      <section 
+        id="showcase"
+        className={styles.showcase}>
         <header>
           <h2 className={styles.logo}>Event Bookings</h2>   
-          <div 
+          {/* <button
+            id="toggle"
             onClick={openMenu}
-            className={styles.toggle}></div>
+            className={styles.toggle}>
+            <FontAwesomeIcon 
+              className={styles.bars}
+              icon={faBars} size="lg" />   
+          </button> */}
+          <FontAwesomeIcon 
+            className={styles.bars}
+            icon={faBars} size="lg" />   
         </header>
+
 
         {/* <video muted loop autoPlay>
           <source src={SphereVideo} /> 

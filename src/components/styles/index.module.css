@@ -13,7 +13,7 @@
   transition: 0.5s;
 }
 
-.showcase.active {
+.showcase .active {
   right: 300px;
 }
 
@@ -36,9 +36,6 @@
 
 .toggle {
   position: relative;
-  width: 60px;
-  height: 60px;
-  background: black;
 }
 
 .toggle.active {

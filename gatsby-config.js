@@ -3,5 +3,5 @@ module.exports = {
     siteUrl: "https://www.yourdomain.tld",
     title: "EP_EventBookings",
   },
-  plugins: [],
+  plugins: [`gatsby-plugin-fontawesome-css`],
 };
