@@ -29,24 +29,6 @@
   justify-content: space-between;
 }
 
-.logo {
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.toggle {
-  position: relative;
-}
-
-.toggle.active {
-  background: black;
-  /* show close */
-}
-
-.menu {
-  display: none;
-}
-
 .showcase video {
   position: absolute;
   top: 0; 
@@ -55,6 +37,57 @@
   height: 100%;
   object-fit: cover;
   opacity: 0.8;
+}
+
+.logo {
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.barsIcon {
+  font-size: 1.8em;
+}
+
+.barsIcon:hover {
+  cursor: pointer;
+}
+
+.menu {
+  background: white;
+  width: 250px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  right: -100%;
+  transition: .8s;
+  z-index: 1000;
+}
+
+.menu.active {
+  right: 0;
+  transition: .35s;
+}
+
+.closeIcon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.8em;
+}
+.menu ul {
+  overflow-y: auto;
+  color: black;
+}
+
+.menuList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
 }
 
 .overlay {
@@ -132,32 +165,6 @@
 
 .social li a:hover {
   transform: scale(0.5) translate(-15px);
-}
-
-.menu {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 300px;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.menu ul {
-  position: relative;
-  list-style: none;
-}
-
-.menu ul li a {
-  text-decoration: none;
-  font-size: 24px;
-  color: #111;
-}
-
-.menu ul li a:hover {
-  color: #03a9f4;
 }
 
 @media screen and (max-width: 768px) {

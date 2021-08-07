@@ -1,43 +1,31 @@
 import * as React from "react"
+import { useState } from 'react';
 import Layout from "../components/layout";
 import SphereVideo from "../assets/video.mp4";
 import * as styles from "../components/styles/index.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faBars
+  faBars, faTimes
 } from '@fortawesome/free-solid-svg-icons';
 
 const IndexPage = () => {
+  const [menu, setMenu] = useState(false);
 
   const openMenu = () => {
-    // const menuToggle = document.querySelector('.toggle');
-    const menuToggle = document.getElementById('toggle');
-    // const showcase = document.querySelector('.showcase');
-    const showcase = document.getElementById('showcase');
-    menuToggle.classList.toggle('active');
-    showcase.classList.toggle('active'); 
+    console.log('open the menu');
+    setMenu(!menu); 
   }
-
   return (
     <Layout pageTitle="Event Bookings">
-      <section 
-        id="showcase"
+      <section  
         className={styles.showcase}>
         <header>
           <h2 className={styles.logo}>Event Bookings</h2>   
-          {/* <button
-            id="toggle"
-            onClick={openMenu}
-            className={styles.toggle}>
-            <FontAwesomeIcon 
-              className={styles.bars}
-              icon={faBars} size="lg" />   
-          </button> */}
           <FontAwesomeIcon 
-            className={styles.bars}
+            onClick={openMenu}
+            className={styles.barsIcon}
             icon={faBars} size="lg" />   
         </header>
-
 
         {/* <video muted loop autoPlay>
           <source src={SphereVideo} /> 
@@ -58,11 +46,17 @@ const IndexPage = () => {
         </ul>
       </section>
 
-      <div className={styles.menu}>
-        <ul>
-          <button>link</button>
-          <button>link</button>
-          <button>link</button>
+      <div className={
+        menu ? 
+          `${styles.menu} ${styles.active}`
+          : `${styles.menu}`}>
+        <FontAwesomeIcon 
+          className={styles.closeIcon}
+          onClick={openMenu} icon={faTimes} color="black" />
+        <ul className={styles.menuList}>
+          <li>link</li>
+          <li>link</li>
+          <li>link</li>
         </ul>
       </div>
     </Layout>
