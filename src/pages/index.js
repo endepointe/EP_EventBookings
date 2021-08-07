@@ -5,15 +5,19 @@ import SphereVideo from "../assets/video.mp4";
 import * as styles from "../components/styles/index.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  faAngleRight,
   faBars, faTimes
 } from '@fortawesome/free-solid-svg-icons';
+import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
 const IndexPage = () => {
   const [menu, setMenu] = useState(false);
 
   const openMenu = () => {
-    console.log('open the menu');
     setMenu(!menu); 
+  }
+  const test = () => {
+    console.log('test');
   }
   return (
     <Layout pageTitle="Event Bookings">
@@ -33,16 +37,45 @@ const IndexPage = () => {
 
         <div className={styles.overlay}></div>
 
-        <div className={styles.text}>
-          <h2>never stop</h2> 
-          <h3>making</h3>
-          <p>some motivational text</p>
-          <button>explore</button>
+        <div className={styles.headline}>
+          <div className={styles.text}>
+            <h2>Keep pushing</h2> 
+            <h3>Foreward</h3>
+          </div>
+          <div>
+            <p>Find your event today</p>
+            <button 
+              onClick={test}
+              className={styles.arrowBtn}>
+              <div className={styles.arrowText}>Explore</div>
+              <div className={styles.arrows}>
+                <FontAwesomeIcon 
+                  className={styles.arrow}
+                  icon={faAngleRight} />
+                <FontAwesomeIcon 
+                  className={styles.arrow}
+                  icon={faAngleRight} />
+                <FontAwesomeIcon 
+                  className={styles.arrow}
+                  icon={faAngleRight} />
+              </div>
+            </button>
+          </div>
         </div>
 
         <ul className={styles.social}>
-          <li><a href="twitter.com">twitter</a><img src="" alt="" /></li> 
-          <li><a href="facebook.com">facebook</a><img src="" alt="" /></li> 
+          <li>
+            <FontAwesomeIcon 
+              className={styles.socialIcon}
+              icon={faTwitter} />
+            <a href="twitter.com">
+              twitter</a>
+            </li> 
+          <li>
+            <FontAwesomeIcon 
+              className={styles.socialIcon}
+              icon={faFacebook} />
+            <a href="facebook.com">facebook</a></li> 
         </ul>
       </section>
 

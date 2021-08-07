@@ -36,7 +36,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.8;
+  opacity: 0.6;
 }
 
 .logo {
@@ -100,6 +100,18 @@
   mix-blend-mode: overlay;
 }
 
+.headline {
+  display: inline-block;
+  font-size: 1em;
+  background: none;
+  padding: 10px 0px;
+  color: white;
+  margin-top: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: 0.2s;
+}
+
 .text {
   position: relative;
   z-index: 10;
@@ -119,27 +131,64 @@
   text-transform: uppercase;
 }
 
-.text p {
+.headline p {
   font-size: 1.1em;
   margin: 20px 0;
   font-weight: 400;
   max-width: 700px;
+  color: white;
 }
 
-.text button {
-  display: inline-block;
-  font-size: 1em;
-  background: white;
-  padding: 10px 30px;
-  color: #111;
+.arrowBtn {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  outline: none;
+  color: white;
+  border: none;
+  font-size: 1.8em;
+  padding: 10px 0px;
   margin-top: 10px;
   text-transform: uppercase;
   letter-spacing: 2px;
   transition: 0.2s;
+  opacity: 0.99;
+  border-bottom: 1px solid rgba(0,0,0,0);
+}
+.arrowBtn:hover {
+  letter-spacing: 5px;
+  cursor: pointer;
+  border-bottom: 1px solid white;
+}
+.arrows {
+  display: flex;
+  padding-left: 10px;
 }
 
-.text a:hover {
-  letter-spacing: 6px;
+.arrowBtn .arrow {
+  transition: 0.5s;
+  color: white;
+}
+.arrowBtn .arrow:nth-of-type(1) {
+  opacity: 0.2;
+}
+.arrowBtn .arrow:nth-of-type(2) {
+  opacity: 0.15;
+}
+.arrowBtn .arrow:nth-of-type(3) {
+  opacity: 0.05;
+}
+.arrowBtn:hover .arrow:nth-of-type(1) {
+  opacity: 0.9;
+}
+.arrowBtn:hover .arrow:nth-of-type(2) {
+  opacity: 0.65;
+}
+.arrowBtn:hover .arrow:nth-of-type(3) {
+  opacity: 0.4;
 }
 
 .social {
@@ -153,6 +202,7 @@
 
 .social li {
   list-style: none;
+  font-size: 1.6em;
 }
 
 .social li a {
@@ -161,10 +211,16 @@
   margin-right: 20px;
   transform: scale(0.5);
   transition: 0.5s;
+  text-decoration: none;
 }
 
 .social li a:hover {
   transform: scale(0.5) translate(-15px);
+}
+
+.socialIcon {
+  color: white;
+  margin-right: -10px;
 }
 
 @media screen and (max-width: 768px) {
