@@ -1,14 +1,13 @@
-start:
 do you want to be a vender?
 
 visits page
 
-fill out information for event bright
+fill out information (see event bright data)
 
-donnel recieves the email
+donnell recieves the email
 
-hubspot contains the informatino
+hubspot contains the information (does not have to be managed with hubspot)
 
-aefes verifies and emails donnel
+aefes verifies and emails donnell
 
-donnel informs the newly registered vender that they are registered
+donnell informs the registered vender that they are registered

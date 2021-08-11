@@ -19,6 +19,7 @@ const IndexPage = () => {
   }
   const test = () => {
     console.log('test');
+    window.location = '/';
   }
   return (
     <Layout pageTitle="Event Bookings">
@@ -32,9 +33,9 @@ const IndexPage = () => {
             icon={faBars} />   
         </header>
 
-        <video muted loop autoPlay>
+        {/* <video muted loop autoPlay>
           <source src={SphereVideo} /> 
-        </video>
+        </video> */}
         {/* Video by Pressmaster from Pexels */}
 
         <div className={styles.overlay}></div>
