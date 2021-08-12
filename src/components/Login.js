@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
 import { navigate } from "gatsby";
 import { handleLogin, isLoggedIn } from '../services/auth';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: 250, 
+  }
+}));
 
 const Login = () => {
+  const classes = useStyles();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  const [oauth, setAuthType] = useState(true);
   const updateUsername = (e) => {
     setUsername(e.target.value);
   }
@@ -18,6 +30,10 @@ const Login = () => {
     handleLogin({username, password}); 
   }
 
+  const handleLoginType = () => {
+    setAuthType(!oauth);  
+  }
+
   if (isLoggedIn()) {
     navigate(`/app/dashboard`); 
   }
@@ -25,23 +41,39 @@ const Login = () => {
   return (
     <>
       <h1>Log in</h1>
-      <form 
-        method="post"
-        onSubmit={(e) => {
-          handleSubmit(e)
-          navigate(`/app/dashboard`)
-        }}>
-        <label>
-          Username
-          <input type="text" name="username" onChange={updateUsername} />
-        </label> 
-        <label>
-          Password
-          <input type="password" name="password" onChange={updatePassword} />
-        </label>
-        <input type="submit" value="Log In" />
+      {oauth 
+        ?
+        <div>oauth</div>
+        : 
+        <form 
+          className={classes.root}
+          method="post"
+          onSubmit={(e) => {
+            handleSubmit(e)
+            navigate(`/app/dashboard`)
+          }}>
+          <TextField
+            label="Username"
+            variant="outlined"
+            onChange={updateUsername}
+          />
+          <TextField
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            variant="outlined"
+            onChange={updatePassword} 
+          />
+          <Button fullWidth outlined>Submit</Button>
         </form>
-    </> 
+      }
+      { !oauth 
+          ?
+            <Link onClick={handleLoginType}>Log in with a provider</Link>
+          :
+            <Link onClick={handleLoginType}>Log in with credentials</Link>
+      }
+          </> 
   )
 }
 
