@@ -21,7 +21,6 @@ export const handleLogin = (user) => {
 
 export const isLoggedIn = () => {
   const user = getUser();
-  console.log("user: ", user);
   return !!user.username;
 }
 
