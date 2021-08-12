@@ -1,6 +1,7 @@
 import * as React from "react"
 import { useState } from 'react';
 import { Link } from 'gatsby';
+import { getUser, isLoggedIn } from "../services/auth";
 import Layout from "../components/layout";
 import SphereVideo from "../assets/video.mp4";
 import * as styles from "../components/styles/index.module.css";
@@ -103,9 +104,15 @@ const IndexPage = () => {
           onClick={openMenu} icon={faTimes} color="white" />
         <ul className={styles.menuList}>
           <li>
-            <Link 
-              className={styles.link}
-              to="/account">Account</Link>
+            {isLoggedIn() ? (
+              <Link 
+                className={styles.link}
+                to="/app/dashboard">Dashboard</Link>
+            ) : (
+              <Link 
+                className={styles.link}
+                to="/app/login">Login</Link>
+            )}
           </li>
           <li>
             <Link 
