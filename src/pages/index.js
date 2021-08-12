@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'gatsby';
 import { getUser, isLoggedIn } from "../services/auth";
 import Layout from "../components/layout";
@@ -14,6 +14,13 @@ import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
 const IndexPage = () => {
   const [menu, setMenu] = useState(false);
+
+  useEffect(() => {
+    console.log('test api');
+    fetch('http://localhost:8001')
+      .then(res => res.json())
+      .then(data => console.log(data));
+  }, []);
 
   const openMenu = () => {
     setMenu(!menu); 
