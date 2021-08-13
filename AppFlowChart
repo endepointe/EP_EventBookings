@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2021-08-12T23:22:42.228Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Safari/605.1.15" etag="kg-t_B1461VCQ-4ipYli" version="14.9.6" type="github">
+<mxfile host="app.diagrams.net" modified="2021-08-13T02:43:40.156Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" etag="wS3e0sB0IAHllxn5-bbY" version="14.9.6" type="github">
   <diagram id="TAQXc-Cmeh3G2Ub8K0Tv" name="Page-1">
-    <mxGraphModel dx="1796" dy="1745" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1632" dy="1652" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -197,7 +197,7 @@
         <mxCell id="AxwR9Uwhni_ZFUIJwztR-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.024;entryY=0.601;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="kbmN2qe7JtzhFOVrP93k-43" target="YFrlkmjda54aX7A0Ebi0-63" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="kbmN2qe7JtzhFOVrP93k-43" value="verify that the user data has been transferred then delete user from unverified/ineligible&lt;br&gt;database.&lt;br&gt;&lt;br&gt;this can be done by checking for duplicate data" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+        <mxCell id="kbmN2qe7JtzhFOVrP93k-43" value="INTERNAL CHECK&lt;br&gt;verify that the user data has been transferred then delete user from unverified/ineligible&lt;br&gt;database.&lt;br&gt;&lt;br&gt;this can be done by checking for duplicate data" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
           <mxGeometry x="210" y="505" width="170" height="160" as="geometry" />
         </mxCell>
         <mxCell id="kbmN2qe7JtzhFOVrP93k-64" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="kbmN2qe7JtzhFOVrP93k-63" target="kbmN2qe7JtzhFOVrP93k-36" edge="1">
@@ -250,7 +250,7 @@
         <mxCell id="kbmN2qe7JtzhFOVrP93k-96" value="Register" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="kbmN2qe7JtzhFOVrP93k-80" target="kbmN2qe7JtzhFOVrP93k-82" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Wg8-HK4V0GiGcyX0nuAb-1" value="Does it all user to create a duplicate record or will it warn them that they have duplicate info in the system?" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+        <mxCell id="Wg8-HK4V0GiGcyX0nuAb-1" value="Q1: Does it all user to create a duplicate record or will it warn them that they have duplicate info in the system?&lt;br&gt;&lt;br&gt;A1: this is an internal check, not seen by&lt;br&gt;the user" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="-570" y="20" width="250" height="250" as="geometry" />
         </mxCell>
         <mxCell id="o3CzjDaAHl3BLPRTD9Cw-1" value="Yes" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="kbmN2qe7JtzhFOVrP93k-22" target="kbmN2qe7JtzhFOVrP93k-77" edge="1">
