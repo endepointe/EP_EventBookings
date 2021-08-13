@@ -33,6 +33,10 @@ const Login = () => {
     handleLogin({email, password}); 
   }
 
+  if (isLoggedIn()) {
+    navigate(`/app/dashboard`); 
+  }
+
   return (
     <>
       {hasAccount
