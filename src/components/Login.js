@@ -36,6 +36,7 @@ const Login = () => {
     setAuthType(!oauth);  
   }
 
+
   if (isLoggedIn()) {
     navigate(`/app/dashboard`); 
   }
@@ -45,7 +46,7 @@ const Login = () => {
       <h1>Log in</h1>
       {oauth 
         ?
-        <div>oauth</div>
+        <Link href="http://localhost:8001/auth/google">Login with Google</Link>
         : 
         <form 
           className={classes.root}
