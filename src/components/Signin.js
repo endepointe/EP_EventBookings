@@ -61,9 +61,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 const SignIn = (props) => {
   const classes = useStyles();
 
+  const test = () => {
+    window.location = 'http://localhost:8001/auth/google';
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -78,6 +83,7 @@ const SignIn = (props) => {
           className={classes.googleButton}
           fullWidth
           variant="outlined"
+          onClick={test}
         >
           Sign in with Google
         </Button>

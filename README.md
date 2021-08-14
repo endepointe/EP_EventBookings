@@ -1,13 +1,4 @@
-do you want to be a vender?
 
-visits page
+to fix issue with git credentials, first set git to cache credentials:
 
-fill out information (see event bright data)
-
-donnell recieves the email
-
-hubspot contains the information (does not have to be managed with hubspot)
-
-aefes verifies and emails donnell
-
-donnell informs the registered vender that they are registered
+git config --global credential.helper cache
