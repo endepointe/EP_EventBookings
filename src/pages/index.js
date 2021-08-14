@@ -1,9 +1,9 @@
 import * as React from "react"
 import { useState, useEffect } from 'react';
 import { Link } from 'gatsby';
-import { getUser, isLoggedIn } from "../services/auth";
+import { isLoggedIn } from "../services/auth";
 import Layout from "../components/layout";
-import SphereVideo from "../assets/video.mp4";
+// import SphereVideo from "../assets/video.mp4";
 import * as styles from "../components/styles/index.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -12,14 +12,24 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
+async function postData(url = '', data = {}) {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+  return response.json();
+}
+
 const IndexPage = () => {
   const [menu, setMenu] = useState(false);
 
   useEffect(() => {
     console.log('test api');
-    fetch('http://localhost:8001')
-      .then(res => res.json())
-      .then(data => console.log(data));
+    postData('http://localhost:8001/auth/account/create', {})
+      .then(data => { console.log(data)});
   }, []);
 
   const openMenu = () => {
@@ -29,6 +39,7 @@ const IndexPage = () => {
     console.log('test');
     window.location = '/';
   }
+
   return (
     <Layout pageTitle="Event Bookings">
       <section  
@@ -92,7 +103,7 @@ const IndexPage = () => {
             </a>
           </li> 
           <li>
-            <a href="#">
+            <a href="http://localhost:8000">
               <FontAwesomeIcon 
                 className={styles.socialIcon}
                 icon={faLock} />  

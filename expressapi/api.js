@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
 const google = require('./routes/auth/google');
+const localCreate = require('./routes/auth/localCreate');
+const localLogin = require('./routes/auth/localLogin');
 const app = express();
 const port = 8001;
 const db = require('./psql_db/init');
@@ -17,6 +19,8 @@ app.use(cors(corsOptions));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/auth/', google);
+app.use('/auth/account/', localCreate);
+app.use('/auth/account/', localLogin);
 app.use('/auth/profile', require('./routes/auth/profile'));
 app.use('/auth/logout', require('./routes/auth/logout'));
 

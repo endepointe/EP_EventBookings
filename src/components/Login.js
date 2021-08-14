@@ -3,8 +3,6 @@ import { navigate } from "gatsby";
 import { handleLogin, isLoggedIn } from '../services/auth';
 import Signin from './Signin';
 import Signup from './Signup';
-import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
 
 // https://github.com/bradtraversy/react_step_form
 
@@ -31,10 +29,11 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     handleLogin({email, password}); 
-  }
-
-  if (isLoggedIn()) {
-    navigate(`/app/dashboard`); 
+    if (isLoggedIn()) {
+      navigate(`/app/dashboard`); 
+    } else {
+      alert('try again');
+    }
   }
 
   return (

@@ -121,7 +121,7 @@ const SignIn = (props) => {
             label="Email Address"
             name="email"
             autoComplete="email"
-            autoFocus
+            // autoFocus
             onChange={props.updateEmail}
           />
           <TextField

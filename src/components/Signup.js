@@ -81,7 +81,7 @@ export default function SignUp(props) {
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="current-password"
+                // autoComplete="current-password"
               />
             </Grid>
             <Grid item xs={12}>

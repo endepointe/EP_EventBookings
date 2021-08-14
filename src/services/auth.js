@@ -21,6 +21,14 @@ export const handleLogin = (user) => {
 
 export const handleLocalLogin = (user) => {
   // check against the db
+  if (user.email === 'a@b.c' && user.password === 'pass') {
+    return setUser({
+      username: 'ep',
+      name: 'ende',
+      email: user.email 
+    });
+  }
+  return false;
 }
 
 export const isLoggedIn = () => {
