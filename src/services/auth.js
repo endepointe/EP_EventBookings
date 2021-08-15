@@ -32,10 +32,10 @@ export const handleLocalLogin = async (user) => {
                                   body: JSON.stringify(userdata)
                                 });
     // console.log('response: ', response);
-    // let data = await response.json();
-    console.log('data: ', await response.json());
+    let data = await response.json();
+    console.log('data: ', data);
      return setUser({
-       username: 'ep',
+       username: data.id,
      })
   } catch (err) {
     console.error(err);
@@ -56,6 +56,8 @@ export const handleLocalLogin = async (user) => {
 
 export const isLoggedIn = () => {
   const user = getUser();
+  console.log('user = isLoggedIn(): ', user);
+  console.log('!!user.username: ', !!user.username);
   return !!user.username;
 }
 

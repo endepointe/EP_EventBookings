@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { navigate } from "gatsby";
-import { handleLocalLogin, isLoggedIn } from '../services/auth';
+import { handleLocalLogin, isLoggedIn, getUser } from '../services/auth';
 import Signin from './Signin';
 import Signup from './Signup';
 
@@ -26,14 +26,16 @@ const Login = () => {
     setPassword(e.target.value); 
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    handleLocalLogin({email, password}); 
-    if (isLoggedIn()) {
-      navigate(`/app/dashboard`); 
-    } else {
-      alert('try again');
-    }
+    handleLocalLogin({email, password});
+    navigate('/app/dashboard');
+    // console.log('result after calling handleLocalLogin(): ', getUser());
+    // if (isLoggedIn()) {
+    //   navigate(`/app/dashboard`); 
+    // } else {
+    //   alert('try again');
+    // }
   }
 
   return (
