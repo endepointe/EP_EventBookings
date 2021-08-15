@@ -19,16 +19,39 @@ export const handleLogin = (user) => {
   return false;
 }
 
-export const handleLocalLogin = (user) => {
+export const handleLocalLogin = async (user) => {
   // check against the db
-  if (user.email === 'a@b.c' && user.password === 'pass') {
-    return setUser({
-      username: 'ep',
-      name: 'ende',
-      email: user.email 
-    });
+  try {
+    const userdata = {username: user.email, password: user.password};
+    let response = await fetch('http://localhost:8001/auth/account/create', 
+                                {
+                                  method: 'POST',
+                                  headers: {
+                                    'Content-Type': 'application/json'
+                                  },
+                                  body: JSON.stringify(userdata)
+                                });
+    // console.log('response: ', response);
+    // let data = await response.json();
+    console.log('data: ', await response.json());
+     return setUser({
+       username: 'ep',
+     })
+  } catch (err) {
+    console.error(err);
+    return false;
   }
-  return false;
+
+  // if (user.email === 'a@b.c' && user.password === 'pass') {
+
+  //   return setUser({
+  //     username: 'ep',
+  //     name: 'ende',
+  //     email: user.email 
+  //   });
+  // }
+  
+  // return false;
 }
 
 export const isLoggedIn = () => {

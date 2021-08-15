@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { navigate } from "gatsby";
-import { handleLogin, isLoggedIn } from '../services/auth';
+import { handleLocalLogin, isLoggedIn } from '../services/auth';
 import Signin from './Signin';
 import Signup from './Signup';
 
@@ -28,7 +28,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleLogin({email, password}); 
+    handleLocalLogin({email, password}); 
     if (isLoggedIn()) {
       navigate(`/app/dashboard`); 
     } else {

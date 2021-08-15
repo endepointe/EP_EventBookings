@@ -18,6 +18,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 app.use(passport.initialize());
 app.use(passport.session());
+// require('./passportConfig')(passport);
 app.use('/auth/', google);
 app.use('/auth/account/', localCreate);
 app.use('/auth/account/', localLogin);
@@ -33,14 +34,14 @@ passport.serializeUser(function(user, cb) {
 passport.deserializeUser(async function(user, done) {
 	let profile; 
 	switch (user.provider) {
-		// case 'github':
-		// 	profile = await GithubUser.findById(user.id)
-		// break;
 		case 'google':
 			profile = await GoogleUser.findById(user.id);
 		break;
 		// case 'twitter':
 		// 	profile = await TwitterUser.findById(user.id);
+		// break;
+		// case 'local':
+		// 	profile = await LocalUser.findById(user.id);
 		// break;
 		default:
 			profile = null;
