@@ -87,7 +87,6 @@ export const handleLocalCreate = async (user) => {
     console.error(err);
     return false;
   }
-
   // if (user.email === 'a@b.c' && user.password === 'pass') {
   //   return setUser({
   //     username: 'ep',
@@ -95,7 +94,6 @@ export const handleLocalCreate = async (user) => {
   //     email: user.email 
   //   });
   // }
-  
   // return false;
 }
 
