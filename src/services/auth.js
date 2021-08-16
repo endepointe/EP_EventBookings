@@ -89,7 +89,6 @@ export const handleLocalCreate = async (user) => {
   }
 
   // if (user.email === 'a@b.c' && user.password === 'pass') {
-
   //   return setUser({
   //     username: 'ep',
   //     name: 'ende',
