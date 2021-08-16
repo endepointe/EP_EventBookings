@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
+import Alert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
@@ -54,6 +55,7 @@ export default function SignUp(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [vpassword, setVPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState({status: false, msg: ''});
 
   const updateEmail = (e) => {
     console.log(e.target.value);
@@ -81,7 +83,11 @@ export default function SignUp(props) {
           if (success) {
             navigate('/app/dashboard');
           } else {
-            return;
+            setErrorMessage({status: true, msg: 'user exists, please login'});
+            // setTimeout(() => {
+            //   setErrorMessage({status: false, msg: null});
+            // }, 3000);
+            // return;
           }
         })
         .catch(err=>console.error(err));
@@ -119,6 +125,7 @@ export default function SignUp(props) {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                disabled={errorMessage.status}
                 onChange={updateEmail}
               />
             </Grid>
@@ -131,6 +138,7 @@ export default function SignUp(props) {
                 label="Password"
                 type="password"
                 id="password"
+                disabled={errorMessage.status}
                 onChange={updatePassword}
                 // autoComplete="current-password"
               />
@@ -144,6 +152,7 @@ export default function SignUp(props) {
                 label="Verify Password"
                 type="password"
                 id="vpassword"
+                disabled={errorMessage.status}
                 onChange={updateVPassword}
                 // autoComplete="current-password"
               />
@@ -152,6 +161,7 @@ export default function SignUp(props) {
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
                 label="I want to receive inspiration, marketing promotions and updates via email."
+                disabled={errorMessage.status}
               />
             </Grid>
           </Grid>
@@ -161,10 +171,15 @@ export default function SignUp(props) {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={errorMessage.status}
             onClick={handleSubmit}
           >
             Sign Up
           </Button>
+          {errorMessage.status
+            ? <Alert severity="warning">{errorMessage.msg}</Alert>
+            : <p>{null}</p>
+          }
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link 

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { handleLocalLogin, isLoggedIn, getUser } from '../services/auth';
+import { handleLocalLogin } from '../services/auth';
 import { navigate } from "gatsby";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
+import Alert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
@@ -71,6 +72,7 @@ const SignIn = (props) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState({status: false, msg: ''});
 
   const providerAuth = (provider) => {
     window.location = `http://localhost:8001/auth/${provider}`;
@@ -82,21 +84,28 @@ const SignIn = (props) => {
   }
 
   const updatePassword = (e) => {
+    console.log(e.target.value);
     setPassword(e.target.value); 
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    handleLocalLogin({email, password});
-    // navigate('/app/dashboard');
-    console.log('result after calling handleLocalLogin(): ', getUser());
-    if (isLoggedIn()) {
-      navigate(`/app/dashboard`); 
-    } else {
-      alert('try again');
-    }
-  }
-
+    // returns either a true or false
+    handleLocalLogin({email, password})
+      .then(success => {
+        console.log(success)
+        if (success) {
+          navigate('/app/dashboard');
+        } else {
+          setErrorMessage({status: true, msg: 'please try again'});
+          // setTimeout(() => {
+          //   setErrorMessage({status: false, msg: null});
+          // }, 3000);
+          // return;
+        }
+      })
+      .catch(err=>console.error(err));
+   }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -178,6 +187,10 @@ const SignIn = (props) => {
           >
             Sign In
           </Button>
+          {errorMessage.status
+            ? <Alert severity="warning">{errorMessage.msg}</Alert>
+            : <p>{null}</p>
+          }
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">

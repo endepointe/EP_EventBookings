@@ -50,7 +50,7 @@ router.get('/google/callback',
     }, process.env.KEY_PRIVATE, {expiresIn: 43200000});
     res.status(201).cookie(
       'authorization', token, 
-      {sameSite: 'Lax'}, 
+      {sameSite: 'Strict'}, 
       {expires: new Date(Date.now() + 43200000)} 
     )
     .redirect('http://localhost:8000');

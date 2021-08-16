@@ -29,7 +29,7 @@ export const handleLocalLogin = async (user) => {
   // check against the db
   try {
     const userdata = {username: user.email, password: user.password};
-    let response = await fetch('http://localhost:8001/auth/account/create', 
+    let response = await fetch('http://localhost:8001/auth/account/login', 
                                 {
                                   method: 'POST',
                                   headers: {
@@ -38,7 +38,8 @@ export const handleLocalLogin = async (user) => {
                                   body: JSON.stringify(userdata)
                                 });
     let data = await response.json();
-    if (data) {
+    console.log(data);
+    if (data.result) {
       setUser({
         username: data.id
       })
@@ -46,9 +47,9 @@ export const handleLocalLogin = async (user) => {
       setUser({});
     }
     if (isLoggedIn()) {
-      return true;
+      return data.result;
     }
-    return false;
+    return data.result;
   } catch (err) {
     console.error(err);
     return false;
