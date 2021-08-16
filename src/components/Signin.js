@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { handleLocalLogin, isLoggedIn, getUser } from '../services/auth';
+import { navigate } from "gatsby";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -64,11 +66,37 @@ const useStyles = makeStyles((theme) => ({
 
 
 const SignIn = (props) => {
+
   const classes = useStyles();
 
-  const test = () => {
-    window.location = 'http://localhost:8001/auth/google';
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const providerAuth = (provider) => {
+    window.location = `http://localhost:8001/auth/${provider}`;
   }
+
+  const updateEmail = (e) => {
+    console.log(e.target.value);
+    setEmail(e.target.value);
+  }
+
+  const updatePassword = (e) => {
+    setPassword(e.target.value); 
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    handleLocalLogin({email, password});
+    // navigate('/app/dashboard');
+    console.log('result after calling handleLocalLogin(): ', getUser());
+    if (isLoggedIn()) {
+      navigate(`/app/dashboard`); 
+    } else {
+      alert('try again');
+    }
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -83,7 +111,7 @@ const SignIn = (props) => {
           className={classes.googleButton}
           fullWidth
           variant="outlined"
-          onClick={test}
+          onClick={()=>providerAuth('google')}
         >
           Sign in with Google
         </Button>
@@ -122,7 +150,7 @@ const SignIn = (props) => {
             name="email"
             autoComplete="email"
             // autoFocus
-            onChange={props.updateEmail}
+            onChange={updateEmail}
           />
           <TextField
             variant="outlined"
@@ -133,7 +161,7 @@ const SignIn = (props) => {
             label="Password"
             type="password"
             id="password"
-            onChange={props.updatePassword}
+            onChange={updatePassword}
             autoComplete="current-password"
           />
           <FormControlLabel
@@ -145,7 +173,7 @@ const SignIn = (props) => {
             fullWidth
             variant="contained"
             color="primary"
-            onClick={props.handleSubmit}
+            onClick={handleSubmit}
             className={classes.submit}
           >
             Sign In

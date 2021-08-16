@@ -12,32 +12,29 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
-async function postData(url = '', data = {}) {
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  });
-  return response.json();
-}
+// async function postData(url = '', data = {}) {
+//   const response = await fetch(url, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(data)
+//   });
+//   return response.json();
+// }
 
 const IndexPage = () => {
   const [menu, setMenu] = useState(false);
 
   useEffect(() => {
     console.log('test api');
-    postData('http://localhost:8001/auth/account/create', {})
-      .then(data => { console.log(data)});
   }, []);
 
   const openMenu = () => {
     setMenu(!menu); 
   }
-  const test = () => {
-    console.log('test');
-    window.location = '/';
+  const startHere = () => {
+    console.log('start here clicked');
   }
 
   return (
@@ -68,7 +65,7 @@ const IndexPage = () => {
           <div>
             {/* <p className={styles.tester}>Find your event today</p> */}
             <button 
-              onClick={test}
+              onClick={startHere}
               className={styles.arrowBtn}>
               <div className={styles.arrowText}>Start Here</div>
               <div className={styles.arrows}>

@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { handleLocalCreate, getUser } from '../services/auth';
+import { navigate } from "gatsby";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -49,6 +51,53 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp(props) {
   const classes = useStyles();
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [vpassword, setVPassword] = useState('');
+
+  const updateEmail = (e) => {
+    console.log(e.target.value);
+    setEmail(e.target.value);
+  }
+
+  const updatePassword = (e) => {
+    setPassword(e.target.value); 
+  }
+
+  const updateVPassword = (e) => {
+    setVPassword(e.target.value); 
+  }
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (password === vpassword && 
+        password.length > 0 && 
+        vpassword.length > 0) {
+      // returns either a true or false
+      handleLocalCreate({email, password})
+        .then(success => {
+          console.log(success)
+          if (success) {
+            navigate('/app/dashboard');
+          } else {
+            return;
+          }
+        })
+        .catch(err=>console.error(err));
+    } else {
+      alert('display password error msg')
+      return;
+    }
+    // navigate('/app/dashboard');
+    console.log('result after calling handleLocalLogin(): ', getUser());
+    // if (d) {
+    //   navigate(`/app/dashboard`); 
+    // } else {
+    //   alert('try again');
+    // }
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -70,6 +119,7 @@ export default function SignUp(props) {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={updateEmail}
               />
             </Grid>
             <Grid item xs={12}>
@@ -81,6 +131,7 @@ export default function SignUp(props) {
                 label="Password"
                 type="password"
                 id="password"
+                onChange={updatePassword}
                 // autoComplete="current-password"
               />
             </Grid>
@@ -93,6 +144,7 @@ export default function SignUp(props) {
                 label="Verify Password"
                 type="password"
                 id="vpassword"
+                onChange={updateVPassword}
                 // autoComplete="current-password"
               />
             </Grid>
@@ -109,6 +161,7 @@ export default function SignUp(props) {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSubmit}
           >
             Sign Up
           </Button>

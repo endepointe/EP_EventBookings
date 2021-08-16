@@ -1,24 +1,26 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const google = require('./routes/auth/google');
 const localCreate = require('./routes/auth/localCreate');
 const localLogin = require('./routes/auth/localLogin');
 const app = express();
 const port = 8001;
-const db = require('./psql_db/init');
 const GoogleUser = require('./psql_db/auth/google/findOrCreate');
+const LocalUser = require('./psql_db/auth/local/findOrCreate');
 
 const corsOptions = {
-	origin: 'http://localhost:8000'
-}
+	origin: 'http://localhost:8000',
+	credentials: true
+};
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(passport.initialize());
 app.use(passport.session());
-// require('./passportConfig')(passport);
 app.use('/auth/', google);
 app.use('/auth/account/', localCreate);
 app.use('/auth/account/', localLogin);
@@ -40,9 +42,9 @@ passport.deserializeUser(async function(user, done) {
 		// case 'twitter':
 		// 	profile = await TwitterUser.findById(user.id);
 		// break;
-		// case 'local':
-		// 	profile = await LocalUser.findById(user.id);
-		// break;
+		case 'local':
+			profile = await LocalUser.findById(user.id);
+		break;
 		default:
 			profile = null;
 		break;
