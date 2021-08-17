@@ -3,15 +3,15 @@ export const isBrowser = () => typeof window !== "undefined";
 // this function should check for the presence of a cookie and verify that
 // the data in the cookie is valid
 export const getUser = () =>
-  isBrowser() && window.localStorage.getItem("gatsbyUser")
-    ? JSON.parse(window.localStorage.getItem("gatsbyUser"))
+  isBrowser() && window.localStorage.getItem("EBUser")
+    ? JSON.parse(window.localStorage.getItem("EBUser"))
     : {}
 
 
 // afer successful login or create, sets the token in a cookie
 const setUser = user => {
   console.log('set user: ', user);
-  window.localStorage.setItem("gatsbyUser", JSON.stringify(user))
+  window.localStorage.setItem("EBUser", JSON.stringify(user))
 }  
 
 // export const handleLogin = (user) => {
@@ -28,7 +28,13 @@ const setUser = user => {
 export const handleLocalLogin = async (user) => {
   // check against the db
   try {
-    const userdata = {username: user.email, password: user.password};
+    let u = getUser();
+    console.log('user token: ', u.token);
+    const userdata = {
+      username: user.email, 
+      password: user.password,
+      token: u.token,
+      provider: user.provider};
     let response = await fetch('http://localhost:8001/auth/account/login', 
                                 {
                                   method: 'POST',
@@ -38,13 +44,17 @@ export const handleLocalLogin = async (user) => {
                                   body: JSON.stringify(userdata)
                                 });
     let data = await response.json();
-    console.log(data);
+    console.log('data after login: ', data);
     if (data.result) {
       setUser({
-        username: data.id
+        username: data.id,
+        token: data.token
       })
     } else {
-      setUser({});
+      setUser({
+        username: null,
+        token: data.token 
+      });
     }
     if (isLoggedIn()) {
       return data.result;
@@ -59,7 +69,11 @@ export const handleLocalLogin = async (user) => {
 export const handleLocalCreate = async (user) => {
   // check against the db
   try {
-    const userdata = {username: user.email, password: user.password};
+    const userdata = {
+      username: user.email, 
+      password: user.password,
+      provider: user.provider
+    };
     let response = await fetch('http://localhost:8001/auth/account/create', 
                                 {
                                   method: 'POST',
@@ -73,12 +87,14 @@ export const handleLocalCreate = async (user) => {
     console.log('data: ', data);
     if (data.result) {
       setUser({
-        username: data.id
+        username: data.id,
+        token: data.token
       })
     } else {
-      // delete the user from localstorage, resultin in isLoggedIn returning
-      // false
-      setUser({});
+      setUser({
+        username: null,
+        token: null
+      });
     }
     if (isLoggedIn()) {
       return data.result;
@@ -88,16 +104,6 @@ export const handleLocalCreate = async (user) => {
     console.error(err);
     return false;
   }
-
-  // if (user.email === 'a@b.c' && user.password === 'pass') {
-
-  //   return setUser({
-  //     username: 'ep',
-  //     name: 'ende',
-  //     email: user.email 
-  //   });
-  // }
-  // return false;
 }
 
 export const isLoggedIn = () => {
@@ -107,7 +113,11 @@ export const isLoggedIn = () => {
   return !!user.username;
 }
 
-export const logout = cb => {
-  setUser({});
-  cb();
+export const logout = () => {
+  let user = getUser();
+  setUser({
+    username: null,
+    token: user.token 
+  });
+  return isLoggedIn();
 }

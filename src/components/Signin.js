@@ -91,7 +91,7 @@ const SignIn = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // returns either a true or false
-    handleLocalLogin({email, password})
+    handleLocalLogin({email, password, provider: 'local'})
       .then(success => {
         console.log(success)
         if (success) {
@@ -173,10 +173,10 @@ const SignIn = (props) => {
             onChange={updatePassword}
             autoComplete="current-password"
           />
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
+          /> */}
           <Button
             type="submit"
             fullWidth

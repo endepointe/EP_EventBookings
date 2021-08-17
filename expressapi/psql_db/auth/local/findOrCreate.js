@@ -1,7 +1,8 @@
 const db = require('../../../psql_db/init');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
-const findOrCreate = async (data) => {
+const createOne = async (data) => {
 	console.log('local data: ', data);
 	try {
 		const userres = await db.oneOrNone('select * from localusers where id = $1', [data.username]);
@@ -11,6 +12,13 @@ const findOrCreate = async (data) => {
 			const hashedPassword = await bcrypt.hash(data.password, 10);
 			const newuserres = await db.one('insert into localusers(id,password,provider) values($1,$2,$3) returning id', [data.username, hashedPassword, data.provider]);
 			const newUser = await newuserres;
+			let token = jwt.sign({
+				id: newUser.id,
+				key: hashedPassword,
+				provider: newUser.provider 
+			}, process.env.KEY_PRIVATE, {expiresIn: 60*60*24*30});
+			newUser.token = token;
+			console.log('token: ', token);
 			newUser.result = true;
 			console.log('findOrCreate newUser: ', newUser);
 			return newUser;
@@ -29,17 +37,18 @@ const findOne = async (data) => {
 		if (user === null || !user) {
 			return false;
 		} else {
-			console.log('start bcrypt with: ', data.password)
-			bcrypt.compare(data.password, user.password, (err, res) => {
-				if (err) throw err;
-				console.log('do the passwords match? ', res);
-				if (res === true) {
-					user.result = true;
-					console.log('user is now: ', user);
-					return user;
+			console.log('findOne data obj: ', data)
+			let validToken;
+			jwt.verify(data.token, process.env.KEY_PRIVATE, function(err, result) {
+				console.log('verified token: ', result.key);
+				if (result.key === user.password) {
+					validToken = true;	
 				}
 			})
-			// return user;
+			user.token = data.token;
+			user.result = bcrypt.compareSync(data.password, user.password);
+			console.log('user.result: ', user.result);
+			return user;
 		}
 	} catch (err) {
 		console.error(err);
@@ -56,7 +65,7 @@ const findById = async (id) => {
 }
 
 module.exports = {
-	findOrCreate: findOrCreate,
+	createOne: createOne,
 	findOne: findOne,
 	findById: findById
 }

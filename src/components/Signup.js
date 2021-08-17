@@ -77,17 +77,13 @@ export default function SignUp(props) {
         password.length > 0 && 
         vpassword.length > 0) {
       // returns either a true or false
-      handleLocalCreate({email, password})
+      handleLocalCreate({email, password, provider: 'local'})
         .then(success => {
-          console.log(success)
+          console.log('handleLocalCreate result: ', success);
           if (success) {
             navigate('/app/dashboard');
           } else {
             setErrorMessage({status: true, msg: 'user exists, please login'});
-            // setTimeout(() => {
-            //   setErrorMessage({status: false, msg: null});
-            // }, 3000);
-            // return;
           }
         })
         .catch(err=>console.error(err));
@@ -95,13 +91,7 @@ export default function SignUp(props) {
       alert('display password error msg')
       return;
     }
-    // navigate('/app/dashboard');
     console.log('result after calling handleLocalLogin(): ', getUser());
-    // if (d) {
-    //   navigate(`/app/dashboard`); 
-    // } else {
-    //   alert('try again');
-    // }
   }
 
   return (
@@ -140,7 +130,6 @@ export default function SignUp(props) {
                 id="password"
                 disabled={errorMessage.status}
                 onChange={updatePassword}
-                // autoComplete="current-password"
               />
             </Grid>
             <Grid item xs={12}>
@@ -154,15 +143,14 @@ export default function SignUp(props) {
                 id="vpassword"
                 disabled={errorMessage.status}
                 onChange={updateVPassword}
-                // autoComplete="current-password"
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControlLabel
+              {/* <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
                 label="I want to receive inspiration, marketing promotions and updates via email."
                 disabled={errorMessage.status}
-              />
+              /> */}
             </Grid>
           </Grid>
           <Button

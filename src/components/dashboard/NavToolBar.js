@@ -1,7 +1,7 @@
 import React from 'react';
-// import SideMenu from './SideMenu';
+import { logout } from '../../services/auth';
+import {navigate} from 'gatsby';
 import { makeStyles } from '@material-ui/core/styles';
-// import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
@@ -70,6 +70,13 @@ export default function NavToolBar(props) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleLogout = () => {
+    let status = logout();
+    if (!status) {
+      navigate('/'); 
+    }
+  }
+
   const menuId = 'primary-account-menu';
   const renderMenu = (
     <Menu
@@ -83,7 +90,7 @@ export default function NavToolBar(props) {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
   );
 
