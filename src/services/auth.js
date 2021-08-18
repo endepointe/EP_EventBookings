@@ -106,6 +106,10 @@ export const handleLocalCreate = async (user) => {
   }
 }
 
+export const handleForgotPassword = () => {
+  return 'handle forgotten password';
+}
+
 export const isLoggedIn = () => {
   const user = getUser();
   console.log('user = isLoggedIn(): ', user);
