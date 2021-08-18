@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { handleLocalLogin } from '../services/auth';
+import { handleLocalLogin, handleForgotPassword } from '../services/auth';
 import { navigate } from "gatsby";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -18,6 +18,8 @@ import Container from '@material-ui/core/Container';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 function Copyright() {
   return (
@@ -46,7 +48,8 @@ const useStyles = makeStyles((theme) => ({
   },
   modalPaper: {
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
+    // border: '2px solid #000',
+    border: 'none',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
@@ -101,8 +104,51 @@ const ForgotPasswordModal = (props) => {
       >
         <Fade in={props.modalOpen}>
           <div className={classes.modalPaper}>
-            <h2 id="transition-modal-title">Forgot password?</h2>
-            <p id="transition-modal-description">Enter you email below to reset your password:</p>
+            <h2 id="transition-modal-title">Request Password Reset -</h2>
+            <p id="transition-modal-description">Enter you email below:</p>
+            <form 
+              method="post"
+              className={classes.form} noValidate>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                disabled={props.sentReset}
+                onChange={props.updateEmail}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                disabled={props.sentReset}
+                onClick={props.handleResetRequest}
+                className={classes.submit}
+              >
+                Send Reset Link
+              </Button>
+              {props.sentReset
+                ? <Alert 
+                    severity="info">
+                    Check your email
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => {
+                        props.setSentReset(false);
+                      }}
+                    >
+                      <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                  </Alert>
+                : <p>{null}</p>
+              }
+            </form>
           </div>
         </Fade>
       </Modal>
@@ -118,6 +164,8 @@ const SignIn = (props) => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState({status: false, msg: ''});
   const [modalOpen, openModal] = useState(false);
+  const [sentReset, setSentReset] = useState(false);
+  const [emailError, setEmailError] = useState(false);
 
   const handleOpenModal = (e) => {
     e.preventDefault();
@@ -128,12 +176,22 @@ const SignIn = (props) => {
     openModal(false); 
   }
 
+  const handleResetRequest = async (e) => {
+    e.preventDefault();
+    // returns either a true or false
+    setSentReset(!sentReset);
+    handleForgotPassword({email})
+      .then((res) => {
+        console.log(res)
+      })
+      .catch(err=>console.error(err));
+   }
+
   const providerAuth = (provider) => {
     window.location = `http://localhost:8001/auth/${provider}`;
   }
 
   const updateEmail = (e) => {
-    console.log(e.target.value);
     setEmail(e.target.value);
   }
 
@@ -152,10 +210,6 @@ const SignIn = (props) => {
           navigate('/app/dashboard');
         } else {
           setErrorMessage({status: true, msg: 'please try again'});
-          // setTimeout(() => {
-          //   setErrorMessage({status: false, msg: null});
-          // }, 3000);
-          // return;
         }
       })
       .catch(err=>console.error(err));
@@ -248,7 +302,11 @@ const SignIn = (props) => {
           <Grid container>
             <Grid item xs>
               <ForgotPasswordModal 
+                sentReset={sentReset}
+                setSentReset={setSentReset}
                 modalOpen={modalOpen} 
+                updateEmail={updateEmail}
+                handleResetRequest={handleResetRequest}
                 handleOpenModal={handleOpenModal}
                 handleCloseModal={handleCloseModal} />
             </Grid>
