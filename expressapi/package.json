@@ -4,6 +4,7 @@
   "description": "",
   "main": "api.js",
   "scripts": {
+    "dev": "concurrently nodemon api && cd .. && gatsby develop",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ende",

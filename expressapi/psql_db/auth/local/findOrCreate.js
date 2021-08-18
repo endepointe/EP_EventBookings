@@ -38,16 +38,57 @@ const findOne = async (data) => {
 			return false;
 		} else {
 			console.log('findOne data obj: ', data)
-			let validToken;
-			jwt.verify(data.token, process.env.KEY_PRIVATE, function(err, result) {
-				console.log('verified token: ', result.key);
-				if (result.key === user.password) {
-					validToken = true;	
-				}
-			})
-			user.token = data.token;
 			user.result = bcrypt.compareSync(data.password, user.password);
-			console.log('user.result: ', user.result);
+			// if the passwords match, check if the token is valid.
+			// if the token is not valid (possibly expired), issue a new token
+			// to the user.
+			if (user.result) {
+				try {
+					let decodedToken = jwt.verify(data.token, process.env.KEY_PRIVATE)
+					console.log('decodedToken: ', decodedToken);
+					if (data.token === null || data.token === '') {
+						user.token = jwt.sign({
+															id: user.id,
+															key: user.password,
+															provider: user.provider 
+															}, 
+															process.env.KEY_PRIVATE, 
+															{expiresIn: 60*60*24*30});
+					} else {
+						user.token = data.token;
+					}
+				} catch(err) {
+					switch (err.name) {
+						case 'TokenExpiredError':
+							console.error(err.message);
+							user.token = jwt.sign({
+															id: user.id,
+															key: user.password,
+															provider: user.provider 
+														}, 
+														process.env.KEY_PRIVATE, 
+														{expiresIn: 60*60*24*30});
+						break;	
+						case 'JsonWebTokenError':
+							console.error("at findOne(): ", err);
+							user.token =  jwt.sign({
+															id: user.id,
+															key: user.password,
+															provider: user.provider 
+														}, 
+														process.env.KEY_PRIVATE, 
+														{expiresIn: 60*60*24*30});
+						break;
+						default:
+							console.error("issue with token with valid pw:", err.name);
+						break;
+					}	
+				}					
+			} else {
+				// implement a max password attempt or some type of guard against
+				// brute force attacks.
+				user.token = data.token;	
+			}
 			return user;
 		}
 	} catch (err) {
