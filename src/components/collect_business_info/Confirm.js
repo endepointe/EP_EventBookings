@@ -18,46 +18,39 @@ const Confirm = (props) => {
 
   return (
     <>
-      <Dialog
-        open
-        fullWidth
-        maxWidth='sm'
-      >
-        <AppBar title="Confirm User Data" />
-        <List>
-          <ListItem>
-            <ListItemText primary="First Name" secondary={props.state.firstName} />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Last Name" secondary={props.state.lastName} />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Email" secondary={props.state.email} />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Occupation" secondary={props.state.occupation} />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="City" secondary={props.state.city} />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Bio" secondary={props.state.bio} />
-          </ListItem>
-        </List>
-        <br />
+      <List>
+        <ListItem>
+          <ListItemText primary="First Name" secondary={props.state.firstName} />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Last Name" secondary={props.state.lastName} />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Email" secondary={props.state.email} />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Occupation" secondary={props.state.occupation} />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="City" secondary={props.state.city} />
+        </ListItem>
+        <ListItem>
+          <ListItemText primary="Bio" secondary={props.state.bio} />
+        </ListItem>
+      </List>
+      <br />
 
-        <Button
-          color="secondary"
-          variant="contained"
-          onClick={back}
-        >Back</Button>
+      <Button
+        color="secondary"
+        variant="contained"
+        onClick={back}
+      >Back</Button>
 
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={cont}
-        >Confirm & Continue</Button>
-      </Dialog>
+      <Button
+        color="primary"
+        variant="contained"
+        onClick={cont}
+      >Confirm & Continue</Button>
     </>
   );
 }
