@@ -6,6 +6,7 @@ const passport = require('passport');
 const google = require('./routes/auth/google');
 const localCreate = require('./routes/auth/localCreate');
 const localLogin = require('./routes/auth/localLogin');
+const passwordReset = require('./routes/passwordReset');
 const app = express();
 const port = 8001;
 const GoogleUser = require('./psql_db/auth/google/findOrCreate');
@@ -26,6 +27,7 @@ app.use('/auth/account/', localCreate);
 app.use('/auth/account/', localLogin);
 app.use('/auth/profile', require('./routes/auth/profile'));
 app.use('/auth/logout', require('./routes/auth/logout'));
+app.use('/password-reset', passwordReset);
 
 
 passport.serializeUser(function(user, cb) {

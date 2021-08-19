@@ -105,7 +105,7 @@ const ForgotPasswordModal = (props) => {
         <Fade in={props.modalOpen}>
           <div className={classes.modalPaper}>
             <h2 id="transition-modal-title">Request Password Reset -</h2>
-            <p id="transition-modal-description">Enter you email below:</p>
+            <p id="transition-modal-description">Enter your email below:</p>
             <form 
               method="post"
               className={classes.form} noValidate>
@@ -133,18 +133,20 @@ const ForgotPasswordModal = (props) => {
               </Button>
               {props.sentReset
                 ? <Alert 
-                    severity="info">
-                    Check your email
-                    <IconButton
-                      aria-label="close"
-                      color="inherit"
-                      size="small"
-                      onClick={() => {
-                        props.setSentReset(false);
-                      }}
-                    >
-                      <CloseIcon fontSize="inherit" />
-                    </IconButton>
+                    severity="info"
+                    action={
+                      <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                          props.setSentReset(false);
+                        }}
+                      >
+                        <CloseIcon fontSize="inherit" />
+                      </IconButton>
+                    }>
+                      Check your email
                   </Alert>
                 : <p>{null}</p>
               }

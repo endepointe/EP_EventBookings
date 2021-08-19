@@ -107,7 +107,17 @@ export const handleLocalCreate = async (user) => {
 }
 
 export const handleForgotPassword = async ({email}) => {
-  return `reset the following password: ${email}`;
+  let response = await fetch('http://localhost:8001/password-reset',
+                              {
+                                method: 'POST',
+                                headers: {
+                                  'Content-Type': 'application/json' 
+                                },
+                                body: JSON.stringify({email: email})
+                              });
+  let data = await response.text();
+  console.log('data: ', data);
+  return `reset the following password for user: ${data}`;
 }
 
 export const isLoggedIn = () => {
