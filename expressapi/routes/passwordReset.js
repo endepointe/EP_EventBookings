@@ -11,6 +11,7 @@ router.post('/', async (req, res) => {
     let response = await LocalUser.findById(req.body.email);
     let user = await response;
     console.log('reset password for user: ', user);
+    console.trace();
     // instead of sending the id to the user,
     // create a token and email it to the user.
     res.send(user.id);
