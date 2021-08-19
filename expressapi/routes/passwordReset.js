@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const sendEmail = require('../utils/sendEmail');
 const LocalUser = require('../psql_db/auth/local/findOrCreate');
 // consider adding a token table
+//https://dev.to/jahangeer/how-to-implement-password-reset-via-email-in-node-js-132m
 
 router.post('/', async (req, res) => {
   try {

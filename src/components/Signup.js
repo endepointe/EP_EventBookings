@@ -81,7 +81,9 @@ export default function SignUp(props) {
         .then(success => {
           console.log('handleLocalCreate result: ', success);
           if (success) {
-            navigate('/app/dashboard');
+            // start collecting data from the user before sending them 
+            // to their dashboard
+            navigate('/app/collect-business-info');
           } else {
             setErrorMessage({status: true, msg: 'user exists, please login'});
           }

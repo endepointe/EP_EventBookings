@@ -167,7 +167,7 @@ const SignIn = (props) => {
   const [errorMessage, setErrorMessage] = useState({status: false, msg: ''});
   const [modalOpen, openModal] = useState(false);
   const [sentReset, setSentReset] = useState(false);
-  const [emailError, setEmailError] = useState(false);
+  // const [emailError, setEmailError] = useState(false);
 
   const handleOpenModal = (e) => {
     e.preventDefault();
