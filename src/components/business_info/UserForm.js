@@ -1,20 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
-import Paper from '@material-ui/core/Paper';
+import React, { Component } from 'react';
+import PropTypes from "prop-types";
+import {
+  Box,
+  Grid,
+  Paper,
+  withStyles,
+  Stepper,
+  Step,
+  StepLabel,
+} from "@material-ui/core";
 import FormUserContactInfo from './FormUserContactInfo';
 import FormUserBusinessDetails from './FormUserBusinessDetails';
 import FormUserSocialMedia from './FormUserSocialMedia';
 import FormUserFileUpload from './FormUserFileUpload';
 import Confirm from './Confirm';
 import Success from './Success';
+import { renderText } from "../common/DisplayComponent";
+import { styles } from "../common/styles";
 
-const UserForm = () => {
-  const [state, setState] = useState({});
-
-  useEffect(() => {
-    setState({
-      step: 1,
+class UserForm extends Component {
+  state = {
+    data: {
       firstName: '',
       lastName: '',
       email: '',
@@ -22,86 +28,136 @@ const UserForm = () => {
       militaryStatus: '',
       companyName: '', 
       websiteUrl: '',
-      socialMedia: {
-        Facebook: '',
-        Twitter: '',
-        Instagram: '',
-        LinkedIn: '' 
-      }
-    }) 
-  }, [])
-
-  // Proceed to next step
-  const nextStep = () => {
-    const { step } = state;
-    setState({
-      step: step + 1
-    });
+      socialMedia: [
+        {Facebook: ''},
+        {Twitter: ''},
+        {Instagram: ''},
+        {LinkedIn: ''}
+      ]
+    },
+    errors: {},
+    steps: [
+      {label: "Contact Info"},
+      {label: "Business Info"},
+      {label: "Social Media"},
+      {label: "Form Upload"},
+      {label: "Confirmation"},
+      {label: "Success"}
+    ],
+    step: 0
   };
 
-  // Go back to prev step
-  const prevStep = () => {
-    const { step } = state;
-    setState({
-      step: step - 1
-    });
-  };
+  render() {
+    const {classes} = this.props;
 
-  // Handle fields change
-  // const handleChange = e => {
-  //   console.log('change: ', e.target.value)
-  // };
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      console.log('submit form');
+    }
 
-  return (
-    <Container maxWidth="sm">
-      <CssBaseline />
-      <Paper>
-      { state.step === 1
-        ?
-          <FormUserContactInfo
-            nextStep={nextStep}
-            // handleChange={handleChange}
-            state={state}
-          />
-        : state.step === 2 
-        ? 
-          <FormUserBusinessDetails
-            nextStep={nextStep}
-            prevStep={prevStep}
-            // handleChange={handleChange}
-            state={state}
-          />
-        : state.step === 3
-        ?
-          <FormUserSocialMedia
-            nextStep={nextStep}
-            prevStep={prevStep}
-            state={state}
-          />
-        : state.step === 4
-        ? 
-          <FormUserFileUpload
-            nextStep={nextStep}
-            prevStep={prevStep}
-            // handleChange={handleChange}
-            state={state}
-          />
-        : state.step === 5
-        ? 
-          <Confirm
-            nextStep={nextStep}
-            prevStep={prevStep}
-            // handleChange={handleChange}
-            state={state}
-          />
-        : state.step === 6
-        ? 
-          <Success />
-        : null
+    // Handle fields change
+    const handleChange = ({target}) => {
+      const { data, errors } = this.state;
+      target.value.length <= 3
+        ? (errors[target.name] = `${target.name} have at least 3 letters`)
+        : (errors[target.name] = '');
+      data[target.name] = target.value;
+      this.setState({data, errors});
+    };
+
+    const handleNextStep = () => {
+      let {step} = this.state;
+      console.log('current step: ', step);
+      step += 1;
+      this.setState({step})
+    };
+
+    const handleBackStep = () => {
+      let {step} = this.state;
+      step -= 1;
+      this.setState({step});
+    };
+
+    const getStepContent = (step) => {
+      switch (step) {
+        case 0:
+          return (
+            <FormUserContactInfo
+              state={this.state}
+              handleChange={handleChange}
+              handleNextStep={handleNextStep} />
+          );
+        case 1: 
+          return (
+            <FormUserBusinessDetails 
+              state={this.state}
+              handleChange={handleChange}
+              handleNextStep={handleNextStep}
+              handleBackStep={handleBackStep} />
+          );
+        case 3:
+          return (
+            <FormUserSocialMedia 
+              state={this.state}
+              handleChange={handleChange}
+              handleNextStep={handleNextStep}
+              handleBackStep={handleBackStep}/>
+          );
+        case 4:
+          return (
+            <FormUserFileUpload
+              state={this.state}
+              handleChange={handleChange}
+              handleNextStep={handleNextStep}
+              handleBackStep={handleBackStep} />
+          );
+        case 5: 
+          return (
+            <Confirm 
+              state={this.state}
+              handleNextStep={handleNextStep}
+              handleBackStep={handleBackStep} />
+          );
+        case 6:
+          return (
+            <Success />
+          )
+        default:
+          return (<div>step form</div>);
       }
-      </Paper>
-    </Container>
-  );
+    };
+
+    return (
+      <Grid container className={classes.formContainer}>
+        <Grid item xs={12} sm={7}>
+          <form onSubmit={this.handleSubmit} className={classes.form}>
+            <Paper component={Box} mb={1}>
+              <Box pt={2}>
+                {renderText({
+                  type: "h6",
+                  color: "primary",
+                  label: "MultiStep Signup Form",
+                  align: "center",
+                })}
+              </Box>
+              <Stepper activeStep={this.state.step} alternativeLabel>
+                {this.state.steps.map((item) => (
+                  <Step key={item.label}>
+                    <StepLabel>{item.label}</StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+            </Paper>
+            {getStepContent(this.state.step)}
+          </form>
+        </Grid>
+      </Grid>
+    );
+  }
 }
 
-export default UserForm;
+UserForm.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(UserForm);

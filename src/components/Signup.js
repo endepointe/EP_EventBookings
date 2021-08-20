@@ -83,7 +83,7 @@ export default function SignUp(props) {
           if (success) {
             // start collecting data from the user before sending them 
             // to their dashboard
-            navigate('/app/collect-business-info');
+            navigate('/app/business-info');
           } else {
             setErrorMessage({status: true, msg: 'user exists, please login'});
           }

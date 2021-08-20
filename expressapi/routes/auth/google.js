@@ -27,7 +27,8 @@ passport.use(new GoogleStrategy({
     user = await GoogleUser.findOrCreate({
       id: profile._json.sub,
       name: profile._json.name,
-      avatar: profile._json.picture 
+      avatar_url: profile._json.picture,
+      provider: profile.provider
     });
     return done(null, user); 
   } 

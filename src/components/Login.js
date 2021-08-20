@@ -1,21 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Signin from './Signin';
-import Signup from './Signup';
 
+// after the application is able to take orders and receive payments,
+// the ability to create a local username and password has been suspended.
 const Login = () => {
- const [hasAccount, setHasAccount] = useState(true);
-
-  const handleHasAccount = (e) => {
-    e.preventDefault();
-    setHasAccount(!hasAccount); 
-  }
 
   return (
     <>
-      {hasAccount
-        ? <Signin handleHasAccount={handleHasAccount} />
-        : <Signup handleHasAccount={handleHasAccount} />
-      }
+      <Signin />
     </> 
   )
 }

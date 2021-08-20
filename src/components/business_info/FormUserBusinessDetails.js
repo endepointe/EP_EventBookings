@@ -4,23 +4,13 @@ import Button from '@material-ui/core/Button';
 
 const FormUserBusinessDetails = (props) => {
 
-  const cont = e => {
-    e.preventDefault();
-    props.nextStep();
-  };
-
-  const back = e => {
-    e.preventDefault();
-    props.prevStep();
-  };
-
   return (
     <>
       <TextField
         placeholder="Enter Your Occupation"
         label="Occupation"
         // onChange={props.handleChange('occupation')}
-        defaultValue={props.state.occupation}
+        // defaultValue={props.state.occupation}
         margin="normal"
         fullWidth
       />
@@ -29,7 +19,7 @@ const FormUserBusinessDetails = (props) => {
         placeholder="Enter Your City"
         label="City"
         // onChange={props.handleChange('city')}
-        defaultValue={props.state.city}
+        // defaultValue={props.state.city}
         margin="normal"
         fullWidth
       />
@@ -38,7 +28,7 @@ const FormUserBusinessDetails = (props) => {
         placeholder="Enter Your Bio"
         label="Bio"
         // onChange={props.handleChange('bio')}
-        defaultValue={props.state.bio}
+        // defaultValue={props.state.bio}
         margin="normal"
         fullWidth
       />
@@ -47,13 +37,13 @@ const FormUserBusinessDetails = (props) => {
       <Button
         color="secondary"
         variant="contained"
-        onClick={back}
+        // onClick={back}
       >Back</Button>
 
       <Button
         color="primary"
         variant="contained"
-        onClick={cont}
+        // onClick={cont}
       >Continue</Button>
     </>
   );
