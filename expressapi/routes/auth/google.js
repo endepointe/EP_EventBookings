@@ -48,13 +48,13 @@ router.get('/google/callback',
     const token = jwt.sign({
       id: req.user.id,
       provider: req.user.provider 
-    }, process.env.KEY_PRIVATE, {expiresIn: 43200000});
+    }, process.env.KEY_PRIVATE, {expiresIn: 60*60*24*14});
     res.status(201).cookie(
       'authorization', token, 
       {sameSite: 'Strict'}, 
       {expires: new Date(Date.now() + 43200000)} 
     )
-    .redirect('http://localhost:8000');
+    .redirect('http://localhost:8000/app/business-info');
 });
 
 module.exports = router;
