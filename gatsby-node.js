@@ -3,8 +3,8 @@ exports.onCreatePage = async ({ page, actions }) => {
 
   const { createPage } = actions;
 
-  if (page.path.match(/^\/account/)) {
-    page.matchPath = "/account/*"; 
+  if (page.path.match(/^\/dashboard/)) {
+    page.matchPath = "/dashboard/*"; 
     createPage(page);
   }
 }

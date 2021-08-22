@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Router } from "@reach/router"
+import { Link } from "gatsby"
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -53,11 +55,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NavBar(props) {
+const NavBar = (props) => {
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [user, setUser] = useState({});
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

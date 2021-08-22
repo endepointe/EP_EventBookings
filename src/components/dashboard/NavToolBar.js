@@ -1,6 +1,5 @@
 import React from 'react';
-import { logout } from '../../services/auth';
-import {navigate} from 'gatsby';
+import { logout } from '../../utils/auth';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -70,11 +69,9 @@ export default function NavToolBar(props) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const handleLogout = () => {
-    let status = logout();
-    if (!status) {
-      navigate('/'); 
-    }
+  const handleLogout = (e) => {
+    e.preventDefault()
+    logout();
   }
 
   const menuId = 'primary-account-menu';
