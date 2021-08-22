@@ -5,14 +5,14 @@ import Dashboard from '../../components/dashboard/Dashboard';
 import UserForm from '../../components/business_info/UserForm';
 import Login from '../../components/Login';
 
-const App = () => {
+const Account = () => {
   return (
     <Router>
-      <PrivateRoute path="/app/business-info" component={UserForm} />
-      <PrivateRoute path="/app/dashboard" component={Dashboard} />  
-      <Login path="/app/login" />
+      <PrivateRoute path="/account/business-info" component={UserForm} />
+      <PrivateRoute path="/account/dashboard" component={Dashboard} />  
+      <Login path="/account/login" />
     </Router>
   )
 }
 
-export default App;
+export default Account;
