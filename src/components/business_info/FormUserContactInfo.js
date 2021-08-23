@@ -1,48 +1,98 @@
-import React, { useState } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import React from "react";
+import { Box, Grid, Paper } from "@material-ui/core";
+import { styles } from "../common/styles";
+import {
+  renderButton,
+  renderInputField,
+  renderSelect,
+  renderText,
+} from "../common/DisplayComponent";
 
-const FormUserContactInfo = (props) => {
-
-  useState(() => {
-    console.log('FormUserContactInfo props: ', props.state);
-  }, []);
-
+const FormUserContactInfo = ({state, handleChange, handleNextStep}) => {
   return (
-    <>
-      <TextField
-        placeholder="Enter Your First Name"
-        label="First Name"
-        // onChange={props.handleChange('firstName')}
-        // defaultValue={''}
-        margin="normal"
-        fullWidth
-      />
-      <br />
-      <TextField
-        placeholder="Enter Your Last Name"
-        label="Last Name"
-        // onChange={props.handleChange('lastName')}
-        // defaultValue={props.state.lastName}
-        margin="normal"
-        fullWidth
-      />
-      <br />
-      <TextField
-        placeholder="Enter Your Email"
-        label="Email"
-        // onChange={props.handleChange('email')}
-        // defaultValue={props.state.email}
-        margin="normal"
-        fullWidth
-      />
-      <br />
-      <Button
-        color="primary"
-        variant="contained"
-        // onClick={cont}
-      >Continue</Button>
-    </>
+    <Paper style={styles.steps}>
+      <Box mt={2} mb={2}>
+        {renderText({
+          label: "Please Fill personal Data",
+          type: "h6",
+          color: "textPrimary",
+          align: "center",
+        })}
+      </Box>
+
+      <Grid container spacing={1} style={{ marginBottom: "16px" }}>
+        <Grid item xs={12} sm={6}>
+          {renderInputField({
+            state,
+            name: "firstName",
+            label: "First Name",
+            onChange: handleChange,
+          })}
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          {renderInputField({
+            state,
+            name: "lastName",
+            label: "Last Name",
+            onChange: handleChange,
+          })}
+        </Grid>
+      </Grid>
+      <Grid container spacing={1} style={{ marginBottom: "16px" }}>
+        <Grid item xs={12}>
+          {renderSelect({
+            state,
+            name: "militaryBranch",
+            label: "Military Branch",
+            options: [
+              { key: "Army", value: "army" },
+              { key: "Navy", value: "navy" },
+              { key: "Air Force", value: "air force" },
+              { key: "Coast Guard", value: "coast guard" },
+            ],
+            onChange: handleChange,
+          })}
+        </Grid>
+      </Grid>
+      <Grid container spacing={1} style={{ marginBottom: "16px" }}>
+        <Grid item xs={12}>
+          {renderSelect({
+            state,
+            name: "militaryStatus",
+            label: "Military Status",
+            options: [
+              { key: "Active duty", value: "active duty" },
+              { key: "Reserves", value: "reserves" },
+              { key: "Spouse", value: "spouse" },
+            ],
+            onChange: handleChange,
+          })}
+        </Grid>
+      </Grid>
+      <Grid container spacing={1} style={{ marginBottom: "16px" }}>
+        <Grid item xs={12} sm={6}>
+          {renderInputField({
+            state,
+            name: "phoneNumber",
+            label: "Phone",
+            onChange: handleChange,
+          })}
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          {renderInputField({
+            state,
+            name: "email",
+            label: "Email",
+            type: "email",
+            onChange: handleChange,
+          })}
+        </Grid>
+      </Grid>
+
+      <Grid container component={Box} justify='flex-end' mt={2} p={2}>
+        {renderButton({ label: "Next", onClick: handleNextStep })}
+      </Grid>
+    </Paper>
   );
 }
 

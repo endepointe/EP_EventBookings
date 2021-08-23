@@ -1,51 +1,93 @@
-import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import React, { useEffect } from "react";
+import { Box, Grid, Paper } from "@material-ui/core";
+import { styles } from "../common/styles";
+import {
+  renderButton,
+  renderInputField,
+  renderSelect,
+  renderText,
+} from "../common/DisplayComponent";
 
-const FormUserBusinessDetails = (props) => {
+const FormUserBusinessDetails = ({
+    state, handleChange, handleNextStep, handleBackStep}) => {
+
+  useEffect(() => {
+    console.log(state); 
+  })
 
   return (
-    <>
-      <TextField
-        placeholder="Enter Your Occupation"
-        label="Occupation"
-        // onChange={props.handleChange('occupation')}
-        // defaultValue={props.state.occupation}
-        margin="normal"
-        fullWidth
-      />
-      <br />
-      <TextField
-        placeholder="Enter Your City"
-        label="City"
-        // onChange={props.handleChange('city')}
-        // defaultValue={props.state.city}
-        margin="normal"
-        fullWidth
-      />
-      <br />
-      <TextField
-        placeholder="Enter Your Bio"
-        label="Bio"
-        // onChange={props.handleChange('bio')}
-        // defaultValue={props.state.bio}
-        margin="normal"
-        fullWidth
-      />
-      <br />
+    <Paper style={styles.steps}>
+      <Box mt={2} mb={2}>
+        {renderText({
+          label: "A Bit About Education",
+          type: "h6",
+          color: "textPrimary",
+          align: "center",
+        })}
+      </Box>
 
-      <Button
-        color="secondary"
-        variant="contained"
-        // onClick={back}
-      >Back</Button>
+      <Grid container spacing={1} style={{ marginBottom: "16px" }}>
+        <Grid item xs={12} sm={6}>
+          {renderSelect({
+            state,
+            name: "highestDegree",
+            label: "Qualification Degree",
+            options: [
+              { key: "graduation", value: "Graduation" },
+              { key: "B.Tech", value: "B.Tech" },
+              { key: "BCA", value: "BCA Course" },
+              { key: "M.Tech", value: "M.Tech" },
+              { key: "MCA", value: "MCA" },
+            ],
+            onChange: handleChange,
+          })}
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          {renderInputField({
+            state,
+            name: "issuedBy",
+            label: "Issued By College name",
+            onChange: handleChange,
+          })}
+        </Grid>
+      </Grid>
 
-      <Button
-        color="primary"
-        variant="contained"
-        // onClick={cont}
-      >Continue</Button>
-    </>
+      <Grid container spacing={1} style={{ marginBottom: "16px" }}>
+        <Grid item xs={12} sm={6}>
+          {renderInputField({
+            state,
+            name: "yearOfPassing",
+            label: "Passing Year",
+            onChange: handleChange,
+          })}
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          {renderSelect({
+            state,
+            name: "jobApplyFor",
+            label: "JobApplyFor",
+            options: [
+              { key: "Manager", value: "Manager" },
+              { key: "Project Designer", value: "Project Designer" },
+              { key: "Clerk", value: "Clerk" },
+              { key: "Helper", value: "Helper" },
+            ],
+            onChange: handleChange,
+          })}
+        </Grid>
+      </Grid>
+
+      <Grid container component={Box} justify='flex-end' mt={2} p={2}>
+        <Box ml={2}>
+          {renderButton({
+            label: "Back",
+            color: "default",
+            onClick: handleBackStep,
+          })}
+        </Box>
+        <Box ml={2}>{renderButton({ label: "Next", onClick: handleNextStep })}</Box>
+      </Grid>
+    </Paper>
   );
 }
 

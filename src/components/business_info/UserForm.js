@@ -18,7 +18,7 @@ import Success from './Success';
 import { renderText } from "../common/DisplayComponent";
 import { styles } from "../common/styles";
 
-import FullScreenDialog from './FSDialog';
+import FullScreenDialog from './FullScreenDialog';
 
 class UserForm extends Component {
   constructor(props) {
@@ -27,8 +27,9 @@ class UserForm extends Component {
       data: {
         firstName: '',
         lastName: '',
-        email: '',
+        email: this.props.user.email,
         phoneNumber: '',
+        militaryBranch: '',
         militaryStatus: '',
         companyName: '', 
         websiteUrl: '',
@@ -51,38 +52,18 @@ class UserForm extends Component {
       step: 0
     };
   }
-  // state = {
-  //   data: {
-  //     firstName: '',
-  //     lastName: '',
-  //     email: '',
-  //     phoneNumber: '',
-  //     militaryStatus: '',
-  //     companyName: '', 
-  //     websiteUrl: '',
-  //     socialMedia: [
-  //       {Facebook: ''},
-  //       {Twitter: ''},
-  //       {Instagram: ''},
-  //       {LinkedIn: ''}
-  //     ]
-  //   },
-  //   errors: {},
-  //   steps: [
-  //     {label: "Contact Info"},
-  //     {label: "Business Info"},
-  //     {label: "Social Media"},
-  //     {label: "Form Upload"},
-  //     {label: "Confirmation"},
-  //     {label: "Success"}
-  //   ],
-  //   step: 0
-  // };
+
+  componentDidMount() {
+    console.log('component ready');
+    console.log(this.state);
+  }
 
   render() {
     const {classes} = this.props;
     const {open} = this.props;
-
+    const {user} = this.props;
+    // this function will be called after the user has filled out the
+    // required information (everything but the pdf forms)
     const handleSubmit = (e) => {
       e.preventDefault();
       console.log('submit form');
@@ -95,6 +76,7 @@ class UserForm extends Component {
         ? (errors[target.name] = `${target.name} have at least 3 letters`)
         : (errors[target.name] = '');
       data[target.name] = target.value;
+      console.log(data[target.name]);
       this.setState({data, errors});
     };
 
@@ -117,6 +99,7 @@ class UserForm extends Component {
           return (
             <FormUserContactInfo
               state={this.state}
+              user={user}
               handleChange={handleChange}
               handleNextStep={handleNextStep} />
           );
@@ -128,15 +111,16 @@ class UserForm extends Component {
               handleNextStep={handleNextStep}
               handleBackStep={handleBackStep} />
           );
-        case 3:
+        case 2:
           return (
             <FormUserSocialMedia 
               state={this.state}
               handleChange={handleChange}
+              handleSubmit={handleSubmit}
               handleNextStep={handleNextStep}
               handleBackStep={handleBackStep}/>
           );
-        case 4:
+        case 3:
           return (
             <FormUserFileUpload
               state={this.state}
@@ -144,14 +128,14 @@ class UserForm extends Component {
               handleNextStep={handleNextStep}
               handleBackStep={handleBackStep} />
           );
-        case 5: 
+        case 4: 
           return (
             <Confirm 
               state={this.state}
               handleNextStep={handleNextStep}
               handleBackStep={handleBackStep} />
           );
-        case 6:
+        case 5:
           return (
             <Success />
           )
@@ -170,7 +154,7 @@ class UserForm extends Component {
                   {renderText({
                     type: "h6",
                     color: "primary",
-                    label: "MultiStep Signup Form",
+                    label: "Event Bookings Signup Form",
                     align: "center",
                   })}
                 </Box>
@@ -195,4 +179,5 @@ UserForm.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+//https://github.com/GreatCoderss/reactMultiStepForm/tree/main/src/component/Steps
 export default withStyles(styles)(UserForm);
