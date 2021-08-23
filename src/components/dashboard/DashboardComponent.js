@@ -1,19 +1,24 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import NavBar from './NavBar';
-import {findUser} from '../../utils/crud';
+import UserForm from '../business_info/UserForm';
+import {userExists} from '../../utils/crud';
 
 const DashboardComponent = (props) => {
 
-  console.log(props.user);
-  useEffect(() => {
-    findUser(props.user)
-      .then(res => res.json())
-      .then(data => console.log(data)); 
-  })
+  const [openUserForm, setOpenUserForm] = useState(false);
+
+  useEffect(async () => {
+    if(await userExists(props.user.email) === false) {
+      setOpenUserForm(true);
+    };
+  });
 
   return (
     <>
-      <NavBar user={props.user}/>
+      {openUserForm 
+        ? <UserForm open={openUserForm}/>
+        : <NavBar user={props.user}/>
+      }
     </>
   )
 }

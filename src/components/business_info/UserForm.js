@@ -18,37 +18,70 @@ import Success from './Success';
 import { renderText } from "../common/DisplayComponent";
 import { styles } from "../common/styles";
 
+import FullScreenDialog from './FSDialog';
+
 class UserForm extends Component {
-  state = {
-    data: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
-      militaryStatus: '',
-      companyName: '', 
-      websiteUrl: '',
-      socialMedia: [
-        {Facebook: ''},
-        {Twitter: ''},
-        {Instagram: ''},
-        {LinkedIn: ''}
-      ]
-    },
-    errors: {},
-    steps: [
-      {label: "Contact Info"},
-      {label: "Business Info"},
-      {label: "Social Media"},
-      {label: "Form Upload"},
-      {label: "Confirmation"},
-      {label: "Success"}
-    ],
-    step: 0
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+        militaryStatus: '',
+        companyName: '', 
+        websiteUrl: '',
+        socialMedia: [
+          {Facebook: ''},
+          {Twitter: ''},
+          {Instagram: ''},
+          {LinkedIn: ''}
+        ]
+      },
+      errors: {},
+      steps: [
+        {label: "Contact Info"},
+        {label: "Business Info"},
+        {label: "Social Media"},
+        {label: "Form Upload"},
+        {label: "Confirmation"},
+        {label: "Success"}
+      ],
+      step: 0
+    };
+  }
+  // state = {
+  //   data: {
+  //     firstName: '',
+  //     lastName: '',
+  //     email: '',
+  //     phoneNumber: '',
+  //     militaryStatus: '',
+  //     companyName: '', 
+  //     websiteUrl: '',
+  //     socialMedia: [
+  //       {Facebook: ''},
+  //       {Twitter: ''},
+  //       {Instagram: ''},
+  //       {LinkedIn: ''}
+  //     ]
+  //   },
+  //   errors: {},
+  //   steps: [
+  //     {label: "Contact Info"},
+  //     {label: "Business Info"},
+  //     {label: "Social Media"},
+  //     {label: "Form Upload"},
+  //     {label: "Confirmation"},
+  //     {label: "Success"}
+  //   ],
+  //   step: 0
+  // };
 
   render() {
     const {classes} = this.props;
+    const {open} = this.props;
 
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -128,30 +161,32 @@ class UserForm extends Component {
     };
 
     return (
-      <Grid container className={classes.formContainer}>
-        <Grid item xs={12} sm={7}>
-          <form onSubmit={this.handleSubmit} className={classes.form}>
-            <Paper component={Box} mb={1}>
-              <Box pt={2}>
-                {renderText({
-                  type: "h6",
-                  color: "primary",
-                  label: "MultiStep Signup Form",
-                  align: "center",
-                })}
-              </Box>
-              <Stepper activeStep={this.state.step} alternativeLabel>
-                {this.state.steps.map((item) => (
-                  <Step key={item.label}>
-                    <StepLabel>{item.label}</StepLabel>
-                  </Step>
-                ))}
-              </Stepper>
-            </Paper>
-            {getStepContent(this.state.step)}
-          </form>
+      <FullScreenDialog open={open}>
+        <Grid container className={classes.formContainer}>
+          <Grid item xs={12} sm={7}>
+            <form onSubmit={this.handleSubmit} className={classes.form}>
+              <Paper component={Box} mb={1}>
+                <Box pt={2}>
+                  {renderText({
+                    type: "h6",
+                    color: "primary",
+                    label: "MultiStep Signup Form",
+                    align: "center",
+                  })}
+                </Box>
+                <Stepper activeStep={this.state.step} alternativeLabel>
+                  {this.state.steps.map((item) => (
+                    <Step key={item.label}>
+                      <StepLabel>{item.label}</StepLabel>
+                    </Step>
+                  ))}
+                </Stepper>
+              </Paper>
+              {getStepContent(this.state.step)}
+            </form>
+          </Grid>
         </Grid>
-      </Grid>
+      </FullScreenDialog>
     );
   }
 }
