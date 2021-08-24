@@ -26,6 +26,7 @@ const FormUserContactInfo = ({state, handleChange, handleNextStep}) => {
             state,
             name: "firstName",
             label: "First Name",
+            required: true,
             onChange: handleChange,
           })}
         </Grid>
@@ -34,6 +35,7 @@ const FormUserContactInfo = ({state, handleChange, handleNextStep}) => {
             state,
             name: "lastName",
             label: "Last Name",
+            required: true,
             onChange: handleChange,
           })}
         </Grid>
@@ -44,6 +46,7 @@ const FormUserContactInfo = ({state, handleChange, handleNextStep}) => {
             state,
             name: "militaryBranch",
             label: "Military Branch",
+            required: true,
             options: [
               { key: "Army", value: "army" },
               { key: "Navy", value: "navy" },
@@ -60,6 +63,7 @@ const FormUserContactInfo = ({state, handleChange, handleNextStep}) => {
             state,
             name: "militaryStatus",
             label: "Military Status",
+            required: true,
             options: [
               { key: "Active duty", value: "active duty" },
               { key: "Reserves", value: "reserves" },
@@ -75,6 +79,7 @@ const FormUserContactInfo = ({state, handleChange, handleNextStep}) => {
             state,
             name: "phoneNumber",
             label: "Phone",
+            required: true,
             onChange: handleChange,
           })}
         </Grid>
@@ -84,6 +89,7 @@ const FormUserContactInfo = ({state, handleChange, handleNextStep}) => {
             name: "email",
             label: "Email",
             type: "email",
+            required: true,
             onChange: handleChange,
           })}
         </Grid>

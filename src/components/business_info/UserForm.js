@@ -33,12 +33,10 @@ class UserForm extends Component {
         militaryStatus: '',
         companyName: '', 
         websiteUrl: '',
-        socialMedia: [
-          {Facebook: ''},
-          {Twitter: ''},
-          {Instagram: ''},
-          {LinkedIn: ''}
-        ]
+        twitter: '',
+        instagram: '',
+        facebook: '',
+        linkedin: '',
       },
       errors: {},
       steps: [
@@ -81,10 +79,12 @@ class UserForm extends Component {
     };
 
     const handleNextStep = () => {
+
       let {step} = this.state;
       console.log('current step: ', step);
       step += 1;
       this.setState({step})
+
     };
 
     const handleBackStep = () => {

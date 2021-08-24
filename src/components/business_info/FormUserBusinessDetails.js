@@ -6,6 +6,7 @@ import {
   renderInputField,
   renderSelect,
   renderText,
+  renderTextareaField,
 } from "../common/DisplayComponent";
 
 const FormUserBusinessDetails = ({
@@ -19,7 +20,7 @@ const FormUserBusinessDetails = ({
     <Paper style={styles.steps}>
       <Box mt={2} mb={2}>
         {renderText({
-          label: "A Bit About Education",
+          label: "Tell us about your business:",
           type: "h6",
           color: "textPrimary",
           align: "center",
@@ -28,25 +29,30 @@ const FormUserBusinessDetails = ({
 
       <Grid container spacing={1} style={{ marginBottom: "16px" }}>
         <Grid item xs={12} sm={6}>
-          {renderSelect({
+          {renderInputField({
             state,
-            name: "highestDegree",
-            label: "Qualification Degree",
-            options: [
-              { key: "graduation", value: "Graduation" },
-              { key: "B.Tech", value: "B.Tech" },
-              { key: "BCA", value: "BCA Course" },
-              { key: "M.Tech", value: "M.Tech" },
-              { key: "MCA", value: "MCA" },
-            ],
+            name: "companyName",
+            label: "Company name",
             onChange: handleChange,
           })}
         </Grid>
         <Grid item xs={12} sm={6}>
           {renderInputField({
             state,
-            name: "issuedBy",
-            label: "Issued By College name",
+            name: "websiteUrl",
+            label: "Website URL",
+            required: true,
+            onChange: handleChange,
+          })}
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={1} style={{ marginBottom: "16px" }}>
+        <Grid item xs={12} sm={12}>
+          {renderTextareaField({
+            state,
+            name: "description",
+            label: "Description of business",
             onChange: handleChange,
           })}
         </Grid>
@@ -56,28 +62,39 @@ const FormUserBusinessDetails = ({
         <Grid item xs={12} sm={6}>
           {renderInputField({
             state,
-            name: "yearOfPassing",
-            label: "Passing Year",
+            name: "twitter",
+            label: "Twitter URL",
             onChange: handleChange,
           })}
         </Grid>
         <Grid item xs={12} sm={6}>
-          {renderSelect({
+          {renderInputField({
             state,
-            name: "jobApplyFor",
-            label: "JobApplyFor",
-            options: [
-              { key: "Manager", value: "Manager" },
-              { key: "Project Designer", value: "Project Designer" },
-              { key: "Clerk", value: "Clerk" },
-              { key: "Helper", value: "Helper" },
-            ],
+            name: "facebook",
+            label: "Facebook URL",
+            onChange: handleChange,
+          })}
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          {renderInputField({
+            state,
+            name: "instagram",
+            label: "Instgram URL",
+            required: false,
+            onChange: handleChange,
+          })}
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          {renderInputField({
+            state,
+            name: "linkedin",
+            label: "LinkedIn URL",
             onChange: handleChange,
           })}
         </Grid>
       </Grid>
 
-      <Grid container component={Box} justify='flex-end' mt={2} p={2}>
+      <Grid container component={Box} justifyContent='flex-end' mt={2} p={2}>
         <Box ml={2}>
           {renderButton({
             label: "Back",
