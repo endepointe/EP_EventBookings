@@ -4,7 +4,6 @@ import { styles } from "../common/styles";
 import {
   renderButton,
   renderInputField,
-  renderSelect,
   renderText,
   renderTextareaField,
 } from "../common/DisplayComponent";
@@ -33,6 +32,7 @@ const FormUserBusinessDetails = ({
             state,
             name: "companyName",
             label: "Company name",
+            required: true,
             onChange: handleChange,
           })}
         </Grid>
@@ -53,42 +53,7 @@ const FormUserBusinessDetails = ({
             state,
             name: "description",
             label: "Description of business",
-            onChange: handleChange,
-          })}
-        </Grid>
-      </Grid>
-
-      <Grid container spacing={1} style={{ marginBottom: "16px" }}>
-        <Grid item xs={12} sm={6}>
-          {renderInputField({
-            state,
-            name: "twitter",
-            label: "Twitter URL",
-            onChange: handleChange,
-          })}
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          {renderInputField({
-            state,
-            name: "facebook",
-            label: "Facebook URL",
-            onChange: handleChange,
-          })}
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          {renderInputField({
-            state,
-            name: "instagram",
-            label: "Instgram URL",
-            required: false,
-            onChange: handleChange,
-          })}
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          {renderInputField({
-            state,
-            name: "linkedin",
-            label: "LinkedIn URL",
+            required: true,
             onChange: handleChange,
           })}
         </Grid>
@@ -102,7 +67,10 @@ const FormUserBusinessDetails = ({
             onClick: handleBackStep,
           })}
         </Box>
-        <Box ml={2}>{renderButton({ label: "Next", onClick: handleNextStep })}</Box>
+        <Box ml={2}>{renderButton({ 
+          label: "Next", 
+          disabled: state.disableNext, 
+          onClick: handleNextStep })}</Box>
       </Grid>
     </Paper>
   );

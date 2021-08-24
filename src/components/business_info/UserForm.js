@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { checkInput } from '../../utils/checks';
 import PropTypes from "prop-types";
 import {
   Box,
@@ -33,6 +34,7 @@ class UserForm extends Component {
         militaryStatus: '',
         companyName: '', 
         websiteUrl: '',
+        description: '',
         twitter: '',
         instagram: '',
         facebook: '',
@@ -47,7 +49,8 @@ class UserForm extends Component {
         {label: "Confirmation"},
         {label: "Success"}
       ],
-      step: 0
+      step: 0,
+      disableNext: true
     };
   }
 
@@ -69,29 +72,36 @@ class UserForm extends Component {
 
     // Handle fields change
     const handleChange = ({target}) => {
-      const { data, errors } = this.state;
-      target.value.length <= 3
-        ? (errors[target.name] = `${target.name} have at least 3 letters`)
-        : (errors[target.name] = '');
+      const { step, data, errors } = this.state;
+      // target.value.length <= 3
+      //   ? (errors[target.name] = `${target.name} have at least 3 letters`)
+      //   : (errors[target.name] = '');
       data[target.name] = target.value;
       console.log(data[target.name]);
       this.setState({data, errors});
+      this.setState({disableNext: checkInput(step, data)})
     };
 
     const handleNextStep = () => {
-
-      let {step} = this.state;
+      let {step, data} = this.state;
+      // this.setState({disableNext: checkInput(step, data, errors)})
       console.log('current step: ', step);
       step += 1;
-      this.setState({step})
-
+      this.setState({step, disableNext: checkInput(step, data)});
     };
 
     const handleBackStep = () => {
-      let {step} = this.state;
+      let {step, data} = this.state;
       step -= 1;
-      this.setState({step});
+      this.setState({step, disableNext: checkInput(step, data)});
     };
+
+    const handleDownload = () => {
+      const link = document.createElement('a');
+      link.download = 'download.txt'; 
+      link.href = "./download.txt";
+      link.click();
+    }
 
     const getStepContent = (step) => {
       switch (step) {
@@ -125,6 +135,7 @@ class UserForm extends Component {
             <FormUserFileUpload
               state={this.state}
               handleChange={handleChange}
+              handleDownload={handleDownload}
               handleNextStep={handleNextStep}
               handleBackStep={handleBackStep} />
           );

@@ -53,7 +53,6 @@ export const renderTextareaField = ({ name, label, type, state, onChange}) => {
   )
 }
 
-
 export const renderSelect = ({ name, label, options, state, required, onChange }) => {
   const { data, errors } = state;
   return (
@@ -78,11 +77,38 @@ export const renderSelect = ({ name, label, options, state, required, onChange }
     </TextField>
   );
 };
-export const renderButton = ({ label, variant, color, fullWidth, onClick }) => (
+
+export const renderDownloadButton = ({ 
+    label, 
+    variant, 
+    color, 
+    fullWidth, 
+    onClick 
+  }) => (
+
   <Button
     variant={variant ? variant : "outlined"}
     color={color ? color : "primary"}
     fullWidth={fullWidth ? fullWidth : false}
+    onClick={onClick}>
+    {label}
+  </Button>
+);
+
+export const renderButton = ({ 
+    label, 
+    variant, 
+    color, 
+    fullWidth, 
+    disabled,
+    onClick 
+  }) => (
+
+  <Button
+    variant={variant ? variant : "outlined"}
+    color={color ? color : "primary"}
+    fullWidth={fullWidth ? fullWidth : false}
+    disabled={disabled}
     onClick={onClick}>
     {label}
   </Button>

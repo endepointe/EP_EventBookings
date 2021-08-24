@@ -9,6 +9,7 @@ import {
 } from "../common/DisplayComponent";
 
 const FormUserContactInfo = ({state, handleChange, handleNextStep}) => {
+
   return (
     <Paper style={styles.steps}>
       <Box mt={2} mb={2}>
@@ -96,7 +97,10 @@ const FormUserContactInfo = ({state, handleChange, handleNextStep}) => {
       </Grid>
 
       <Grid container component={Box} justify='flex-end' mt={2} p={2}>
-        {renderButton({ label: "Next", onClick: handleNextStep })}
+        {renderButton({ 
+          label: "Next", 
+          onClick: handleNextStep, 
+          disabled: state.disableNext })}
       </Grid>
     </Paper>
   );
