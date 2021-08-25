@@ -13,19 +13,20 @@ const FormUserFileUpload = ({
     handleDownload,
     handleChange, handleNextStep, handleBackStep}) => {
 
-  // const data = useStaticQuery(graphql`
-  //   {
-  //     allFile(filter: { extension: { eq: "pdf" } }) {
-  //       edges {
-  //         node {
-  //           publicURL
-  //           name
-  //         }
-  //       }
-  //     }
-  //   }
-  // `);
-  // console.log(data);
+  const data = useStaticQuery(graphql`
+    {
+      allFile(filter: { sourceInstanceName: { eq: "data" } }) {
+        edges {
+          node {
+            relativePath
+            extension
+            publicURL
+          }
+        }
+      }
+    }
+  `);
+  console.log('graphql data', data.allFile.edges);
   return (
     <Paper style={styles.steps}>
       <Box mt={2} mb={2}>
@@ -42,7 +43,7 @@ const FormUserFileUpload = ({
           {renderDownloadButton({
             label: "Download",
             color: "default",
-            onClick: handleDownload,
+            onClick: handleDownload(data.allFile.edges[0].node),
           })}
         </Grid>
       </Grid>

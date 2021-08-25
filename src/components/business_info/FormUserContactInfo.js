@@ -96,7 +96,7 @@ const FormUserContactInfo = ({state, handleChange, handleNextStep}) => {
         </Grid>
       </Grid>
 
-      <Grid container component={Box} justify='flex-end' mt={2} p={2}>
+      <Grid container component={Box} justifyContent='flex-end' mt={2} p={2}>
         {renderButton({ 
           label: "Next", 
           onClick: handleNextStep, 

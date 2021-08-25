@@ -12,7 +12,6 @@ const auth = isBrowser
       scope: "openid profile email",
     })
   : {}
-// ...
 
 // insert after auth const
 const tokens = {

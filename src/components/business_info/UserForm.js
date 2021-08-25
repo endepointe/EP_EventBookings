@@ -25,16 +25,31 @@ class UserForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // data: {
+      //   firstName: '',
+      //   lastName: '',
+      //   email: this.props.user.email,
+      //   phoneNumber: '',
+      //   militaryBranch: '',
+      //   militaryStatus: '',
+      //   companyName: '', 
+      //   websiteUrl: '',
+      //   description: '',
+      //   twitter: '',
+      //   instagram: '',
+      //   facebook: '',
+      //   linkedin: '',
+      // },
       data: {
-        firstName: '',
-        lastName: '',
+        firstName: 'ende',
+        lastName: 'point',
         email: this.props.user.email,
-        phoneNumber: '',
+        phoneNumber: '12334567889',
         militaryBranch: '',
         militaryStatus: '',
-        companyName: '', 
-        websiteUrl: '',
-        description: '',
+        companyName: 'Endepointe', 
+        websiteUrl: 'endepointe.com',
+        description: 'all the things built here',
         twitter: '',
         instagram: '',
         facebook: '',
@@ -96,10 +111,11 @@ class UserForm extends Component {
       this.setState({step, disableNext: checkInput(step, data)});
     };
 
-    const handleDownload = () => {
+    const handleDownload = (file) => {
+      console.log('file to download: ', file);
       const link = document.createElement('a');
-      link.download = 'download.txt'; 
-      link.href = "./download.txt";
+      link.download = file.relativePath; 
+      link.href = file.publicURL;
       link.click();
     }
 

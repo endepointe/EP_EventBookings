@@ -33,7 +33,6 @@ export const checkInput = (step, data) => {
     break;
     case 2: 
       return false;
-    break;
     case 3:
     break;
     case 4:

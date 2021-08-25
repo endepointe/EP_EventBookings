@@ -82,6 +82,7 @@ export const renderDownloadButton = ({
     label, 
     variant, 
     color, 
+    file,
     fullWidth, 
     onClick 
   }) => (
