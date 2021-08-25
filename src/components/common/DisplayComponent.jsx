@@ -96,6 +96,23 @@ export const renderDownloadButton = ({
   </Button>
 );
 
+export const renderUploadButton = ({ 
+    label, 
+    variant, 
+    color, 
+    file,
+    fullWidth, 
+    onClick 
+  }) => (
+
+  <Button
+    variant={variant ? variant : "outlined"}
+    color={color ? color : "primary"}
+    fullWidth={fullWidth ? fullWidth : false}
+    onClick={onClick}>
+    {label}
+  </Button>
+);
 export const renderButton = ({ 
     label, 
     variant, 

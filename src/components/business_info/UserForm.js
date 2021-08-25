@@ -54,6 +54,7 @@ class UserForm extends Component {
         instagram: '',
         facebook: '',
         linkedin: '',
+        file1: {},
       },
       errors: {},
       steps: [

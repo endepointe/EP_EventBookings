@@ -5,3 +5,9 @@ git config --global credential.helper cache or store
 
 Authentication pattern used:
 https://auth0.com/blog/securing-gatsby-with-auth0/#Gatsby-Basics
+
+
+Article to read after using react-dropzone:
+https://github.com/Chandra-Panta-Chhetri/react-file-upload-tutorial
+
+https://dev.to/chandrapantachhetri/responsive-react-file-upload-component-with-drag-and-drop-4ef8

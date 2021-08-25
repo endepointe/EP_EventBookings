@@ -4,7 +4,6 @@ import { styles } from "../common/styles";
 import {
   renderButton,
   renderInputField,
-  renderSelect,
   renderText,
 } from "../common/DisplayComponent";
 
