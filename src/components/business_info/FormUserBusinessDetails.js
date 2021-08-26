@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Box, Grid, Paper } from "@material-ui/core";
 import { styles } from "../common/styles";
 import {
@@ -10,10 +10,6 @@ import {
 
 const FormUserBusinessDetails = ({
     state, handleChange, handleNextStep, handleBackStep}) => {
-
-  useEffect(() => {
-    console.log(state); 
-  })
 
   return (
     <Paper style={styles.steps}>

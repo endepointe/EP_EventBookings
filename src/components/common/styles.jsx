@@ -8,7 +8,6 @@ export const styles = {
     alignItems: "center",
     height: "98vh",
   },
-
   form: {
     padding: "10px",
     minHeight: "350px",
@@ -19,7 +18,6 @@ export const styles = {
     textAlign: "center",
     margin: "10px 0px 30px 0px",
   },
-
   steps: {
     padding: "16px",
   },

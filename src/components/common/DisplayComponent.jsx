@@ -90,7 +90,7 @@ export const renderDownloadButton = ({
   <Button
     variant={variant ? variant : "outlined"}
     color={color ? color : "primary"}
-    fullWidth={fullWidth ? fullWidth : false}
+    fullWidth={true}
     onClick={onClick}>
     {label}
   </Button>
@@ -108,7 +108,7 @@ export const renderUploadButton = ({
   <Button
     variant={variant ? variant : "outlined"}
     color={color ? color : "primary"}
-    fullWidth={fullWidth ? fullWidth : false}
+    fullWidth={true}
     onClick={onClick}>
     {label}
   </Button>

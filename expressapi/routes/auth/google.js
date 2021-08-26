@@ -54,7 +54,7 @@ router.get('/google/callback',
       {sameSite: 'Strict'}, 
       {expires: new Date(Date.now() + 43200000)} 
     )
-    .redirect('http://localhost:8000/app/business-info');
+    .redirect('http://localhost:8000/app/dashboard');
 });
 
 module.exports = router;

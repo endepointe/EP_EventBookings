@@ -1,7 +1,6 @@
 // decides whether the next button is disabled in UserForm's child components
 // returns true or false
 export const checkInput = (step, data) => {
-  console.log(step, data);
   switch (step) {
     case 0:
       /*
@@ -34,8 +33,10 @@ export const checkInput = (step, data) => {
     case 2: 
       return false;
     case 3:
+      // user must have at least 1 social media profile. 
     break;
     case 4:
+      // user may choose to upload the forms at this time
     break;
     case 5:
     break;

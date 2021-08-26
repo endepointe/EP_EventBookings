@@ -1,9 +1,11 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useStaticQuery, graphql } from "gatsby";
 import { DropzoneDialog } from 'material-ui-dropzone';
 import { AttachFile, PictureAsPdf } from '@material-ui/icons';
 import { Box, Grid, Paper } from "@material-ui/core";
+import {Alert} from '@material-ui/lab';
 import { styles } from "../common/styles";
+import {makeStyles} from '@material-ui/core/styles';
 import {
   renderButton,
   renderDownloadButton,
@@ -11,6 +13,11 @@ import {
   renderText,
 } from "../common/DisplayComponent";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%'
+  }
+}))
 const handlePreviewIcon = (fileObject, classes) => {
   const {type} = fileObject.file
   const iconProps = {
@@ -28,9 +35,35 @@ const handlePreviewIcon = (fileObject, classes) => {
 const FormUserFileUpload = ({
     state, 
     handleDownload,
-    handleChange, handleNextStep, handleBackStep}) => {
+    handleFileUpload,
+    handleNextStep, handleBackStep}) => {
+
+  const classes = useStyles();
+
   const [openUpload, setOpenUpload] = useState(false);
-  const [files, setFiles] = useState([{file: null}]);
+
+  const [fileName, setFileName] = useState('');
+
+  const [aafes, setAafes] = useState({
+    pdf: null,
+    name: '',
+    set: false,
+  });
+  const [w9, setW9] = useState({
+    pdf: null,
+    name: '',
+    set: false
+  });
+  const [visitorPass, setVisitorPass] = useState({
+    pdf: null,
+    name: '',
+    set: false
+  });
+  const [photoRelease, setPhotoRelease] = useState({
+    pdf: null,
+    name: '',
+    set: false
+  });
 
   const data = useStaticQuery(graphql`
     {
@@ -46,8 +79,50 @@ const FormUserFileUpload = ({
     }
   `);
   // console.log('graphql data', data.allFile.edges);
+  
+  // update the state passed in from UserForm
+  useEffect(() => {
+    console.log('current state in step 4: ', state);
+    if (aafes.set) {
+      console.log('updated aafes: ', aafes);
+      handleFileUpload(aafes.pdf, aafes.name);
+    }
+
+    if (w9.set) {
+      console.log('updated w9: ', w9);
+      handleFileUpload(w9.pdf, w9.name);
+    }
+
+    if (visitorPass.set) {
+      console.log('updated visitor pass: ', visitorPass);
+      handleFileUpload(visitorPass.pdf, visitorPass.name);
+    }
+
+    if (photoRelease.set) {
+      console.log('updated photo release: ', photoRelease);
+      handleFileUpload(photoRelease.pdf, photoRelease.name);
+    }
+  }, [aafes,w9,photoRelease,visitorPass]);
 
   const openUploadDialog = (name) => {
+    console.log('file to upload: ', name);
+    switch (name) {
+      case 'a':
+        setFileName('AAFES Application');
+      break;
+      case 'w':
+        setFileName('W9');
+      break;
+      case 'v':
+        setFileName("Visitor Pass");
+      break;
+      case 'r':
+        setFileName('Photo Release');
+      break;
+      default:
+        setFileName('');
+      break;
+    }
     setOpenUpload(true); 
   }
 
@@ -56,7 +131,39 @@ const FormUserFileUpload = ({
   }
 
   const saveFile = (file) => {
-    console.log(file)
+    console.log(file);
+    switch (fileName) {
+      case 'AAFES Application':
+        setAafes({
+          pdf: file[0],
+          name: 'AAFES',
+          set: true,
+        });
+      break;
+      case 'W9':
+        setW9({
+          pdf: file[0],
+          name: 'W9',
+          set: true,
+        });
+      break;
+      case 'Visitor Pass':
+        setVisitorPass({
+          pdf: file[0],
+          name: 'Visitor Pass',
+          set: true,
+        });
+      break;
+      case 'Photo Release':
+        setPhotoRelease({
+          pdf: file[0],
+          name: 'Photo Release',
+          set: true,
+        });
+      break;
+      default:
+      break;
+    }
     setOpenUpload(false);
   }
 
@@ -64,7 +171,7 @@ const FormUserFileUpload = ({
     <Paper style={styles.steps}>
       <Box mt={2} mb={2}>
         {renderText({
-          label: "Fill out the following forms:",
+          label: "Complete the following forms:",
           type: "h6",
           color: "textPrimary",
           align: "center",
@@ -72,30 +179,103 @@ const FormUserFileUpload = ({
       </Box>
 
       <Grid container spacing={1} style={{ marginBottom: "16px" }}>
-        <Grid item xs={12} sm={6}>
-          {renderDownloadButton({
-            label: "Download 4200",
-            color: "default",
-            onClick: () => handleDownload(data.allFile.edges[0].node),
-          })}
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          {renderUploadButton({
-            label: "Upload 4200",
-            color: "default",
-            onClick: () => openUploadDialog('4200'),
-          })}
-          <DropzoneDialog
-            open={openUpload}
-            onSave={saveFile}
-            acceptedFiles={['application/pdf']}
-            showPreviews={true}
-            getPreviewIcon={handlePreviewIcon}
-            filesLimit={1}
-            maxFileSize={5000000}
-            onClose={closeUploadDialog}
-          />
-        </Grid>
+        { !aafes.set ?
+          <>
+            <Grid item xs={6} sm={6}>
+              {renderDownloadButton({
+                label: "Download AAFES Application",
+                color: "default",
+                onClick: () => handleDownload(data.allFile.edges[3].node),
+              })}
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              {renderUploadButton({
+                label: "Upload AAFES Application",
+                color: "default",
+                onClick: () => openUploadDialog('a'),
+              })}
+            </Grid>
+          </>
+          : 
+          <div className={classes.root}>
+            <Alert serverity="success">Saved AAFES Application</Alert>
+          </div>
+        }
+      </Grid>
+
+      <Grid container spacing={1} style={{ marginBottom: "16px" }}>
+        { !w9.set ?
+          <>
+            <Grid item xs={6} sm={6}>
+              {renderDownloadButton({
+                label: "Download W9",
+                color: "default",
+                onClick: () => handleDownload(data.allFile.edges[2].node),
+              })}
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              {renderUploadButton({
+                label: "Upload W9",
+                color: "default",
+                onClick: () => openUploadDialog('w'),
+              })}
+            </Grid>
+          </>
+          : 
+          <div className={classes.root}>
+            <Alert serverity="success">Saved W9</Alert>
+          </div>
+        }
+      </Grid>
+ 
+      <Grid container spacing={1} style={{ marginBottom: "16px" }}>
+        { !visitorPass.set ?
+          <>
+            <Grid item xs={6} sm={6}>
+              {renderDownloadButton({
+                label: "Download AAFES Visitor Pass",
+                color: "default",
+                onClick: () => handleDownload(data.allFile.edges[1].node),
+              })}
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              {renderUploadButton({
+                label: "Upload AAFES Visitor Pass",
+                color: "default",
+                onClick: () => openUploadDialog('v'),
+              })}
+            </Grid>
+          </>
+          : 
+          <div className={classes.root}>
+            <Alert serverity="success">Saved AAFES Visitor's Pass</Alert>
+          </div>
+        }
+      </Grid>
+
+      <Grid container spacing={1} style={{ marginBottom: "16px" }}>
+        { !photoRelease.set ?
+          <>
+            <Grid item xs={6} sm={6}>
+              {renderDownloadButton({
+                label: "Download Photo Release Form",
+                color: "default",
+                onClick: () => handleDownload(data.allFile.edges[0].node),
+              })}
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              {renderUploadButton({
+                label: "Upload Photo Release Form",
+                color: "default",
+                onClick: () => openUploadDialog('r'),
+              })}
+            </Grid>
+          </>
+          : 
+          <div className={classes.root}>
+            <Alert serverity="success">Saved Photo Release Form</Alert>
+          </div>
+        }
       </Grid>
 
       <Grid container component={Box} justifyContent='flex-end' mt={2} p={2}>
@@ -111,6 +291,18 @@ const FormUserFileUpload = ({
           disabled: false, 
           onClick: handleNextStep })}</Box>
       </Grid>
+
+      <DropzoneDialog
+        open={openUpload}
+        dialogTitle={`Upload your ${fileName} form`}
+        onSave={saveFile}
+        acceptedFiles={['application/pdf']}
+        showPreviews={true}
+        getPreviewIcon={handlePreviewIcon}
+        filesLimit={1}
+        maxFileSize={65000000}
+        onClose={closeUploadDialog}
+      />
     </Paper>
   );
 }

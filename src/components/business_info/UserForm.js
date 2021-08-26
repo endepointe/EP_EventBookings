@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { checkInput } from '../../utils/checks';
+import {upload} from '../../utils/FileInterface';
 import PropTypes from "prop-types";
 import {
   Box,
@@ -54,7 +55,20 @@ class UserForm extends Component {
         instagram: '',
         facebook: '',
         linkedin: '',
-        file1: {},
+        forms: {
+          aafes: {
+            pdf: null,
+          },
+          w9: {
+            pdf: null,
+          },
+          visitorPass: {
+            pdf: null,
+          },
+          photoRelease: {
+            pdf: null,
+          }
+        }
       },
       errors: {},
       steps: [
@@ -72,7 +86,7 @@ class UserForm extends Component {
 
   componentDidMount() {
     console.log('component ready');
-    console.log(this.state);
+    // console.log(this.state);
   }
 
   render() {
@@ -100,8 +114,6 @@ class UserForm extends Component {
 
     const handleNextStep = () => {
       let {step, data} = this.state;
-      // this.setState({disableNext: checkInput(step, data, errors)})
-      console.log('current step: ', step);
       step += 1;
       this.setState({step, disableNext: checkInput(step, data)});
     };
@@ -118,6 +130,27 @@ class UserForm extends Component {
       link.download = file.relativePath; 
       link.href = file.publicURL;
       link.click();
+    }
+
+    const handleFileUpload = (file, name) => {
+      const {data} = this.state;
+      console.log(data.forms, name);
+      console.log('this will take all the pdfs in state and upload them to their destination');
+      switch (name) {
+        case 'AAFES':
+          data.forms.aafes = file;
+        break;
+        case 'W9':
+          data.forms.w9 = file;
+        break;
+        case 'Visitor Pass':
+          data.forms.visitorPass = file;
+        default:
+        case 'Photo Release':
+          data.forms.photoRelease = file;
+        break;
+      }
+      this.setState({data});
     }
 
     const getStepContent = (step) => {
@@ -151,7 +184,7 @@ class UserForm extends Component {
           return (
             <FormUserFileUpload
               state={this.state}
-              handleChange={handleChange}
+              handleFileUpload={handleFileUpload}
               handleDownload={handleDownload}
               handleNextStep={handleNextStep}
               handleBackStep={handleBackStep} />
