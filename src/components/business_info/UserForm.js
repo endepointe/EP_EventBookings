@@ -25,6 +25,7 @@ import FullScreenDialog from './FullScreenDialog';
 class UserForm extends Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       // data: {
       //   firstName: '',
@@ -40,6 +41,20 @@ class UserForm extends Component {
       //   instagram: '',
       //   facebook: '',
       //   linkedin: '',
+      //   forms: {
+      //     aafes: {
+      //       pdf: null,
+      //     },
+      //     w9: {
+      //       pdf: null,
+      //     },
+      //     visitorPass: {
+      //       pdf: null,
+      //     },
+      //     photoRelease: {
+      //       pdf: null,
+      //     }
+      //   }
       // },
       data: {
         firstName: 'ende',
@@ -86,7 +101,6 @@ class UserForm extends Component {
 
   componentDidMount() {
     console.log('component ready');
-    // console.log(this.state);
   }
 
   render() {
@@ -107,7 +121,6 @@ class UserForm extends Component {
       //   ? (errors[target.name] = `${target.name} have at least 3 letters`)
       //   : (errors[target.name] = '');
       data[target.name] = target.value;
-      console.log(data[target.name]);
       this.setState({data, errors});
       this.setState({disableNext: checkInput(step, data)})
     };
@@ -125,7 +138,6 @@ class UserForm extends Component {
     };
 
     const handleDownload = (file) => {
-      console.log('file to download: ', file);
       const link = document.createElement('a');
       link.download = file.relativePath; 
       link.href = file.publicURL;
@@ -134,8 +146,6 @@ class UserForm extends Component {
 
     const handleFileUpload = (file, name) => {
       const {data} = this.state;
-      console.log(data.forms, name);
-      console.log('this will take all the pdfs in state and upload them to their destination');
       switch (name) {
         case 'AAFES':
           data.forms.aafes = file;
@@ -198,7 +208,7 @@ class UserForm extends Component {
           );
         case 5:
           return (
-            <Success />
+            <Success state={this.state} />
           )
         default:
           return (<div>step form</div>);

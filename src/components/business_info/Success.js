@@ -2,14 +2,17 @@ import React, { useEffect } from "react";
 import { Box, Paper } from "@material-ui/core";
 import { styles } from "../common/styles";
 import { renderText } from "../common/DisplayComponent";
-
 import { navigate } from 'gatsby';
 
 // display a success message and then send the user to their dashboard
-const Success = ({ data }) => {
+const Success = ({ state }) => {
 
   useEffect(() => {
-    navigate('/app/dashboard');
+    // save data to database and send the user to their dashboard
+    setTimeout(() => {
+      alert('heading to your dashboard')
+      navigate('/dashboard');
+    }, 5000)
   });
 
   return (
@@ -23,7 +26,7 @@ const Success = ({ data }) => {
         })}
       </Box>
 
-      {JSON.stringify(data, null, 4)}
+      {JSON.stringify(state, null, 4)}
     </Paper>
   );
 }

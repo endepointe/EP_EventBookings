@@ -29,7 +29,9 @@ const DashboardComponent = (props) => {
   return (
     <>
       {openUserForm 
-        ? <UserForm open={openUserForm} user={props.user}/>
+        ? <UserForm 
+            open={openUserForm} 
+            user={props.user} />
         : <NavBar />
       }
     </>

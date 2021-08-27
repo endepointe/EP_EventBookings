@@ -131,7 +131,6 @@ const FormUserFileUpload = ({
   }
 
   const saveFile = (file) => {
-    console.log(file);
     switch (fileName) {
       case 'AAFES Application':
         setAafes({

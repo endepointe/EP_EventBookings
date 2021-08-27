@@ -10,6 +10,7 @@ import {
   faBars, faLock, faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { isAuthenticated } from "../utils/auth";
 
 // async function postData(url = '', data = {}) {
 //   const response = await fetch(url, {
@@ -118,18 +119,21 @@ const IndexPage = () => {
           onClick={openMenu} icon={faTimes} color="white" />
         <ul className={styles.menuList}>
           <li>
-            <Link 
+            {/* <Link 
               className={styles.link}
-              to="/dashboard">Dashboard</Link>
-            {/* {isAuthenticated() ? (
+              to="/dashboard">Dashboard</Link> */}
+              {/* goes to the same auth process 
+                  with the given url, so no problem 
+              */}
+            {isAuthenticated() ? (
               <Link 
                 className={styles.link}
                 to="/dashboard">Dashboard</Link>
             ) : (
               <Link 
                 className={styles.link}
-                to="/login">Login</Link>
-            )} */}
+                to="/dashboard">Login</Link>
+            )}
           </li>
           <li>
             <Link 
