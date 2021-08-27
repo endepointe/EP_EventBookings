@@ -53,6 +53,15 @@ class UserForm extends Component {
       //     },
       //     photoRelease: {
       //       pdf: null,
+      //     },
+      //     companyLogo: {
+      //       image: null,
+      //     },
+      //     proofOfStatus: {
+      //       image: null,
+      //     },
+      //     vendorHeadshot: {
+      //       image: null,
       //     }
       //   }
       // },
@@ -82,6 +91,15 @@ class UserForm extends Component {
           },
           photoRelease: {
             pdf: null,
+          },
+          companyLogo: {
+            image: null,
+          },
+          proofOfStatus: {
+            image: null,
+          },
+          vendorHeadshot: {
+            image: null,
           }
         }
       },
@@ -155,9 +173,18 @@ class UserForm extends Component {
         break;
         case 'Visitor Pass':
           data.forms.visitorPass = file;
-        default:
+        break;
         case 'Photo Release':
           data.forms.photoRelease = file;
+        break;
+        case 'Company Logo':
+          data.forms.companyLogo = file;
+        break;
+        case 'Proof of Status':
+          data.forms.proofOfStatus = file;
+        break;
+        case 'Vendor Headshot':
+          data.forms.vendorHeadshot = file;
         break;
       }
       this.setState({data});

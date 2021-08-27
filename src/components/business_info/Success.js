@@ -8,11 +8,20 @@ import { navigate } from 'gatsby';
 const Success = ({ state }) => {
 
   useEffect(() => {
-    // save data to database and send the user to their dashboard
-    setTimeout(() => {
-      alert('heading to your dashboard')
-      navigate('/dashboard');
-    }, 5000)
+    // save data to hubspot and send the user to their dashboard
+    // setTimeout(() => {
+    //   navigate('/dashboard');
+    // }, 5000)
+    async function hubspot() {
+      try {
+        let response = await fetch('http://localhost:8001/hubspot/read');
+        let data = await response.json();
+        console.log(data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    hubspot();
   });
 
   return (

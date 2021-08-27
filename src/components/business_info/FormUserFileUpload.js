@@ -64,6 +64,22 @@ const FormUserFileUpload = ({
     name: '',
     set: false
   });
+  const [companyLogo, setCompanyLogo] = useState({
+    image: null,
+    name: '',
+    set: false
+  });
+  const [proofOfStatus, setProofOfStatus] = useState({
+    image: null,
+    name: '',
+    set: false
+  });
+  const [vendorHeadshot, setVendorHeadshot] = useState({
+    image: null,
+    name: '',
+    set: false
+  });
+
 
   const data = useStaticQuery(graphql`
     {
@@ -102,7 +118,22 @@ const FormUserFileUpload = ({
       console.log('updated photo release: ', photoRelease);
       handleFileUpload(photoRelease.pdf, photoRelease.name);
     }
-  }, [aafes,w9,photoRelease,visitorPass]);
+
+    if (companyLogo.set) {
+      console.log('updated company logo: ', companyLogo);
+      handleFileUpload(companyLogo.image, companyLogo.name);
+    }
+
+    if (proofOfStatus.set) {
+      console.log('updated proof of status: ', proofOfStatus);
+      handleFileUpload(proofOfStatus.image, proofOfStatus.name);
+    }
+
+    if (vendorHeadshot.set) {
+      console.log('updated vendor headshot: ', vendorHeadshot);
+      handleFileUpload(vendorHeadshot.image, vendorHeadshot.name);
+    }
+  }, [aafes,w9,photoRelease,visitorPass,companyLogo,proofOfStatus,vendorHeadshot]);
 
   const openUploadDialog = (name) => {
     console.log('file to upload: ', name);
@@ -118,6 +149,15 @@ const FormUserFileUpload = ({
       break;
       case 'r':
         setFileName('Photo Release');
+      break;
+      case 'l':
+        setFileName('Company Logo');
+      break;
+      case 'p':
+        setFileName('Proof of Status');
+      break;
+      case 'h':
+        setFileName('Vendor Headshot');
       break;
       default:
         setFileName('');
@@ -157,6 +197,27 @@ const FormUserFileUpload = ({
         setPhotoRelease({
           pdf: file[0],
           name: 'Photo Release',
+          set: true,
+        });
+      break;
+      case 'Company Logo':
+        setCompanyLogo({
+          image: file[0],
+          name: 'Company Logo',
+          set: true,
+        });
+      break;
+      case 'Proof of Status':
+        setProofOfStatus({
+          image: file[0],
+          name: 'Proof of Status',
+          set: true,
+        });
+      break;
+      case 'Vendor Headshot':
+        setVendorHeadshot({
+          image: file[0],
+          name: 'Vendor Headshot',
           set: true,
         });
       break;
@@ -276,6 +337,61 @@ const FormUserFileUpload = ({
           </div>
         }
       </Grid>
+
+      <Grid container spacing={1} style={{ marginBottom: "16px" }}>
+        { !companyLogo.set ?
+          <>
+            <Grid item xs={12}>
+              {renderUploadButton({
+                label: "Upload Company Logo",
+                color: "default",
+                onClick: () => openUploadDialog('l'),
+              })}
+            </Grid>
+          </>
+          : 
+          <div className={classes.root}>
+            <Alert serverity="success">Saved Company Logo</Alert>
+          </div>
+        }
+      </Grid>
+
+      <Grid container spacing={1} style={{ marginBottom: "16px" }}>
+        { !proofOfStatus.set ?
+          <>
+            <Grid item xs={12} sm={6}>
+              {renderUploadButton({
+                label: "Upload Proof of Status",
+                color: "default",
+                onClick: () => openUploadDialog('p'),
+              })}
+            </Grid>
+          </>
+          : 
+          <div className={classes.root}>
+            <Alert serverity="success">Saved Proof of Status</Alert>
+          </div>
+        }
+      </Grid>
+
+      <Grid container spacing={1} style={{ marginBottom: "16px" }}>
+        { !vendorHeadshot.set ?
+          <>
+            <Grid item xs={12} sm={6}>
+              {renderUploadButton({
+                label: "Upload Vendor Headshot",
+                color: "default",
+                onClick: () => openUploadDialog('h'),
+              })}
+            </Grid>
+          </>
+          : 
+          <div className={classes.root}>
+            <Alert serverity="success">Saved Vendor Headshot</Alert>
+          </div>
+        }
+      </Grid>
+
 
       <Grid container component={Box} justifyContent='flex-end' mt={2} p={2}>
         <Box ml={2}>
