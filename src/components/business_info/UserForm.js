@@ -113,7 +113,9 @@ class UserForm extends Component {
         {label: "Success"}
       ],
       step: 0,
-      disableNext: true
+      disableNext: true,
+      disableBack: false,
+      saving: false,
     };
   }
 
@@ -154,6 +156,27 @@ class UserForm extends Component {
       step -= 1;
       this.setState({step, disableNext: checkInput(step, data)});
     };
+
+    const handleSave = async () => {
+      // pass all state data to hs and return status.
+      // if there is an issue with saving the data to hubspot then
+      // the user wil be notified, otherwise the use will be sent
+      // to their dashboard.
+      try {
+        let {step, data} = this.state;
+        console.log(data);
+        this.setState({disableBack: true})
+        let hubspotData = await fetch(`${process.env.EXPRESS_API_HOST}/hubspot/read`);
+        console.log(hubspotData);
+        setTimeout(() => {
+          step += 1;
+          this.setState({step});
+        }, 3000)
+        this.setState({saving: true})
+      } catch (err) {
+        console.error(err);
+      }
+    }
 
     const handleDownload = (file) => {
       const link = document.createElement('a');
@@ -230,12 +253,12 @@ class UserForm extends Component {
           return (
             <Confirm 
               state={this.state}
-              handleNextStep={handleNextStep}
+              handleSave={handleSave}
               handleBackStep={handleBackStep} />
           );
         case 5:
           return (
-            <Success state={this.state} />
+            <Success state={this.state} closeUserForm={this.props.handleOpenUserForm} />
           )
         default:
           return (<div>step form</div>);

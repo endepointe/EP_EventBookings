@@ -1,42 +1,23 @@
 import React, { useEffect } from "react";
-import { Box, Paper } from "@material-ui/core";
-import { styles } from "../common/styles";
-import { renderText } from "../common/DisplayComponent";
-import { navigate } from 'gatsby';
+import { Box, Grid } from "@material-ui/core";
+import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
 
 // display a success message and then send the user to their dashboard
-const Success = ({ state }) => {
+const Success = ({ state, closeUserForm }) => {
 
   useEffect(() => {
-    // save data to hubspot and send the user to their dashboard
-    // setTimeout(() => {
-    //   navigate('/dashboard');
-    // }, 5000)
-    async function hubspot() {
-      try {
-        let response = await fetch('http://localhost:8001/hubspot/read');
-        let data = await response.json();
-        console.log(data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    hubspot();
+    setTimeout(() => {
+      // save user email to psql db for future login check
+      console.log(state)
+      closeUserForm();
+    }, 2500);
+
   });
 
   return (
-    <Paper style={styles.steps}>
-      <Box mt={2} mb={2}>
-        {renderText({
-          label: "Your Submitted Data",
-          type: "h6",
-          color: "textPrimary",
-          align: "center",
-        })}
-      </Box>
-
-      {JSON.stringify(state, null, 4)}
-    </Paper>
+    <Grid container component={Box} justifyContent='center' mt={2} p={2}>
+      <CheckCircleRoundedIcon/>
+    </Grid>
   );
 }
 

@@ -7,6 +7,8 @@ import {
   renderSelect,
   renderText,
 } from "../common/DisplayComponent";
+// for user phone number
+//https://github.com/s-yadav/react-number-format
 
 const FormUserContactInfo = ({state, handleChange, handleNextStep}) => {
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 // import { Router } from "@reach/router"
 // import { Link } from "gatsby"
 import PropTypes from 'prop-types';
@@ -60,6 +60,14 @@ const NavBar = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  useEffect(() => {
+    async function eb() {
+      let data = await fetch(`https://www.eventbriteapi.com/v3/users/me/events?token=${process.env.EVENTBRITE_PRIVATE_TOKEN}`);
+      console.log(data);
+    }
+    eb();
+  })
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

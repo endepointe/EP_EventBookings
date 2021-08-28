@@ -21,4 +21,9 @@ export const styles = {
   steps: {
     padding: "16px",
   },
+  center: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  }
 };

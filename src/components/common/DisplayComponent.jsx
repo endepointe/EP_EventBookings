@@ -13,7 +13,7 @@ export const renderText = ({ type, label, color, ...rest }) => (
   </Typography>
 );
 
-export const renderInputField = ({ name, label, type, state, onChange, required }) => {
+export const renderInputField = ({ name, label, type, readOnly, state, onChange, required }) => {
   const { data, errors } = state;
   return (
     <TextField
@@ -27,6 +27,9 @@ export const renderInputField = ({ name, label, type, state, onChange, required 
       value={data[name]}
       error={errors[name] ? true : false}
       helperText={errors[name] ? errors[name] : ""}
+      InputProps={{
+        readOnly: readOnly ? true : false
+      }}
       required={required}
       onChange={onChange}
     />

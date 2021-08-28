@@ -16,9 +16,9 @@ const DashboardComponent = (props) => {
     async function checkUserRegistration() {
       if(await userExists(props.user.email) === false &&
         isAuthenticated()) {
-        setOpenUserForm(true);
+        handleOpenUserForm();
       } else {
-        setOpenUserForm(false);
+        // handleOpenUserForm();
         logout();
         navigate('/'); 
       }
@@ -26,11 +26,16 @@ const DashboardComponent = (props) => {
     checkUserRegistration();
   }, [props.user.email]);
 
+  const handleOpenUserForm = () => {
+    setOpenUserForm(!openUserForm);
+  }
+
   return (
     <>
       {openUserForm 
         ? <UserForm 
             open={openUserForm} 
+            handleOpenUserForm={handleOpenUserForm}
             user={props.user} />
         : <NavBar />
       }

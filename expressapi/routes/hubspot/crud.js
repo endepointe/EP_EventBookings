@@ -53,7 +53,7 @@ const properties = [
 			? console.error(JSON.stringify(e.response, null, 2))
 			: console.error(e)
 	}
-	res.send({msg: 'post data to hubspot'})
+	// res.send({msg: 'post data to hubspot'})
 })
 
 module.exports = router;
