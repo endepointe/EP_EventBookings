@@ -4,6 +4,8 @@ import {
   MenuItem, 
   TextField, 
   Typography } from "@material-ui/core";
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 
 export const renderText = ({ type, label, color, ...rest }) => (
   <Typography variant={type} color={color} {...rest}>
@@ -84,13 +86,16 @@ export const renderDownloadButton = ({
     color, 
     file,
     fullWidth, 
+    size,
     onClick 
   }) => (
 
   <Button
-    variant={variant ? variant : "outlined"}
+    variant={variant ? variant : "contained"}
     color={color ? color : "primary"}
     fullWidth={true}
+    startIcon={<CloudDownloadIcon/>}
+    size={size ? size : 'large'}
     onClick={onClick}>
     {label}
   </Button>
@@ -102,13 +107,16 @@ export const renderUploadButton = ({
     color, 
     file,
     fullWidth, 
+    size,
     onClick 
   }) => (
 
   <Button
-    variant={variant ? variant : "outlined"}
-    color={color ? color : "primary"}
+    variant={variant ? variant : "contained"}
+    color={color ? color : "default"}
     fullWidth={true}
+    startIcon={<CloudUploadIcon/>}
+    size={size ? size : 'large'}
     onClick={onClick}>
     {label}
   </Button>

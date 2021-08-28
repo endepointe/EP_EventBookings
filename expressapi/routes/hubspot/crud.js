@@ -27,10 +27,9 @@ const hubspotClient = new hubspot.Client({apiKey: process.env.HUBSPOT_API_KEY})
 	vendor_head_shot,
 */
 
-
 router.post('/create', async (req, res) => {
 
-})
+});
 
 router.get('/read', async (req, res) => {
 	const limit = 10;

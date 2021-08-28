@@ -244,14 +244,12 @@ const FormUserFileUpload = ({
             <Grid item xs={6} sm={6}>
               {renderDownloadButton({
                 label: "Download AAFES Application",
-                color: "default",
                 onClick: () => handleDownload(data.allFile.edges[3].node),
               })}
             </Grid>
             <Grid item xs={6} sm={6}>
               {renderUploadButton({
                 label: "Upload AAFES Application",
-                color: "default",
                 onClick: () => openUploadDialog('a'),
               })}
             </Grid>
@@ -269,14 +267,12 @@ const FormUserFileUpload = ({
             <Grid item xs={6} sm={6}>
               {renderDownloadButton({
                 label: "Download W9",
-                color: "default",
                 onClick: () => handleDownload(data.allFile.edges[2].node),
               })}
             </Grid>
             <Grid item xs={6} sm={6}>
               {renderUploadButton({
                 label: "Upload W9",
-                color: "default",
                 onClick: () => openUploadDialog('w'),
               })}
             </Grid>
@@ -294,14 +290,12 @@ const FormUserFileUpload = ({
             <Grid item xs={6} sm={6}>
               {renderDownloadButton({
                 label: "Download AAFES Visitor Pass",
-                color: "default",
                 onClick: () => handleDownload(data.allFile.edges[1].node),
               })}
             </Grid>
             <Grid item xs={6} sm={6}>
               {renderUploadButton({
                 label: "Upload AAFES Visitor Pass",
-                color: "default",
                 onClick: () => openUploadDialog('v'),
               })}
             </Grid>
@@ -319,14 +313,12 @@ const FormUserFileUpload = ({
             <Grid item xs={6} sm={6}>
               {renderDownloadButton({
                 label: "Download Photo Release Form",
-                color: "default",
                 onClick: () => handleDownload(data.allFile.edges[0].node),
               })}
             </Grid>
             <Grid item xs={6} sm={6}>
               {renderUploadButton({
                 label: "Upload Photo Release Form",
-                color: "default",
                 onClick: () => openUploadDialog('r'),
               })}
             </Grid>
@@ -344,7 +336,6 @@ const FormUserFileUpload = ({
             <Grid item xs={12}>
               {renderUploadButton({
                 label: "Upload Company Logo",
-                color: "default",
                 onClick: () => openUploadDialog('l'),
               })}
             </Grid>
@@ -359,10 +350,9 @@ const FormUserFileUpload = ({
       <Grid container spacing={1} style={{ marginBottom: "16px" }}>
         { !proofOfStatus.set ?
           <>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               {renderUploadButton({
                 label: "Upload Proof of Status",
-                color: "default",
                 onClick: () => openUploadDialog('p'),
               })}
             </Grid>
@@ -377,10 +367,9 @@ const FormUserFileUpload = ({
       <Grid container spacing={1} style={{ marginBottom: "16px" }}>
         { !vendorHeadshot.set ?
           <>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               {renderUploadButton({
                 label: "Upload Vendor Headshot",
-                color: "default",
                 onClick: () => openUploadDialog('h'),
               })}
             </Grid>
@@ -391,7 +380,6 @@ const FormUserFileUpload = ({
           </div>
         }
       </Grid>
-
 
       <Grid container component={Box} justifyContent='flex-end' mt={2} p={2}>
         <Box ml={2}>
