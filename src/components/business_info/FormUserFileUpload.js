@@ -80,7 +80,7 @@ const FormUserFileUpload = ({
     set: false
   });
 
-
+  // retrieve the pdf files for the user to download
   const data = useStaticQuery(graphql`
     {
       allFile(filter: { sourceInstanceName: { eq: "data" } }) {
@@ -94,7 +94,6 @@ const FormUserFileUpload = ({
       }
     }
   `);
-  // console.log('graphql data', data.allFile.edges);
   
   // update the state passed in from UserForm
   useEffect(() => {
@@ -103,32 +102,26 @@ const FormUserFileUpload = ({
       console.log('updated aafes: ', aafes);
       handleFileUpload(aafes.pdf, aafes.name);
     }
-
     if (w9.set) {
       console.log('updated w9: ', w9);
       handleFileUpload(w9.pdf, w9.name);
     }
-
     if (visitorPass.set) {
       console.log('updated visitor pass: ', visitorPass);
       handleFileUpload(visitorPass.pdf, visitorPass.name);
     }
-
     if (photoRelease.set) {
       console.log('updated photo release: ', photoRelease);
       handleFileUpload(photoRelease.pdf, photoRelease.name);
     }
-
     if (companyLogo.set) {
       console.log('updated company logo: ', companyLogo);
       handleFileUpload(companyLogo.image, companyLogo.name);
     }
-
     if (proofOfStatus.set) {
       console.log('updated proof of status: ', proofOfStatus);
       handleFileUpload(proofOfStatus.image, proofOfStatus.name);
     }
-
     if (vendorHeadshot.set) {
       console.log('updated vendor headshot: ', vendorHeadshot);
       handleFileUpload(vendorHeadshot.image, vendorHeadshot.name);

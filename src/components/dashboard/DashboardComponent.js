@@ -14,16 +14,19 @@ const DashboardComponent = (props) => {
 
   useEffect(() => {
     async function checkUserRegistration() {
+      // for new accounts
       if(await userExists(props.user.email) === false &&
         isAuthenticated()) {
         handleOpenUserForm();
-      } else {
-        // handleOpenUserForm();
-        logout();
-        navigate('/'); 
+      // } else {
+      //   handleOpenUserForm();
+      //   logout();
+      //   navigate('/'); 
       }
+      return;
     }
     checkUserRegistration();
+    
   }, [props.user.email]);
 
   const handleOpenUserForm = () => {

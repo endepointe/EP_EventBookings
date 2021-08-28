@@ -158,7 +158,7 @@ class UserForm extends Component {
     };
 
     const handleSave = async () => {
-      // pass all state data to hs and return status.
+      // pass all state data to hubspot and return status.
       // if there is an issue with saving the data to hubspot then
       // the user wil be notified, otherwise the use will be sent
       // to their dashboard.
