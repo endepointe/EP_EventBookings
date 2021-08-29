@@ -1,5 +1,6 @@
 import React from "react"
 import { silentAuth } from "./src/utils/auth"
+import ReduxWrapper from './src/state/ReduxWrapper'
 
 class SessionCheck extends React.Component {
   constructor(props) {
@@ -26,6 +27,12 @@ class SessionCheck extends React.Component {
   }
 }
 
-export const wrapRootElement = ({ element }) => {
-  return <SessionCheck>{element}</SessionCheck>
+export const wrapRootElement = (props) => {
+  return (
+    <SessionCheck>
+      <ReduxWrapper {...props} />
+    </SessionCheck>
+  )
 }
+
+
