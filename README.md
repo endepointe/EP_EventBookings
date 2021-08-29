@@ -15,3 +15,7 @@ https://dev.to/chandrapantachhetri/responsive-react-file-upload-component-with-d
 
 HubSpot Contact API:
 https://developers.hubspot.com/docs/api/crm/contacts
+
+Eventbrite Pricing:
+https://www.eventbrite.com/organizer/compare-packages
+
