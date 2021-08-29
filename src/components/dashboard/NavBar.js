@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 // import { Router } from "@reach/router"
 // import { Link } from "gatsby"
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import {Counter} from './Counter';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavBar = ({count, increment},props) => {
+const NavBar = (props) => {
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -163,8 +163,7 @@ const NavBar = ({count, increment},props) => {
           arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
           donec massa sapien faucibus et molestie ac.
         </Typography>
-        <div>Count: {count}</div>
-        <button onClick={increment}>increment</button>
+        <Counter/>
         <Typography paragraph>
           Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
           consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
@@ -175,21 +174,12 @@ const NavBar = ({count, increment},props) => {
   );
 }
 
-NavBar.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window: PropTypes.func,
-  count: PropTypes.number.isRequired,
-  increment: PropTypes.func.isRequired,
-};
-const mapStateToProps = ({ count }) => {
-  return { count }
-}
+// NavBar.propTypes = {
+//   /**
+//    * Injected by the documentation to work in an iframe.
+//    * You won't need it on your project.
+//    */
+//   window: PropTypes.func,
+// };
 
-const mapDispatchToProps = dispatch => {
-  return { increment: () => dispatch({ type: `INCREMENT` }) }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default NavBar;
