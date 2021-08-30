@@ -23,8 +23,8 @@ router.get('/read', async (req, res) => {
  
   // 2
   // array events
-  let events = await sdk.request(`/organizations/${organizationID}/events/`);
-  console.log('events: ', events);
+  let data = await sdk.request(`/organizations/${organizationID}/events/`);
+
   // Extract event data and send to client
   /*
     string id,
@@ -35,12 +35,46 @@ router.get('/read', async (req, res) => {
     object logo,
     string venue_id,
     object start,
-    ibject end,
+    object end,
     string status,
     string inventory_type
   */
 
-  res.json(events);
+  const newEvent = (eventData) => {
+    let {
+      id, 
+      name, 
+      capacity, 
+      description, 
+      summary, 
+      logo, 
+      venue_id, 
+      start, 
+      end, 
+      status, 
+      inventory_type, 
+    } = eventData;
+    return {
+      id, 
+      name, 
+      capacity, 
+      description, 
+      summary, 
+      logo, 
+      venue_id, 
+      start, 
+      end, 
+      status, 
+      inventory_type
+    };
+  }
+
+  console.log('new event: ', newEvent(data.events[0]));
+
+  // for (let i = 0; i < data.events.length; i++) {
+
+  // }
+  res.json(newEvent(data.events[data.events.length -1]));
   
   } catch (err) {
     console.error(err); 
