@@ -164,10 +164,9 @@ class UserForm extends Component {
       // to their dashboard.
       try {
         let {step, data} = this.state;
-        console.log(data);
         this.setState({disableBack: true})
         let hubspotData = await fetch(`${process.env.EXPRESS_API_HOST}/hubspot/read`);
-        console.log(hubspotData);
+        console.log('save to hubspot');
         setTimeout(() => {
           step += 1;
           this.setState({step});

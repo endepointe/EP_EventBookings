@@ -16,14 +16,16 @@ router.get('/read', async (req, res) => {
   try {
   // 1
   // string response  
-  let response = await sdk.request('/users/me/organizations/');
-  let organizationID = await response.organizations[0].id;
+  let organizationResponse = await sdk.request('/users/me/organizations/');
+  let organizationID = await organizationResponse.organizations[0].id;
 
   console.log('Organization id: ', organizationID); 
  
   // 2
   // array events
-  let data = await sdk.request(`/organizations/${organizationID}/events/`);
+  let eventResponse = await sdk.request(`/organizations/${organizationID}/events/`);
+  let data = await eventResponse;
+  console.log(data);
 
   // Extract event data and send to client
   /*
@@ -45,7 +47,7 @@ router.get('/read', async (req, res) => {
       id, 
       name, 
       capacity, 
-      description, 
+      // description, 
       summary, 
       logo, 
       venue_id, 
@@ -56,25 +58,26 @@ router.get('/read', async (req, res) => {
     } = eventData;
     return {
       id, 
-      name, 
+      name: name.text, 
       capacity, 
-      description, 
+      // description, 
       summary, 
-      logo, 
+      logo: logo.url, 
       venue_id, 
-      start, 
-      end, 
+      start: {timezone: start.timezone, local: start.local, utc: start.utc}, 
+      end: {timezone: start.timezone, local: start.local, utc: start.utc},
       status, 
       inventory_type
     };
   }
 
-  console.log('new event: ', newEvent(data.events[0]));
+  let list = [];
 
-  // for (let i = 0; i < data.events.length; i++) {
+  for (let i = 0; i < data.events.length; i++) {
+    list.push(newEvent(data.events[i]))
+  }
 
-  // }
-  res.json(newEvent(data.events[data.events.length -1]));
+  res.json(list);
   
   } catch (err) {
     console.error(err); 

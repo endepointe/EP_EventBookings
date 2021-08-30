@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import { Box, Grid, Paper } from "@material-ui/core";
 import Loader from "react-loader-spinner";
 import { styles } from "../common/styles";
@@ -51,9 +51,9 @@ const Confirm = ({
     state, 
     handleSave, handleBackStep}) => {
   
-  useEffect(() => {
-    console.log(state);
-  }, [state.saving]);
+  // useEffect(() => {
+  //   console.log(state);
+  // }, [state.saving]);
 
   return (
     <>

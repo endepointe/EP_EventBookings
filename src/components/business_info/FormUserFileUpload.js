@@ -97,7 +97,6 @@ const FormUserFileUpload = ({
   
   // update the state passed in from UserForm
   useEffect(() => {
-    console.log('current state in step 4: ', state);
     if (aafes.set) {
       console.log('updated aafes: ', aafes);
       handleFileUpload(aafes.pdf, aafes.name);

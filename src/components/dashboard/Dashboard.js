@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 // import { Router } from "@reach/router"
 // import { Link } from "gatsby"
 import PropTypes from 'prop-types';
@@ -20,6 +20,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import NavToolBar from './NavToolBar';
+import {EventList} from './EventList';
 
 const drawerWidth = 240;
 
@@ -56,19 +57,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NavBar = (props) => {
+const Dashboard = (props) => {
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
-  useEffect(() => {
-    async function eb() {
-      let data = await fetch(`${process.env.EXPRESS_API_HOST}/eventbrite/read`);
-      console.log(await data.json());
-    }
-    eb();
-  });
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -163,7 +156,10 @@ const NavBar = (props) => {
           arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
           donec massa sapien faucibus et molestie ac.
         </Typography>
+
         <Counter/>
+        <EventList/>
+
         <Typography paragraph>
           Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
           consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
@@ -174,7 +170,7 @@ const NavBar = (props) => {
   );
 }
 
-NavBar.propTypes = {
+Dashboard.propTypes = {
   /**
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
@@ -182,4 +178,4 @@ NavBar.propTypes = {
   window: PropTypes.func,
 };
 
-export default NavBar;
+export default Dashboard;

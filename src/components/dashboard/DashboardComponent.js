@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import NavBar from './NavBar';
+import Layout from '../layout';
+import Dashboard from './Dashboard';
 import UserForm from '../business_info/UserForm';
 import {userExists} from '../../utils/crud';
 import {isAuthenticated} from '../../utils/auth';
@@ -29,15 +30,15 @@ const DashboardComponent = (props) => {
   }
 
   return (
-    <>
+    <Layout>
       {openUserForm 
         ? <UserForm 
             open={openUserForm} 
             handleOpenUserForm={handleOpenUserForm}
             user={props.user} />
-        : <NavBar />
+        : <Dashboard />
       }
-    </>
+    </Layout>
   )
 }
 
