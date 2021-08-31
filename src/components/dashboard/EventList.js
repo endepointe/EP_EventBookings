@@ -6,12 +6,16 @@ export const EventList = () => {
   console.log("events: ", typeof events);
   let n = 0;
   const renderEvents = Object.entries(events).map(event => (
-    <article key={parseInt(event.id)}>
-      <h3>{events[event.name]}</h3>
-      <p>{events[event.summary]}</p>
-    </article> 
-  )
-);
+    // console.log(event[0], event[1])
+    <article key={event[0]}>
+      <h3>{event[1].name}</h3>
+      <p>{event[1].description}</p>
+      <p>{event[1].summary}</p>
+      <p>{event[1].start.utc}</p>
+    </article>
+  )); 
+
+ 
 
   return (
     <section>

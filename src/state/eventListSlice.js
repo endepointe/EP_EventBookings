@@ -5,7 +5,7 @@ const initialState = [
     id: 12345,
     name: 'EP Test Event', 
     capacity: 1337, 
-    // description, 
+    description: '', 
     summary: 'A test event for Redux store', 
     logo: '', 
     venue_id: '67890', 

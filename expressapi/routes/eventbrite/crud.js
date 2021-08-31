@@ -25,7 +25,6 @@ router.get('/read', async (req, res) => {
   // array events
   let eventResponse = await sdk.request(`/organizations/${organizationID}/events/`);
   let data = await eventResponse;
-  console.log(data);
 
   // Extract event data and send to client
   /*
@@ -47,7 +46,7 @@ router.get('/read', async (req, res) => {
       id, 
       name, 
       capacity, 
-      // description, 
+      description, 
       summary, 
       logo, 
       venue_id, 
@@ -56,16 +55,17 @@ router.get('/read', async (req, res) => {
       status, 
       inventory_type, 
     } = eventData;
+    // parse description text and create an object
     return {
       id, 
       name: name.text, 
       capacity, 
-      // description, 
+      description: description.text, 
       summary, 
       logo: logo.url, 
       venue_id, 
       start: {timezone: start.timezone, local: start.local, utc: start.utc}, 
-      end: {timezone: start.timezone, local: start.local, utc: start.utc},
+      end: {timezone: end.timezone, local: end.local, utc: end.utc},
       status, 
       inventory_type
     };
@@ -76,6 +76,8 @@ router.get('/read', async (req, res) => {
   for (let i = 0; i < data.events.length; i++) {
     list.push(newEvent(data.events[i]))
   }
+
+  console.log(list[2]);
 
   res.json(list);
   

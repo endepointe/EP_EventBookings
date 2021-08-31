@@ -46,7 +46,7 @@ const properties = [
 	
 	try {
 		const apiResponse = await hubspotClient.crm.contacts.basicApi.getPage(limit, after, properties, associations, archived);
-		console.log(JSON.stringify(apiResponse.body, null, 2));
+		// console.log(JSON.stringify(apiResponse.body, null, 2));
 		res.status(200).send(apiResponse);
 	} catch (e) {
 		e.message === 'HTTP request failed'
