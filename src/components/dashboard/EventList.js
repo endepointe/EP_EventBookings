@@ -18,23 +18,28 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const EventList = () => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const events = useSelector(getAllEvents);
+  const eventStatus = useSelector(state => state.eventList.status);
+  const classes = useStyles();
+  
   console.log("events: ", events);
 
   useEffect(() => {
-    dispatch(fetchEvents()); 
+    console.log(eventStatus);
+    if (eventStatus === 'idle') {
+      dispatch(fetchEvents());
+    }
     console.log(events);
-  }, [dispatch])
+  }, [eventStatus,dispatch]);
   
   const renderEvents = Object.entries(events).map(event => (
-    // console.log(event[0], event[1])
-    <Grid item xs={12} md={6} key={event[0]}>
-      <EventCard 
-        className={classes.paper}
-        event={event[1]}/> 
-    </Grid>
+    console.log(event[0], event[1])
+    // <Grid item xs={12} md={6} key={event[0]}>
+    //   <EventCard 
+    //     className={classes.paper}
+    //     event={event[1]}/> 
+    // </Grid>
   )); 
 
   return (
