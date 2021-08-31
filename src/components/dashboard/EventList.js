@@ -1,8 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, {useEffect} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {getAllEvents, fetchEvents} from '../../state/eventListSlice';
 import EventCard from './EventCard';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -17,8 +19,15 @@ const useStyles = makeStyles((theme) => ({
 
 export const EventList = () => {
   const classes = useStyles();
-  const events = useSelector(state => state.eventList);
-  console.log("events: ", typeof events);
+  const dispatch = useDispatch();
+  const events = useSelector(getAllEvents);
+  console.log("events: ", events);
+
+  useEffect(() => {
+    dispatch(fetchEvents()); 
+    console.log(events);
+  }, [dispatch])
+  
   const renderEvents = Object.entries(events).map(event => (
     // console.log(event[0], event[1])
     <Grid item xs={12} md={6} key={event[0]}>

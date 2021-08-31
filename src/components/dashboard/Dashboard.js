@@ -1,6 +1,5 @@
 import React from 'react';
-// import { Router } from "@reach/router"
-// import { Link } from "gatsby"
+import { Router, Link as ReachLink } from "@reach/router"
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,11 +14,15 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
+import EventIcon from '@material-ui/icons/Event';
+import PersonIcon from '@material-ui/icons/Person';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import NavToolBar from './NavToolBar';
 import {EventList} from './EventList';
+
+// for layout ideas until components are made
+let Account = () => <div>Account Page</div>
 
 const drawerWidth = 240;
 
@@ -52,8 +55,13 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
+    justifyContent: 'center',
     padding: theme.spacing(3),
   },
+  reachLink: {
+    textDecoration: 'none', 
+    color: 'inherit',
+  }
 }));
 
 const Dashboard = (props) => {
@@ -71,12 +79,16 @@ const Dashboard = (props) => {
       {/* <div className={classes.toolbar} /> */}
       <Divider />
       <List>
-        {['Find Events', 'Register for Events', 'Your Events', 'Account Info'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+        <ReachLink 
+          className={classes.reachLink}
+          to="/dashboard/events">
+          <ListItem button>
+            <ListItemIcon>
+              <EventIcon /> 
+            </ListItemIcon>
+            <ListItemText primary={'Find Events'} />
           </ListItem>
-        ))}
+        </ReachLink>
       </List>
       <Divider />
       <List>
@@ -86,12 +98,24 @@ const Dashboard = (props) => {
             </ListItemIcon>
             <ListItemText primary={'Files'} />
           </ListItem>
+
            <ListItem button>
             <ListItemIcon>
               <MailIcon />
             </ListItemIcon>
             <ListItemText primary={'Messages'} />
           </ListItem>
+
+          <ReachLink 
+            className={classes.reachLink}
+            to="/dashboard/account">
+            <ListItem button>
+              <ListItemIcon>
+                <PersonIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Account'} />
+            </ListItem>
+          </ReachLink>
       </List>
     </div>
   );
@@ -149,9 +173,10 @@ const Dashboard = (props) => {
 
       <main className={classes.content}>
         <div className={classes.toolbar} />
-
-        <EventList/>
-
+        <Router>
+          <EventList path="/dashboard/events" />
+          <Account path="/dashboard/account"/>
+        </Router>
       </main>
     </div>
   );

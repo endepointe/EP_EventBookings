@@ -30,7 +30,7 @@ const DashboardComponent = (props) => {
   }
 
   return (
-    <Layout>
+    <>
       {/* change back to true after getting a working event list design */}
       {!openUserForm 
         ? <UserForm 
@@ -39,7 +39,7 @@ const DashboardComponent = (props) => {
             user={props.user} />
         : <Dashboard />
       }
-    </Layout>
+    </>
   )
 }
 
