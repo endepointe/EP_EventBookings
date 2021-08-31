@@ -2,7 +2,6 @@ import React from 'react';
 // import { Router } from "@reach/router"
 // import { Link } from "gatsby"
 import PropTypes from 'prop-types';
-import {Counter} from './Counter';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
@@ -69,7 +68,7 @@ const Dashboard = (props) => {
 
   const drawer = (
     <div>
-      <div className={classes.toolbar} />
+      {/* <div className={classes.toolbar} /> */}
       <Divider />
       <List>
         {['Find Events', 'Register for Events', 'Your Events', 'Account Info'].map((text, index) => (
@@ -113,9 +112,6 @@ const Dashboard = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          {/* <Typography variant="h6" noWrap>
-            Responsive drawer
-          </Typography> */}
           <NavToolBar/>
         </Toolbar>
       </AppBar>
@@ -150,21 +146,12 @@ const Dashboard = (props) => {
           </Drawer>
         </Hidden>
       </nav>
+
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography paragraph>
-          arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-          donec massa sapien faucibus et molestie ac.
-        </Typography>
 
-        <Counter/>
         <EventList/>
 
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-          consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-          accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
       </main>
     </div>
   );

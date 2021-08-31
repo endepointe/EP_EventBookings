@@ -71,15 +71,15 @@ router.get('/read', async (req, res) => {
     };
   }
 
-  let list = [];
+  let liveEvents = [];
 
   for (let i = 0; i < data.events.length; i++) {
-    list.push(newEvent(data.events[i]))
+    if (data.events[i].status === 'live') {
+      liveEvents.push(newEvent(data.events[i]));
+    }
   }
 
-  console.log(list[2]);
-
-  res.json(list);
+  res.json(liveEvents);
   
   } catch (err) {
     console.error(err); 

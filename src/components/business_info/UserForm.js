@@ -25,7 +25,6 @@ import FullScreenDialog from './FullScreenDialog';
 class UserForm extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       // data: {
       //   firstName: '',
