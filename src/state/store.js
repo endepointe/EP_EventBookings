@@ -5,6 +5,6 @@ import eventListReducer from './eventListSlice';
 export default configureStore({
   reducer: {
     counter: counterReducer,
-    eventList: eventListReducer,
+    events: eventListReducer,
   },
 });

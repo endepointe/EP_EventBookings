@@ -31,8 +31,7 @@ const DashboardComponent = (props) => {
 
   return (
     <>
-      {/* change back to true after getting a working event list design */}
-      {!openUserForm 
+      {openUserForm 
         ? <UserForm 
             open={openUserForm} 
             handleOpenUserForm={handleOpenUserForm}

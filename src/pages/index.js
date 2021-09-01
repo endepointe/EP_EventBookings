@@ -1,5 +1,7 @@
 import * as React from "react"
 import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {getAllEvents, fetchEvents} from '../state/eventListSlice';
 import { Link } from 'gatsby';
 import Layout from "../components/layout";
 // import SphereVideo from "../assets/video.mp4";
@@ -12,23 +14,20 @@ import {
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { isAuthenticated } from "../utils/auth";
 
-// async function postData(url = '', data = {}) {
-//   const response = await fetch(url, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(data)
-//   });
-//   return response.json();
-// }
-
 const IndexPage = () => {
   const [menu, setMenu] = useState(false);
 
+  const dispatch = useDispatch();
+  const events = useSelector(getAllEvents);
+  const eventStatus = useSelector(state => state.events.status);
+
+ 
   useEffect(() => {
-    console.log('test api');
-  }, []);
+    console.log(eventStatus);
+    if (eventStatus === 'idle') {
+      dispatch(fetchEvents());
+    }
+  }, [eventStatus,dispatch]);
 
   const openMenu = () => {
     setMenu(!menu); 
