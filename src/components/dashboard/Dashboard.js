@@ -77,6 +77,9 @@ const Dashboard = (props) => {
   const drawer = (
     <div>
       {/* <div className={classes.toolbar} /> */}
+      <div>put a logo here</div>
+      <div>put a logo here</div>
+      <div>put a logo here</div>
       <Divider />
       <List>
         <ReachLink 

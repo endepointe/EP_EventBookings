@@ -1,4 +1,4 @@
-
+// https://redux.js.org/tutorials/essentials/part-5-async-logic
 export async function client(endpoint, { body, ...customConfig } = {}) {
   const headers = { 'Content-Type': 'application/json' }
 

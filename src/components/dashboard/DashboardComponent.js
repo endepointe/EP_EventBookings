@@ -30,15 +30,15 @@ const DashboardComponent = (props) => {
   }
 
   return (
-    <>
-      {openUserForm 
+    <Layout>
+      {!openUserForm 
         ? <UserForm 
             open={openUserForm} 
             handleOpenUserForm={handleOpenUserForm}
             user={props.user} />
         : <Dashboard />
       }
-    </>
+    </Layout>
   )
 }
 

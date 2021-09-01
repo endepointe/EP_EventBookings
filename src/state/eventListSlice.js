@@ -19,29 +19,34 @@ export const fetchEvents = createAsyncThunk('events/fetchEvents', async () => {
     
 const eventListSlice = createSlice({
   name: 'events',
-  initialState: initialState,
+  initialState,
   reducers: {
-    populate: {
-      reducer(state, action) {
-        state.events.push(action.payload);
-      },
-      prepare(id,name,capacity,description,summary,logo,venue_id,start,end,status,inventory_type) {
-        return {
-          payload: {
-            id, 
-            name, 
-            capacity, 
-            description, 
-            summary, 
-            logo, 
-            venue_id, 
-            start, 
-            end,
-            status, 
-            inventory_type
-          }
-        }
-      }
+    // populate: {
+    //   reducer(state, action) {
+    //     console.log(action.payload);
+    //     state.events.push(action.payload);
+    //   },
+    //   prepare(id,name,capacity,description,summary,logo,venue_id,start,end,status,inventory_type) {
+    //     return {
+    //       payload: {
+    //         id, 
+    //         name, 
+    //         capacity, 
+    //         description, 
+    //         summary, 
+    //         logo, 
+    //         venue_id, 
+    //         start, 
+    //         end,
+    //         status, 
+    //         inventory_type
+    //       }
+    //     }
+    //   }
+    // }
+    populate(state,action) {
+      console.log(action.payload); 
+      state.events.push(action.payload);
     }
   }
 });
