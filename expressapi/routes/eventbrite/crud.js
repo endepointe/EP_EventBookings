@@ -23,9 +23,9 @@ router.get('/read', async (req, res) => {
  
   // 2
   // array events
-  let eventResponse = await sdk.request(`/organizations/${organizationID}/events/`);
+  let eventResponse = await sdk.request(`/organizations/${organizationID}/events/?expand=venue`);
   let data = await eventResponse;
-
+  console.log(data.events[24].venue.address);
   // Extract event data and send to client
   /*
     string id,
@@ -41,27 +41,6 @@ router.get('/read', async (req, res) => {
     string inventory_type
   */
 
-  // get the venue address with venue_id
-  // https://www.eventbrite.com/platform/api#/reference/venue/retrieve-a-venue
-  // let venueData = await sdk.request(`/venues/${venue_id}/`);
-  // let venueAddress = await venueData.address.localized_address_display;
-  // console.log(await venueAddress);
-  console.log(data.events[24].venue_id)
-  data.events.forEach(async event => {
-    console.log(event.venue_id);
-    // left off here
-    ry {
-      if (event.venue_id) {
-        let venueData = await sdk.request(`/venues/${event.venue_id}/`);
-        let venueAddress = await venueData.address.localized_address_display;
-        console.log(venueAddress);
-        event.address = venueAddress;
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  })
-
   const newEvent = (eventData) => {
     let {
       id, 
@@ -70,8 +49,7 @@ router.get('/read', async (req, res) => {
       description, 
       summary, 
       logo, 
-      venue_id, 
-      address,
+      venue,
       start, 
       end, 
       status, 
@@ -79,6 +57,7 @@ router.get('/read', async (req, res) => {
     } = eventData;
     // todo: parse description text and create an object
 
+    console.log(venue);
     return {
       id, 
       name: name.text, 
@@ -86,8 +65,7 @@ router.get('/read', async (req, res) => {
       description: description.text, 
       summary, 
       logo: logo.url, 
-      venue_id, 
-      address,
+      venue: venue.address.localized_address_display, 
       start: {timezone: start.timezone, local: start.local, utc: start.utc}, 
       end: {timezone: end.timezone, local: end.local, utc: end.utc},
       status, 

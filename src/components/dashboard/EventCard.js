@@ -44,6 +44,9 @@ export default function EventCard(props) {
             gutterBottom variant="h5" component="h2">
             {props.event.name}
           </Typography>
+          <Typography variant="body1" component="p">
+            {props.event.venue}
+          </Typography>
           <Typography variant="body2" component="p">
             {new Date(props.event.start.local).toLocaleDateString()}
             {', '}
