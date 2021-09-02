@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const users = require('./routes/users/crud');
 const hubspot = require('./routes/hubspot/crud');
 const eventbrite = require('./routes/eventbrite/crud');
+const createStripeCustomers = require('./routes/stripe/customers/create')
 const app = express();
 const port = 8001;
 
@@ -19,6 +20,7 @@ app.use(cors(corsOptions));
 app.use('/users', users);
 app.use('/hubspot', hubspot);
 app.use('/eventbrite', eventbrite);
+app.use('/stripe/customers/create', createStripeCustomers);
 
 app.get('/', async (req,res) => {
 	res.json({msg: 'api route: /'})

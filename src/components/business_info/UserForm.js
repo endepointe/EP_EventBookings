@@ -66,7 +66,7 @@ class UserForm extends Component {
       // },
       data: {
         firstName: 'ende',
-        lastName: 'point',
+        lastName: 'pointe',
         email: this.props.user.email,
         phoneNumber: '12334567889',
         militaryBranch: '',
@@ -74,10 +74,10 @@ class UserForm extends Component {
         companyName: 'Endepointe', 
         websiteUrl: 'endepointe.com',
         description: 'all the things built here',
-        twitter: '',
-        instagram: '',
-        facebook: '',
-        linkedin: '',
+        twitter: 'ep_twitter',
+        instagram: 'ep_instagram',
+        facebook: 'ep_facebook',
+        linkedin: 'ep_linkedin',
         forms: {
           aafes: {
             pdf: null,

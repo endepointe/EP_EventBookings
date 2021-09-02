@@ -23,6 +23,7 @@
     "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
-    "pg-promise": "^10.11.0"
+    "pg-promise": "^10.11.0",
+    "stripe": "^8.174.0"
   }
 }

@@ -27,8 +27,44 @@ const hubspotClient = new hubspot.Client({apiKey: process.env.HUBSPOT_API_KEY})
 	vendor_head_shot,
 */
 
+// https://developers.hubspot.com/docs/api/crm/contacts
 router.post('/create', async (req, res) => {
 
+	console.log('req.body: ', req.body);
+
+	const properties = {
+		"firstname": req.body.firstName,
+		"lastname": req.body.lastName,
+		"email": req.body.email,
+		"phone": req.body.phoneNumber,
+		"branch_of_service_affiliation": req.body.militaryBranch,
+		"military_status": req.body.militaryStatus,
+		"company": req.body.companyName,
+		"website": req.body.websiteUrl,
+		"description_of_business": req.body.description,
+		"twitter_profile": req.body.twitter,
+		"instagram": req.body.instagram,
+		"facebook_profile": req.body.facebook,
+		"linkedin_profile": req.body.linkedin,
+		// "aafes_application_form": {},
+		// "aafes_visitor_form": {},
+		// "w9": {},
+		// "photo_release_form": {},
+		// "company_logo": {},
+		// "proof_of_veteran_or_military_spouse_status": {},
+		// "vendor_head_shot": {},
+	};
+
+	const simplePublicObjectInput = { properties };
+	
+	try {
+		const apiResponse = await hubspotClient.crm.contacts.basicApi.create(simplePublicObjectInput);
+		console.log(JSON.stringify(apiResponse.body, null, 2));
+	} catch (e) {
+		e.message === 'HTTP request failed'
+			? console.error(JSON.stringify(e.response, null, 2))
+			: console.error(e)
+	}
 });
 
 router.get('/read', async (req, res) => {

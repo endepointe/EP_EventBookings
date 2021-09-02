@@ -13,7 +13,7 @@ export const renderText = ({ type, label, color, ...rest }) => (
   </Typography>
 );
 
-export const renderInputField = ({ name, label, type, readOnly, state, onChange, required }) => {
+export const renderInputField = ({ name, label, type, readOnly, state, onChange, disabled, required }) => {
   const { data, errors } = state;
   return (
     <TextField
@@ -27,6 +27,7 @@ export const renderInputField = ({ name, label, type, readOnly, state, onChange,
       value={data[name]}
       error={errors[name] ? true : false}
       helperText={errors[name] ? errors[name] : ""}
+      disabled={disabled}
       InputProps={{
         readOnly: readOnly ? true : false
       }}
@@ -36,7 +37,7 @@ export const renderInputField = ({ name, label, type, readOnly, state, onChange,
   );
 };
 
-export const renderTextareaField = ({ name, label, type, state, onChange}) => {
+export const renderTextareaField = ({ name, label, type, state, disabled, onChange}) => {
   const {data, errors} = state;
   return (
     <TextField
@@ -53,6 +54,7 @@ export const renderTextareaField = ({ name, label, type, state, onChange}) => {
       multiline={true}
       minRows={3}
       maxRows={5}
+      disabled={disabled}
       onChange={onChange}
     />
   )

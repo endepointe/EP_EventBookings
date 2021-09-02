@@ -5,6 +5,7 @@ import { styles } from "../common/styles";
 import {
   renderButton,
   renderInputField,
+  renderTextareaField,
   renderText,
 } from "../common/DisplayComponent";
 
@@ -76,6 +77,7 @@ const Confirm = ({
                 label: "First Name",
                 required: true,
                 readOnly: true,
+                disabled: true,
                 onChange: null,
               })}
             </Grid>
@@ -85,11 +87,13 @@ const Confirm = ({
                 name: "lastName",
                 label: "Last Name",
                 required: true,
+                disabled: true,
                 readOnly: true,
                 onChange: null,
               })}
             </Grid>
           </Grid>
+
           <Grid container spacing={1} style={{ marginBottom: "16px" }}>
             <Grid item xs={12} sm={6}>
               {renderInputField({
@@ -97,6 +101,7 @@ const Confirm = ({
                 name: "phoneNumber",
                 label: "Phone",
                 required: true,
+                disabled: true,
                 readOnly: true,
                 onChange: null,
               })}
@@ -108,12 +113,137 @@ const Confirm = ({
                 label: "Email",
                 type: "email",
                 required: true,
+                disabled: true,
                 readOnly: true,
                 onChange: null,
               })}
             </Grid>
           </Grid>
-          <Grid container component={Box} justifyContent='flex-end' mt={2} p={2}>
+
+          <Grid container spacing={1} style={{ marginBottom: "16px" }}>
+            <Grid item xs={12} sm={6}>
+              {renderInputField({
+                state,
+                name: "militaryBranch",
+                label: "Branch of Service",
+                type: 'text',
+                required: true,
+                disabled: true,
+                readOnly: true,
+                onChange: null,
+              })}
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              {renderInputField({
+                state,
+                name: "militaryStatus",
+                label: "Military Status",
+                type: 'text',
+                required: true,
+                disabled: true,
+                readOnly: true,
+                onChange: null,
+              })}
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={1} style={{ marginBottom: "16px" }}>
+            <Grid item xs={12} sm={6}>
+              {renderInputField({
+                state,
+                name: "companyName",
+                label: "Company Name",
+                type: 'text',
+                required: true,
+                readOnly: true,
+                disabled: true,
+                onChange: null,
+              })}
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              {renderInputField({
+                state,
+                name: "websiteUrl",
+                label: "Website",
+                type: "text",
+                required: true,
+                disabled: true,
+                readOnly: true,
+                onChange: null,
+              })}
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={1} style={{ marginBottom: "16px" }}>
+            <Grid item xs={12} sm={6}>
+              {renderInputField({
+                state,
+                name: "twitter",
+                label: "Twitter",
+                type: 'text',
+                required: true,
+                readOnly: true,
+                disabled: true,
+                onChange: null,
+              })}
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              {renderInputField({
+                state,
+                name: "instagram",
+                label: "Instagram",
+                type: "text",
+                required: true,
+                readOnly: true,
+                disabled: true,
+                onChange: null,
+              })}
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={1} style={{ marginBottom: "16px" }}>
+            <Grid item xs={12} sm={6}>
+              {renderInputField({
+                state,
+                name: "facebook",
+                label: "Facebook",
+                type: 'text',
+                required: true,
+                disabled: true,
+                readOnly: true,
+                onChange: null,
+              })}
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              {renderInputField({
+                state,
+                name: "linkedin",
+                label: "LinkedIn",
+                type: "text",
+                required: true,
+                disabled: true,
+                readOnly: true,
+                onChange: null,
+              })}
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={1} style={{ marginBottom: "16px" }}>
+            <Grid item xs={12} sm={12}>
+              {renderTextareaField({
+                state,
+                name: "description",
+                label: "Business description",
+                type: 'text',
+                required: true,
+                disabled: true,
+                onChange: null,
+              })}
+            </Grid>
+          </Grid>
+
+          <Grid container 
+            component={Box} justifyContent='flex-end' mt={2} p={2}>
             <Box ml={2}>
               {renderButton({
                 label: "Back",

@@ -11,6 +11,8 @@ https://github.com/Chandra-Panta-Chhetri/react-file-upload-tutorial
 
 https://dev.to/chandrapantachhetri/responsive-react-file-upload-component-with-drag-and-drop-4ef8
 
+Hubspot API Docs:
+https://developers.hubspot.com/docs/api/overview?_ga=2.107862850.1714841156.1630574939-2025909848.1628381899
 
 HubSpot Contact API:
 https://developers.hubspot.com/docs/api/crm/contacts
@@ -23,3 +25,6 @@ https://www.freecodecamp.org/news/how-to-get-started-with-gatsby-2-and-redux-ae1
 
 Redux with Auth0 wrapRootElement:
 https://stackoverflow.com/questions/60234736/multiple-gatsby-wraprootelement-implementing-auth0-and-redux
+
+Stripe PaymentIntent:
+https://stripe.com/docs/payments/capture-later

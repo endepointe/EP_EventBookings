@@ -48,13 +48,13 @@ const FormUserContactInfo = ({state, handleChange, handleNextStep}) => {
           {renderSelect({
             state,
             name: "militaryBranch",
-            label: "Military Branch",
+            label: "Branch of Service",
             required: true,
             options: [
-              { key: "Army", value: "army" },
-              { key: "Navy", value: "navy" },
-              { key: "Air Force", value: "air force" },
-              { key: "Coast Guard", value: "coast guard" },
+              { key: "Army", value: "Army" },
+              { key: "Navy", value: "Navy" },
+              { key: "Air Force", value: "Air Force" },
+              { key: "Coast Guard", value: "Coast Guard" },
             ],
             onChange: handleChange,
           })}
@@ -68,9 +68,10 @@ const FormUserContactInfo = ({state, handleChange, handleNextStep}) => {
             label: "Military Status",
             required: true,
             options: [
-              { key: "Active duty", value: "active duty" },
-              { key: "Reserves", value: "reserves" },
-              { key: "Spouse", value: "spouse" },
+              { key: "Active duty", value: "Active duty" },
+              { key: "Reserves", value: "Reserves" },
+              { key: "Spouse", value: "Spouse" },
+              { key: "Retired", value: 'Retired'},
             ],
             onChange: handleChange,
           })}
