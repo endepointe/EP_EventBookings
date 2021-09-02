@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-09-02T08:29:43.393Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36" etag="db4PokmMvaiUBUGcsLHl" version="14.9.6" type="github">
+<mxfile host="app.diagrams.net" modified="2021-09-02T08:30:33.459Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36" etag="AeyPRQDLEQrQ_tF31WWy" version="14.9.6" type="github">
   <diagram id="TAQXc-Cmeh3G2Ub8K0Tv" name="Page-1">
     <mxGraphModel dx="2137" dy="1904" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -287,7 +287,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="52DgLM0DCwjhjDv2lJoS-11" value="save user data&amp;nbsp;&lt;br&gt;(not the pdfs)&lt;br&gt;to hubspot&amp;nbsp;&lt;br&gt;and local database&lt;br&gt;and send them to the dashboard&lt;br&gt;&lt;br&gt;the verified column&lt;br&gt;will remain unchecked&lt;br&gt;until user verifies&amp;nbsp;&lt;br&gt;their identity" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+        <mxCell id="52DgLM0DCwjhjDv2lJoS-11" value="save user data&amp;nbsp;&lt;br&gt;to hubspot&amp;nbsp;&lt;br&gt;and local database&lt;br&gt;(not the pdfs)&lt;br&gt;and send them to the dashboard&lt;br&gt;&lt;br&gt;the verified column&lt;br&gt;will remain unchecked&lt;br&gt;until user verifies&amp;nbsp;&lt;br&gt;their identity" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
           <mxGeometry x="285" y="985" width="150" height="160" as="geometry" />
         </mxCell>
         <mxCell id="52DgLM0DCwjhjDv2lJoS-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="52DgLM0DCwjhjDv2lJoS-16" target="kbmN2qe7JtzhFOVrP93k-28">
