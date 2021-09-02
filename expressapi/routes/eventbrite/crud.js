@@ -19,13 +19,13 @@ router.get('/read', async (req, res) => {
   let organizationResponse = await sdk.request('/users/me/organizations/');
   let organizationID = await organizationResponse.organizations[0].id;
 
-  console.log('Organization id: ', organizationID); 
+  // console.log('Organization id: ', organizationID); 
  
   // 2
   // array events
   let eventResponse = await sdk.request(`/organizations/${organizationID}/events/?expand=venue`);
   let data = await eventResponse;
-  console.log(data.events[24].venue.address);
+  // console.log(data.events[24].venue.address);
   // Extract event data and send to client
   /*
     string id,
@@ -57,7 +57,7 @@ router.get('/read', async (req, res) => {
     } = eventData;
     // todo: parse description text and create an object
 
-    console.log(venue);
+    // console.log(venue);
     return {
       id, 
       name: name.text, 

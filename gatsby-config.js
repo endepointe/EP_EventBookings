@@ -20,13 +20,13 @@ module.exports = {
         ignore: [`**/\.*`], // ignore files starting with a dot
       },
     },
-    {
-      resolve: `gatsby-source-stripe`,
-      options: {
-        objects: ['Balance', 'BalanceTransaction', 'Product', 'ApplicationFee', 'Sku', 'Subscription'],
-        secretKey: 'stripe_secret_key_here',
-        downloadFiles: true,
-      }
-    },
+    // {
+    //   resolve: `gatsby-source-stripe`,
+    //   options: {
+    //     objects: ['Balance', 'BalanceTransaction', 'Product', 'ApplicationFee', 'Sku', 'Subscription'],
+    //     secretKey: 'stripe_secret_key_here',
+    //     downloadFiles: true,
+    //   }
+    // },
   ],
 };

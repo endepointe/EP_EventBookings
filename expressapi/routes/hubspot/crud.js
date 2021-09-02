@@ -59,7 +59,8 @@ router.post('/create', async (req, res) => {
 	
 	try {
 		const apiResponse = await hubspotClient.crm.contacts.basicApi.create(simplePublicObjectInput);
-		console.log(JSON.stringify(apiResponse.body, null, 2));
+		// console.log(JSON.stringify(apiResponse.body, null, 2));
+		res.send(JSON.stringify(apiResponse.body, null, 2))
 	} catch (e) {
 		e.message === 'HTTP request failed'
 			? console.error(JSON.stringify(e.response, null, 2))

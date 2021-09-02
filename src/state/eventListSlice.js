@@ -45,7 +45,7 @@ const eventListSlice = createSlice({
     //   }
     // }
     populate(state,action) {
-      console.log(action.payload); 
+      // console.log(action.payload); 
       state.events.push(action.payload);
     }
   }
