@@ -27,35 +27,45 @@ const Success = ({ state, closeUserForm }) => {
       // also save user data to psql db for future login check
       async function hs() {
         console.log(state.data)
-        // 1st try
-        try {
-          let hubspotResponse = await fetch(`${process.env.EXPRESS_API_HOST}/hubspot/create`, 
-            {
-              method: 'POST', 
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(state.data)
-            });
+        // 1. create a new hubspot user
+        // try {
+        //   let hubspotResponse = await fetch(`${process.env.EXPRESS_API_HOST}/hubspot/create`, 
+        //     {
+        //       method: 'POST', 
+        //       headers: {
+        //         'Content-Type': 'application/json',
+        //       },
+        //       body: JSON.stringify(state.data)
+        //     });
 
-          // 2nd try
+          // create a test user. the hubspot user creation works
           try {
-            let hubspotUser = await hubspotResponse.json();
+            //let hubspotUser = await hubspotResponse.json();
+            let hubspotUser = {
+              id: 1234, 
+              properties: {
+                email: state.data.email, 
+                phone: '1234567890',
+                firstname: 'ftest',
+                lastname: 'ltest',
+              }
+            }
 
-            console.log('hubspotUser: ', hubspotUser);
+            //////////////////////
+            // save to local db //
+            //////////////////////
+
+            //console.log('hubspotUser: ', hubspotUser);
 
             if (hubspotUser.properties.email) {
               let userData = {
                 email: hubspotUser.properties.email,
-                phone: hubspotUser.properties.phone,
-                fname: hubspotUser.properties.firstname,
-                lname: hubspotUser.properties.lastname,
-                hsID: hubspotUser.id
               };
 
-              // 3rd try
+              // 3. Save user email to psql
               try {
-                let stripeResponse = await fetch(`${process.env.EXPRESS_API_HOST}/stripe/customer/create`, 
+                console.log(userData);
+                let userResponse = await fetch(`${process.env.EXPRESS_API_HOST}/users/create`, 
                   {
                     method: 'POST',
                     headers: {
@@ -63,9 +73,9 @@ const Success = ({ state, closeUserForm }) => {
                     },
                     body: JSON.stringify(userData),
                   }) 
-                let stripeData = await stripeResponse.json();
-                console.log(stripeData);
-                if (stripeData.msg) {
+                let newUser = await userResponse.json();
+                console.log(newUser);
+                if (!newUser.error) {
                   closeUserForm();
                 }
               } catch (err) { // 3rd catch
@@ -75,10 +85,10 @@ const Success = ({ state, closeUserForm }) => {
           } catch(err) { // 2nd catch
             console.error(err); 
           }
-        } catch (err) { // 1st catch
-          console.error(err);
-          return false;
-        }
+        // } catch (err) { // 1st catch
+        //   console.error(err);
+        //   return false;
+        // }
       }
       hs().then((res) => {
         if (res === true) {

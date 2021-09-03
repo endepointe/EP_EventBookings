@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Router, Link as ReachLink } from "@reach/router"
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
@@ -16,6 +16,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import EventIcon from '@material-ui/icons/Event';
 import PersonIcon from '@material-ui/icons/Person';
+import Avatar from '@material-ui/core/Avatar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import NavToolBar from './NavToolBar';
@@ -41,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
+    backgroundColor: 'rgb(21,97,173)',
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -61,14 +63,27 @@ const useStyles = makeStyles((theme) => ({
   reachLink: {
     textDecoration: 'none', 
     color: 'inherit',
+  }, 
+  avatarSmall: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+  },
+  avatarLarge: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
   }
 }));
 
 const Dashboard = (props) => {
+
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  useEffect(() => {
+    console.log(props.user);
+  });
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -95,30 +110,33 @@ const Dashboard = (props) => {
       </List>
       <Divider />
       <List>
+        <ListItem button>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary={'Files'} />
+        </ListItem>
+
+          <ListItem button>
+          <ListItemIcon>
+            <MailIcon />
+          </ListItemIcon>
+          <ListItemText primary={'Messages'} />
+        </ListItem>
+
+        <ReachLink 
+          className={classes.reachLink}
+          to="/dashboard/account">
           <ListItem button>
             <ListItemIcon>
-              <InboxIcon />
+              <Avatar 
+                className={classes.avatarSmall}
+                src={props.user.picture}
+                alt={props.user.name} />
             </ListItemIcon>
-            <ListItemText primary={'Files'} />
+            <ListItemText primary={'Account'} />
           </ListItem>
-
-           <ListItem button>
-            <ListItemIcon>
-              <MailIcon />
-            </ListItemIcon>
-            <ListItemText primary={'Messages'} />
-          </ListItem>
-
-          <ReachLink 
-            className={classes.reachLink}
-            to="/dashboard/account">
-            <ListItem button>
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText primary={'Account'} />
-            </ListItem>
-          </ReachLink>
+        </ReachLink>
       </List>
     </div>
   );
@@ -139,7 +157,7 @@ const Dashboard = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <NavToolBar/>
+          <NavToolBar user={props.user} />
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">

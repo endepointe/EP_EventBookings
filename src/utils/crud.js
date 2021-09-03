@@ -3,10 +3,13 @@
 // returns true or false
 export const userExists = async (email) => {
   try {
-
+    let data = {email: email};
     let res = await fetch('http://localhost:8001/users/find', {
       method: 'POST',
-      body: JSON.stringify({email: email})
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
     });
 
     let userEmail = await res.text();

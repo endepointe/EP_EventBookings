@@ -9,52 +9,9 @@ import {
   renderText,
 } from "../common/DisplayComponent";
 
-// data: {
-//   firstName: '',
-//   lastName: '',
-//   email: this.props.user.email,
-//   phoneNumber: '',
-//   militaryBranch: '',
-//   militaryStatus: '',
-//   companyName: '', 
-//   websiteUrl: '',
-//   description: '',
-//   twitter: '',
-//   instagram: '',
-//   facebook: '',
-//   linkedin: '',
-//   forms: {
-//     aafes: {
-//       pdf: null,
-//     },
-//     w9: {
-//       pdf: null,
-//     },
-//     visitorPass: {
-//       pdf: null,
-//     },
-//     photoRelease: {
-//       pdf: null,
-//     },
-//     companyLogo: {
-//       image: null,
-//     },
-//     proofOfStatus: {
-//       image: null,
-//     },
-//     vendorHeadshot: {
-//       image: null,
-//     }
-//   }
-// },
-
 const Confirm = ({
     state, 
     handleSave, handleBackStep}) => {
-  
-  // useEffect(() => {
-  //   console.log(state);
-  // }, [state.saving]);
 
   return (
     <>

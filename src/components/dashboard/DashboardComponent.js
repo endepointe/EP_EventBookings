@@ -15,7 +15,11 @@ const DashboardComponent = (props) => {
   useEffect(() => {
     async function checkUserRegistration() {
       // for new accounts
-      if(await userExists(props.user.email) === false &&
+      console.log('props.user.email: ', props.user.email);
+      let exists = await userExists(props.user.email);
+      console.log('exists: ', exists);
+      if (!exists &&  
+      //if(await userExists(props.user.email) === false &&
         isAuthenticated()) {
         handleOpenUserForm();
       }
@@ -36,7 +40,7 @@ const DashboardComponent = (props) => {
             open={openUserForm} 
             handleOpenUserForm={handleOpenUserForm}
             user={props.user} />
-        : <Dashboard />
+        : <Dashboard user={props.user} />
       }
     </Layout>
   )

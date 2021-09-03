@@ -7,8 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
+import Avatar from '@material-ui/core/Avatar';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
@@ -116,7 +115,10 @@ export default function NavToolBar(props) {
           aria-haspopup="true"
           color="inherit"
         >
-          <AccountCircle />
+          <Avatar 
+            className={classes.avatarSmall}
+            src={props.user.picture}
+            alt={props.user.name} />
         </IconButton>
         <p>Logout</p>
       </MenuItem>
@@ -153,7 +155,10 @@ export default function NavToolBar(props) {
             onClick={handleProfileMenuOpen}
             color="inherit"
           >
-            <AccountCircle />
+            <Avatar 
+              className={classes.avatarSmall}
+              src={props.user.picture}
+              alt={props.user.name} />
           </IconButton>
         </div>
         <div className={classes.sectionMobile}>
