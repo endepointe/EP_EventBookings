@@ -21,15 +21,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import NavToolBar from './NavToolBar';
 import {EventList} from './EventList';
+import VendorCheckout from './VendorCheckout';
 
 // for layout ideas until components are made
 let Account = () => <div>Account Page</div>
-let VendorCheckout = (props) => {
-  console.log(props);
-  return (
-    <div>become a vendor</div> 
-  )
-}
 
 const drawerWidth = 240;
 
