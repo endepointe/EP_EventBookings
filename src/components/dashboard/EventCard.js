@@ -29,6 +29,7 @@ const useStyles = makeStyles({
 });
 
 export default function EventCard(props) {
+
   const classes = useStyles();
 
   return (
