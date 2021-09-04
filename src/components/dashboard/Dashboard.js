@@ -24,6 +24,12 @@ import {EventList} from './EventList';
 
 // for layout ideas until components are made
 let Account = () => <div>Account Page</div>
+let VendorCheckout = (props) => {
+  console.log(props);
+  return (
+    <div>become a vendor</div> 
+  )
+}
 
 const drawerWidth = 240;
 
@@ -82,7 +88,7 @@ const Dashboard = (props) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   useEffect(() => {
-    console.log(props.user);
+    // console.log(props.user);
   });
 
   const handleDrawerToggle = () => {
@@ -197,6 +203,7 @@ const Dashboard = (props) => {
         <Router>
           <EventList path="/dashboard/events" />
           <Account path="/dashboard/account"/>
+          <VendorCheckout path="/dashboard/vendor-checkout"/>
         </Router>
       </main>
     </div>
