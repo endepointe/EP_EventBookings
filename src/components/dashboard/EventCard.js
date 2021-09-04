@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import stripe from '../../utils/stripe';
 
 const useStyles = makeStyles({
   root: {
@@ -29,6 +30,11 @@ const useStyles = makeStyles({
 
 export default function EventCard(props) {
   const classes = useStyles();
+
+  const handleBecomeVendor = () => {
+    // create stripe customer
+    console.log(stripe.findUser());
+  }
 
   return (
     <Card className={classes.root}>
@@ -60,7 +66,9 @@ export default function EventCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button 
+          onClick={handleBecomeVendor}
+          size="small" color="primary">
           Become a Vendor
         </Button>
         <Button size="small" color="primary">
