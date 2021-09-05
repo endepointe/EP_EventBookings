@@ -105,25 +105,25 @@ const Dashboard = (props) => {
             <ListItemIcon>
               <EventIcon /> 
             </ListItemIcon>
-            <ListItemText primary={'Find Events'} />
+            <ListItemText primary={'Events'} />
           </ListItem>
         </ReachLink>
       </List>
       <Divider />
       <List>
-        <ListItem button>
+        {/* <ListItem button>
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
           <ListItemText primary={'Files'} />
-        </ListItem>
+        </ListItem> */}
 
-          <ListItem button>
+        {/* <ListItem button>
           <ListItemIcon>
             <MailIcon />
           </ListItemIcon>
           <ListItemText primary={'Messages'} />
-        </ListItem>
+        </ListItem> */}
 
         <ReachLink 
           className={classes.reachLink}

@@ -1,50 +1,82 @@
 import React, {useEffect,useState} from 'react'
+// see note in the ./event_data/events.js file
 import {events} from './event_data/events';
 import {navigate} from '@reach/router';
+import { makeStyles } from '@material-ui/core/styles';
+import {
+  CardMedia,
+  Container,
+  Grid,
+  Hidden,
+  Typography} from '@material-ui/core'; 
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap', 
+  },
+  header: {
+    marginBottom: '2.5rem'
+  },
+  media: {
+    width: '100%',
+    height: 140,
+    marginBottom: '2rem',
+  }
+}));
 
 export default function VendorCheckout(props) {
+  const classes = useStyles();
+  const {event} = props.location.state;
   const [content, setContent] = useState({});
 
   useEffect(() => {
-    console.log(props.location.state.event.id) 
+    console.log(event)
     for (let i = 0; i < events.length; i++) {
-      if (events[i].id === 4321) {
-        setContent(events[i]);
+      if (events[i].id === event.id ) {
+        setContent(events[i].content);
         break;
       } 
     }
+    console.log(content)
     if (props.location.state === null) {
       navigate('dashboard'); 
     }
-  }, [content]);
-  console.log(content.content)
+  }, [content, props.location.state, event.id]);
+
   return (
-    <div>
-      <h3>{props.location.state.event.summary}</h3> 
-      <h1>{props.location.state.event.name}</h1>
-
-      <p>{content?.id}</p>
-      <ul>
-        {/* {content?.content.map(c => (
-          <li>{c}</li> 
-        ))}  */}
-      </ul>
-      <p>This event is Free to attend, everyone is welcome to support local veteran entrepreneurs, shop quality goods and services.</p>
-
-      <p>This event will showcase 30 of the best veteran, military & spouse-owned businesses under one roof.</p>
-
-      <p>Jewelry | Woodworking | Health & Wellness | Home Improvement | Apparel | Food |Luxury Fragrances | Roasted to Order Coffee and More</p>
-
-      <p>Get your tickets to Engage, Support, Grow... Free and open to the public.</p>
-
-      <p>You don't have to be a Veteran to support Veteran Businesses. Get your FREE ticket to support the local veteran-owned businesses. Bring your family and share this event with a friend.</p>
-
-      <h2>Vendors Reserve Your Space Now</h2>
-      <h4>Vendor Qualification:</h4>
-      <ul>
-        <li>Must be a Veteran, Military Spouse, and Dependents (Must have ID)</li> 
-        <li>Must sell a product (unfortunately no service vendors allowed at this event).</li>
-      </ul>
-    </div> 
+    <Container className={classes.root}>
+      <Grid container spacing={3} className={classes.header}>
+        <Hidden only={['md','lg','xl']}>
+          <CardMedia 
+            className={classes.media}
+            image={event.logo} title={event.name} />
+        </Hidden>
+        <Typography 
+          gutterBottom
+          variant="h4">{event.name}</Typography>
+        <Typography 
+          gutterBottom 
+          variant="h5">{event.summary}</Typography> 
+        
+      </Grid>
+      <Grid container spacing={3} className={classes.container}>
+        <Grid xs={12} sm={12} md={8}>
+          {Object.entries(content).map((c,i) => (
+            <Typography paragraph key={i}>{c[1]}</Typography> 
+          ))} 
+        </Grid>
+        <Hidden only={["xs","sm"]}>
+          <Grid xs={4}>
+            <CardMedia 
+              className={classes.media}
+              image={event.logo} title={event.name} /> 
+          </Grid>
+        </Hidden>
+      </Grid>
+    </Container> 
   )
 }

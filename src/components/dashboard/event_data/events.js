@@ -7,7 +7,7 @@
 
 const events = [
   {
-    id: 167122091675,
+    id: '167122091675',
     content: [
       "This event is Free to attend, everyone is welcome to support local veteran entrepreneurs, shop quality goods and services.",
       "This event will showcase 30 of the best veteran, military & spouse-owned businesses under one roof.",
@@ -17,7 +17,7 @@ const events = [
     ],
   },
   {
-    id: 167392835477,
+    id: '167392835477',
     content: [
       'paragragh 1',
       'paragragh 2',
