@@ -1,7 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import { PersonPinSharp } from '@material-ui/icons';
+import {
+  Container,
+  Grid,
+  Modal,
+  Typography
+} from '@material-ui/core';
 
 function getModalStyle() {
 
@@ -37,19 +41,17 @@ export default function VendorPackageModal(props) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">package name</h2>
-      <p id="simple-modal-description">
-        get this data from stripe
-      </p>
+      <Typography id="simple-modal-title">Event Packages</Typography>
+      <Typography id="simple-modal-description">
+        Choose one:
+      </Typography>
       <div>
         {props.products.map((product, idx) => (
           <div key={idx}>
-            <p>{product.product.name}</p>
-            {/* <ul>
-            {Object.entries(product[1].metadata).map((item, i) => (
-              <li key={i}>{item[1]}</li> 
+            <Typography>{product.product.name}</Typography>
+            {Object.entries(product.product.metadata).map((item, i) => (
+              <Typography key={i}>{item[1]}</Typography> 
             ))}
-            </ul> */}
           </div> 
         ))}
       </div>

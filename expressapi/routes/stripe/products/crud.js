@@ -9,8 +9,7 @@ router.get('/event-packages/all', async (req, res) => {
     'prod_K9Sd6RJdLFA4Rb',
   ]
 
-  const productList = [];
-  /*
+  ///*
   /////////////////
   // First solution
   // Use the stripe api to combine products and prices based on unique
@@ -18,36 +17,51 @@ router.get('/event-packages/all', async (req, res) => {
   // O(n) - check this. the awaits are still looping, just not using my
   //        resources.
 
-  for (let i = 0; i < packageIDs.length; i++) {
-    try {
-      let price = await stripe.prices.list({
-        product: packageIDs[i] 
-      })
-      let product = await stripe.products.retrieve(price.data[0].product);
-      productList.push({product: product, price: price.data[0].unit_amount})
-    } catch (err) {
-      console.error(err);
+  async function s() {
+    const list = []
+    for (let i = 0; i < packageIDs.length; i++) {
+      try {
+        let price_with_product = await stripe.prices.list({
+          product: packageIDs[i],
+          expand: ['data.product'],
+        })
+        list.push({
+          product: price_with_product.data[0].product, 
+          price: price_with_product.data[0].unit_amount
+        });
+      } catch (err) {
+        console.error(err);
+      }
     }
+    return list; 
   }
-  res.send(productList);
+  try {
+    const productList = await s()
+    res.send(productList);
+  } catch (err) {
+    console.error(err);
+  }
   // end first solution
   /////////////////////
-  */
 
+  //
+  //
+  //
+  //
+  //
 
-
-  ///*
+  /*
   ////////////////// 
   // Second solution
   // Get all products and prices and compare, using my own server resources. 
   // O(n^2)
+  const productList = [];
 
   const products = await stripe.products.list({
     ids: packageIDs,
   });
 
   const prices = await stripe.prices.list();
-
 
   async function combineProductPrice(products, prices, list) {
     for (let i = 0; i < prices.data.length; i++) {
@@ -72,7 +86,7 @@ router.get('/event-packages/all', async (req, res) => {
   }
   // end Second solution
   //////////////////////
-  //*/
+  */
 });
 
 module.exports = router;
