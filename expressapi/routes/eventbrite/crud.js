@@ -26,7 +26,7 @@ router.get('/read', async (req, res) => {
   let eventResponse = await sdk.request(`/organizations/${organizationID}/events/?expand=venue`);
   let data = await eventResponse;
   // Extract event data and send to client
-  console.log(data.events[24])
+  // console.log(data.events[24])
   /*
     string id,
     object name,

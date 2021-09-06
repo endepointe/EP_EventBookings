@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: '1.8rem', 
   },
   vendorPackageButton: {
-    color: '#1561ad',
+    color: '#d60404',
   },
   map: {
     width: '100%',
@@ -54,7 +54,12 @@ export default function VendorCheckout(props) {
   useEffect(() => {
     console.log(event)
     async function getProducts() {
-      setProducts(await getEventPackages());  
+      try {
+        let data = await getEventPackages();  
+        setProducts(data);
+      } catch (err) {
+        console.error(err);
+      }
     } 
     getProducts();
     console.log(products);

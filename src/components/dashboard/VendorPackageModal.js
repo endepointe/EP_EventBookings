@@ -42,16 +42,14 @@ export default function VendorPackageModal(props) {
         get this data from stripe
       </p>
       <div>
-        {Object.entries(props.products).map((product, idx) => (
+        {props.products.map((product, idx) => (
           <div key={idx}>
-            <p>{product[1].name}</p>
-            {/* expand product to include price */}
-            {/* <p>{product[1]}</p> */}
-            <ul>
+            <p>{product.product.name}</p>
+            {/* <ul>
             {Object.entries(product[1].metadata).map((item, i) => (
               <li key={i}>{item[1]}</li> 
             ))}
-            </ul>
+            </ul> */}
           </div> 
         ))}
       </div>
