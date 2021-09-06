@@ -1,15 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { PersonPinSharp } from '@material-ui/icons';
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
 
   return {
     top: `50%`,
@@ -32,17 +26,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EventListModal(props) {
+export default function VendorPackageModal(props) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = useState(getModalStyle);
+
+  useEffect(() => {
+    console.log(props.products);
+  });
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">{props.event.name}</h2>
+      <h2 id="simple-modal-title">package name</h2>
       <p id="simple-modal-description">
-        {props.event.summary}
+        get this data from stripe
       </p>
+      <div>
+        {Object.entries(props.products).map((product, idx) => (
+          <div key={idx}>
+            <p>{product[1].name}</p>
+            {/* expand product to include price */}
+            {/* <p>{product[1]}</p> */}
+            <ul>
+            {Object.entries(product[1].metadata).map((item, i) => (
+              <li key={i}>{item[1]}</li> 
+            ))}
+            </ul>
+          </div> 
+        ))}
+      </div>
     </div>
   );
 
@@ -50,7 +62,7 @@ export default function EventListModal(props) {
     <div>
       <Modal
         open={props.open}
-        onClose={props.toggleModal}
+        onClose={props.handlePackageModal}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
