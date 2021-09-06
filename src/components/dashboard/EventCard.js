@@ -46,7 +46,7 @@ export default function EventCard(props) {
             {props.event.name}
           </Typography>
           <Typography variant="body1" component="p">
-            {props.event.venue}
+            {props.event.venue.address.localized_address_display}
           </Typography>
           <Typography variant="body2" component="p">
             {new Date(props.event.start.local).toLocaleDateString()}
