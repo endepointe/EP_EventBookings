@@ -12,7 +12,9 @@ import {
   Hidden,
   Typography} from '@material-ui/core'; 
 import VendorPackageModal from './VendorPackageModal';
+import VendorDisqualDrawer from './VendorDisqualDrawer';
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
+import BlockIcon from '@material-ui/icons/Block';
 // import GoogleMapReact from 'google-map-react';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,15 +38,17 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: '1.8rem', 
   },
   vendorPackageButton: {
-    color: '#d60404',
+    color: 'rgb(21,97,173)',
+  },
+  vendorDisqualButton: {
+    color: 'rgb(212,34,34)',
   },
   map: {
     width: '100%',
-    height: '500px' 
+    height: '500px',
+    marginTop: '1em',
   }
 }));
-
-
 
 export default function VendorCheckout(props) {
   const classes = useStyles();
@@ -56,6 +60,7 @@ export default function VendorCheckout(props) {
 
   useEffect(() => {
     console.log(event)
+    // later on, set these products in the redux store
     async function getProducts() {
       try {
         let data = await getEventPackages();  
@@ -174,21 +179,25 @@ export default function VendorCheckout(props) {
             </Typography>
           </Grid>
         </Hidden>
-        <Grid item xs={12}>
-          <Button 
-            className={classes.vendorPackageButton}
-            variant="outlined"
-            onClick={handlePackageModal}>
-            <BusinessCenterIcon/> 
-            Vendor Events Packages 
-          </Button> 
-          <Button 
-            className={classes.vendorPackageButton}
-            variant="outlined"
-            onClick={handleDisqualDrawer}>
-            <BusinessCenterIcon/> 
-            Vendor Disqualifying Items
-          </Button> 
+        <Grid container className={classes.root} spacing={2}>
+          <Grid item xs={6}>
+            <Button 
+              className={classes.vendorPackageButton}
+              variant="outlined"
+              onClick={handlePackageModal}>
+              <BusinessCenterIcon/> 
+              Vendor Events Packages 
+            </Button> 
+          </Grid>
+          <Grid item xs={6}>
+            <Button 
+              className={classes.vendorDisqualButton}
+              variant="outlined"
+              onClick={handleDisqualDrawer}>
+              <BlockIcon/> 
+              Vendor Disqualifying Items
+            </Button> 
+          </Grid>
         </Grid>
       </Grid>
       <div className={classes.map}>
@@ -201,6 +210,8 @@ export default function VendorCheckout(props) {
       <VendorPackageModal 
         products={products}
         open={modalOpen} handlePackageModal={handlePackageModal} />
+      <VendorDisqualDrawer 
+        open={bottomDrawer} handleDisqualDrawer={handleDisqualDrawer} />
     </Container> 
   )
 }
