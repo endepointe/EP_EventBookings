@@ -13,13 +13,15 @@ import {
   Typography} from '@material-ui/core'; 
 import VendorPackageModal from './VendorPackageModal';
 import VendorDisqualDrawer from './VendorDisqualDrawer';
-import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
+// import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import BlockIcon from '@material-ui/icons/Block';
+import PackageTabs from './PackageTabs';
 // import GoogleMapReact from 'google-map-react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    paddingTop: '2em',
   },
   container: {
     display: 'flex',
@@ -181,15 +183,18 @@ export default function VendorCheckout(props) {
         </Hidden>
         <Grid container className={classes.root} spacing={2}>
           <Grid item xs={6}>
-            <Button 
+            <Typography paragraph align="left" variant="h5">
+              Vendor Event Packages 
+            </Typography>
+            {/* <Button 
               className={classes.vendorPackageButton}
               variant="outlined"
               onClick={handlePackageModal}>
               <BusinessCenterIcon/> 
               Vendor Events Packages 
-            </Button> 
+            </Button>  */}
           </Grid>
-          <Grid item xs={6}>
+          {/* <Grid item xs={6}>
             <Button 
               className={classes.vendorDisqualButton}
               variant="outlined"
@@ -197,9 +202,11 @@ export default function VendorCheckout(props) {
               <BlockIcon/> 
               Vendor Disqualifying Items
             </Button> 
-          </Grid>
+          </Grid> */}
+          <PackageTabs products={products} />
         </Grid>
       </Grid>
+      
       <div className={classes.map}>
         google map
         {/* <GoogleMapReact 
@@ -207,9 +214,9 @@ export default function VendorCheckout(props) {
           defaultCenter={
             {lat: event.latitude, lng: event.longitude}} /> */}
       </div>
-      <VendorPackageModal 
+      {/* <VendorPackageModal 
         products={products}
-        open={modalOpen} handlePackageModal={handlePackageModal} />
+        open={modalOpen} handlePackageModal={handlePackageModal} /> */}
       <VendorDisqualDrawer 
         open={bottomDrawer} handleDisqualDrawer={handleDisqualDrawer} />
     </Container> 

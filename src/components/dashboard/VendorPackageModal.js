@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Container,
   Grid,
   Modal,
   Typography
-} from '@material-ui/core';
+ } from '@material-ui/core';
 
 function getModalStyle() {
-
   return {
     top: `50%`,
     left: `50%`,
@@ -21,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     width: '100%',
     maxWidth: '768px',
-    height: '99%',
+    height: '96%',
     maxHeight: '97vh',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
