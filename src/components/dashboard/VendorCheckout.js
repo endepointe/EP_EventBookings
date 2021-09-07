@@ -44,11 +44,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+
+
 export default function VendorCheckout(props) {
   const classes = useStyles();
   const {event} = props.location.state;
   const [content, setContent] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
+  const [bottomDrawer, setBottomDrawer] = useState(false);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -73,10 +76,15 @@ export default function VendorCheckout(props) {
     if (props.location.state === null) {
       navigate('dashboard'); 
     }
-  }, [content,props.location.state,event.id]);
+  },[]);
 
+  
   const handlePackageModal = () => {
     setModalOpen(!modalOpen);
+  }
+
+  const handleDisqualDrawer = () => {
+    setBottomDrawer(!bottomDrawer);
   }
 
   return (
@@ -172,7 +180,14 @@ export default function VendorCheckout(props) {
             variant="outlined"
             onClick={handlePackageModal}>
             <BusinessCenterIcon/> 
-            Vendor Packages 
+            Vendor Events Packages 
+          </Button> 
+          <Button 
+            className={classes.vendorPackageButton}
+            variant="outlined"
+            onClick={handleDisqualDrawer}>
+            <BusinessCenterIcon/> 
+            Vendor Disqualifying Items
           </Button> 
         </Grid>
       </Grid>

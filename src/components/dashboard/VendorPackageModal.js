@@ -21,12 +21,13 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     width: '100%',
     maxWidth: '768px',
-    height: '80%',
+    height: '99%',
     maxHeight: '97vh',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    overflowY: 'auto',
   },
 }));
 
