@@ -9,7 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+  const { children, products, value, index, ...other } = props;
+  console.log(products)
 
   return (
     <div
@@ -20,9 +21,10 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
+        <>
+          {/* <Typography>{children}</Typography> */}
+          {console.log(products)}
+        </>
       )}
     </div>
   );
@@ -30,6 +32,7 @@ function TabPanel(props) {
 
 TabPanel.propTypes = {
   children: PropTypes.node,
+  products: PropTypes.any.isRequired,
   index: PropTypes.any.isRequired,
   value: PropTypes.any.isRequired,
 };
@@ -64,8 +67,6 @@ export default function PackageTabs(props) {
     setValue(index);
   };
 
-  console.log(props.products);
-
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
@@ -78,7 +79,9 @@ export default function PackageTabs(props) {
           aria-label="full width tabs example"
         >
           {props.products.map((product, idx) => (
-            <Tab label={product.product.name.slice(16)} {...a11yProps(idx)}/> 
+            <Tab 
+              key={idx} 
+              label={product.product.name.slice(16)} {...a11yProps(idx)}/> 
           ))}
         </Tabs>
       </AppBar>
@@ -87,25 +90,37 @@ export default function PackageTabs(props) {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
-        <TabPanel value={value} index={0} dir={theme.direction}>
+        <TabPanel 
+          products={props.products}
+          value={value} index={0} dir={theme.direction}>
           Item One
-          <div>
+          {/* <div>
             {props.products.map((product, idx) => (
               <div key={idx}>
                 <Typography>{product.product.name}</Typography>
                 {Object.entries(product.product.metadata).map((item, i) => (
                   <Typography key={i}>{item[1]}</Typography> 
+                ))}
+              </div> 
             ))}
-          </div> 
-        ))}
-      </div>
+          </div> */}
         </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
+        <TabPanel 
+          products={props.products}
+          value={value} index={1} dir={theme.direction}>
           Item Two
         </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
+        <TabPanel 
+          products={props.products}
+          value={value} index={2} dir={theme.direction}>
           Item Three
         </TabPanel>
+        {/* test panel iteration */}
+        <>
+          {/* {props.products.map((product, idx) => (
+            console.log(product, idx)
+          ))} */}
+        </>
       </SwipeableViews>
     </div>
   );
