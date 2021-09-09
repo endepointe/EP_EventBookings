@@ -1,7 +1,6 @@
 import React, {useEffect,useState} from 'react'
 // see note in the ./event_data/events.js file
 import {events} from './event_data/events';
-import {getEventPackages} from '../../utils/stripe';
 import {navigate} from '@reach/router';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -58,21 +57,8 @@ export default function VendorCheckout(props) {
   const [content, setContent] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
   const [bottomDrawer, setBottomDrawer] = useState(false);
-  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    console.log(event)
-    // later on, set these products in the redux store
-    async function getProducts() {
-      try {
-        let data = await getEventPackages();  
-        setProducts(data);
-      } catch (err) {
-        console.error(err);
-      }
-    } 
-    getProducts();
-    console.log(products);
     for (let i = 0; i < events.length; i++) {
       if (events[i].id === event.id ) {
         setContent(events[i].content);
@@ -203,7 +189,7 @@ export default function VendorCheckout(props) {
               Vendor Disqualifying Items
             </Button> 
           </Grid> */}
-          <PackageTabs products={products} />
+          <PackageTabs />
         </Grid>
       </Grid>
       

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  eventPackages: [],
+  packages: [],
   status: 'idle',
   error: null,
 };
@@ -22,4 +22,4 @@ const eventPackageSlice = createSlice({
 
 export const {populateEventPackages} = eventPackageSlice.actions;
 export default eventPackageSlice.reducer;
-export const getEventPackages = state => state.packages.eventPackages;
+export const getEventPackages = state => state.packages.packages;

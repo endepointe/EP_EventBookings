@@ -28,3 +28,8 @@ https://stackoverflow.com/questions/60234736/multiple-gatsby-wraprootelement-imp
 
 Stripe PaymentIntent:
 https://stripe.com/docs/payments/capture-later
+
+
+
+mount unmount components:
+https://stackoverflow.com/questions/54954385/react-useeffect-causing-cant-perform-a-react-state-update-on-an-unmounted-comp

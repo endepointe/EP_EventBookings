@@ -1,16 +1,29 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
+import {getEventPackages} from '../../utils/stripe';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import {
+  AppBar,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemIcon,
+  ListItemSecondaryAction,
+  ListItemText,
+  Avatar,
+  Tabs,
+  Tab,
+  Typography,
+} from '@material-ui/core';
+import FolderIcon from '@material-ui/icons/Folder';
+import DeleteIcon from '@material-ui/icons/Delete';
+import CheckIcon from '@material-ui/icons/Check';
 
 function TabPanel(props) {
-  const { children, products, value, index, ...other } = props;
-  console.log(products)
+  const { children, value, index, ...other } = props;
 
   return (
     <div
@@ -20,19 +33,13 @@ function TabPanel(props) {
       aria-labelledby={`full-width-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <>
-          {/* <Typography>{children}</Typography> */}
-          {console.log(products)}
-        </>
-      )}
+      {value === index && (<>{children}</>)}
     </div>
   );
 }
 
 TabPanel.propTypes = {
   children: PropTypes.node,
-  products: PropTypes.any.isRequired,
   index: PropTypes.any.isRequired,
   value: PropTypes.any.isRequired,
 };
@@ -52,12 +59,34 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     maxWidth: 560,
   },
+  packageMetadata: {
+    padding: '1.6em', 
+    color: 'rgb(111,111,111)',
+  }
 }));
 
-export default function PackageTabs(props) {
+export default function PackageTabs() {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
+  const [packages, setPackages] = useState([]);
+
+  useEffect(() => {
+    // later on, set these products in the redux store
+    async function getPackages() {
+      try {
+        let data = await getEventPackages();  
+        setPackages(data);
+      } catch (err) {
+        console.error(err);
+      }
+    } 
+    getPackages();
+    // unmount the data when changing tabs
+    return () => {
+      setPackages([]);
+    }
+  }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -78,10 +107,10 @@ export default function PackageTabs(props) {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          {props.products.map((product, idx) => (
+          {packages?.map((item, idx) => (
             <Tab 
               key={idx} 
-              label={product.product.name.slice(16)} {...a11yProps(idx)}/> 
+              label={item.product.name.slice(16)} {...a11yProps(idx)}/> 
           ))}
         </Tabs>
       </AppBar>
@@ -90,37 +119,65 @@ export default function PackageTabs(props) {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
-        <TabPanel 
-          products={props.products}
+        {packages?.map((item,idx) => (
+          // console.log(item, idx)
+          <TabPanel key={idx}
+            value={value} 
+            index={idx} 
+            dir={theme.direction}>
+              <Grid 
+                className={classes.packageMetadata} 
+                item xs={12}>
+                <Typography paragraph variant='h6'>
+                  Included in your package: 
+                </Typography> 
+                <List>
+                  {
+                    <ListItem>
+                      <ListItemText
+                        primary={'primary text'}
+                        secondary={'Secondary text'}
+                      />
+                      <ListItemSecondaryAction>
+                        <IconButton 
+                          disabled
+                          edge="end" aria-label="check-icon">
+                          <CheckIcon />
+                        </IconButton>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  }
+                </List>
+              </Grid>
+          </TabPanel>
+          // <TabPanel 
+          //   value={value} index={0} dir={theme.direction}>
+          //   <Grid item xs={12}
+          //     className={classes.packageMetadata}>
+          //     <Typography paragraph variand='h6'>
+          //       Included in your package: 
+          //     </Typography>
+          //   </Grid>
+          // </TabPanel>
+        ))}
+        {/* <TabPanel 
           value={value} index={0} dir={theme.direction}>
-          Item One
-          {/* <div>
-            {props.products.map((product, idx) => (
-              <div key={idx}>
-                <Typography>{product.product.name}</Typography>
-                {Object.entries(product.product.metadata).map((item, i) => (
-                  <Typography key={i}>{item[1]}</Typography> 
-                ))}
-              </div> 
-            ))}
-          </div> */}
+          <Grid item xs={12}
+            className={classes.packageMetadata}>
+            <Typography>{packages[0]?.price}</Typography>
+            <Typography paragraph variand='h6'>
+              Included in your package: 
+            </Typography>
+          </Grid>
         </TabPanel>
         <TabPanel 
-          products={props.products}
           value={value} index={1} dir={theme.direction}>
           Item Two
         </TabPanel>
         <TabPanel 
-          products={props.products}
           value={value} index={2} dir={theme.direction}>
           Item Three
-        </TabPanel>
-        {/* test panel iteration */}
-        <>
-          {/* {props.products.map((product, idx) => (
-            console.log(product, idx)
-          ))} */}
-        </>
+        </TabPanel> */}
       </SwipeableViews>
     </div>
   );
