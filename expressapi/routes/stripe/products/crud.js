@@ -11,11 +11,8 @@ router.get('/event-packages/all', async (req, res) => {
 
   ///*
   /////////////////
-  // First solution
   // Use the stripe api to combine products and prices based on unique
   // product id.
-  // O(n) - check this. the awaits are still looping, just not using my
-  //        resources.
 
   async function s() {
     const list = []
@@ -41,52 +38,6 @@ router.get('/event-packages/all', async (req, res) => {
   } catch (err) {
     console.error(err);
   }
-  // end first solution
-  /////////////////////
-
-  //
-  //
-  //
-  //
-  //
-
-  /*
-  ////////////////// 
-  // Second solution
-  // Get all products and prices and compare, using my own server resources. 
-  // O(n^2)
-  const productList = [];
-
-  const products = await stripe.products.list({
-    ids: packageIDs,
-  });
-
-  const prices = await stripe.prices.list();
-
-  async function combineProductPrice(products, prices, list) {
-    for (let i = 0; i < prices.data.length; i++) {
-      for (let j = 0; j < products.data.length; j++) {
-        if (prices.data[i].product === products.data[j].id) {
-          list.push({
-            product: products.data[j],
-            price: prices.data[i].unit_amount
-          })
-        }
-      }
-    }
-    return productList;
-  }
-
-  try {
-    combineProductPrice(products, prices, productList);
-    res.send(productList);
-  } catch (err) {
-    console.error(err)
-    res.send({msg: 'something went wrong, try again'})
-  }
-  // end Second solution
-  //////////////////////
-  */
 });
 
 module.exports = router;

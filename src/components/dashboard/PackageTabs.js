@@ -5,21 +5,17 @@ import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   AppBar,
+  Button,
   Grid,
   IconButton,
   List,
   ListItem,
-  ListItemAvatar,
-  ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
-  Avatar,
   Tabs,
   Tab,
   Typography,
 } from '@material-ui/core';
-import FolderIcon from '@material-ui/icons/Folder';
-import DeleteIcon from '@material-ui/icons/Delete';
 import CheckIcon from '@material-ui/icons/Check';
 
 function TabPanel(props) {
@@ -57,15 +53,21 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '2em',
     backgroundColor: theme.palette.background.paper,
     width: '100%',
-    maxWidth: 560,
+    maxWidth: 660,
   },
   packageMetadata: {
     padding: '1.6em', 
     color: 'rgb(111,111,111)',
+  },
+  metadataIcon: {
+    color: 'green'
+  },
+  selectPackageButton: {
+    backgroundColor: '#2bb441',
   }
 }));
 
-export default function PackageTabs() {
+export default function PackageTabs(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
@@ -114,6 +116,7 @@ export default function PackageTabs() {
           ))}
         </Tabs>
       </AppBar>
+
       <SwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={value}
@@ -128,56 +131,35 @@ export default function PackageTabs() {
               <Grid 
                 className={classes.packageMetadata} 
                 item xs={12}>
-                <Typography paragraph variant='h6'>
+                <Typography variant='h6'>
                   Included in your package: 
                 </Typography> 
                 <List>
-                  {
-                    <ListItem>
+                  {Object.entries(item.product.metadata).map((data, i) => (
+                    <ListItem key={i}>
                       <ListItemText
-                        primary={'primary text'}
-                        secondary={'Secondary text'}
+                        primary={data[1]}
+                        secondary={item.product.type}
                       />
                       <ListItemSecondaryAction>
                         <IconButton 
                           disabled
                           edge="end" aria-label="check-icon">
-                          <CheckIcon />
+                          <CheckIcon  className={classes.metadataIcon}/>
                         </IconButton>
                       </ListItemSecondaryAction>
                     </ListItem>
-                  }
+                  ))}
                 </List>
               </Grid>
-          </TabPanel>
-          // <TabPanel 
-          //   value={value} index={0} dir={theme.direction}>
-          //   <Grid item xs={12}
-          //     className={classes.packageMetadata}>
-          //     <Typography paragraph variand='h6'>
-          //       Included in your package: 
-          //     </Typography>
-          //   </Grid>
-          // </TabPanel>
+              <Grid container justifyContent='flex-end'>
+                <Button 
+                  onClick={() => props.handleSelectPackage(item.product,item.price)}
+                  className={classes.selectPackageButton}
+                  fullWidth>Select Package (${item.price / 100})</Button>
+              </Grid>
+            </TabPanel>
         ))}
-        {/* <TabPanel 
-          value={value} index={0} dir={theme.direction}>
-          <Grid item xs={12}
-            className={classes.packageMetadata}>
-            <Typography>{packages[0]?.price}</Typography>
-            <Typography paragraph variand='h6'>
-              Included in your package: 
-            </Typography>
-          </Grid>
-        </TabPanel>
-        <TabPanel 
-          value={value} index={1} dir={theme.direction}>
-          Item Two
-        </TabPanel>
-        <TabPanel 
-          value={value} index={2} dir={theme.direction}>
-          Item Three
-        </TabPanel> */}
       </SwipeableViews>
     </div>
   );

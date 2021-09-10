@@ -9,11 +9,12 @@ import {
   Container,
   Grid,
   Hidden,
-  Typography} from '@material-ui/core'; 
-import VendorPackageModal from './VendorPackageModal';
+  IconButton,
+  Typography
+} from '@material-ui/core'; 
+import WarningIcon from '@material-ui/icons/Warning';
+// import VendorPackageModal from './VendorPackageModal';
 import VendorDisqualDrawer from './VendorDisqualDrawer';
-// import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
-import BlockIcon from '@material-ui/icons/Block';
 import PackageTabs from './PackageTabs';
 // import GoogleMapReact from 'google-map-react';
 
@@ -21,6 +22,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     paddingTop: '2em',
+  },
+  row: {
+    flexGrow: 1,
+    flexDirection: 'row',
+    width: 'max-content'
   },
   container: {
     display: 'flex',
@@ -44,6 +50,12 @@ const useStyles = makeStyles((theme) => ({
   vendorDisqualButton: {
     color: 'rgb(212,34,34)',
   },
+  checkoutButton: {
+    // backgroundColor: '#1561ad',
+    borderColor: '#1561ad',
+    color: '#1561ad',
+    borderWidth: '2px',
+  },
   map: {
     width: '100%',
     height: '500px',
@@ -57,6 +69,7 @@ export default function VendorCheckout(props) {
   const [content, setContent] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
   const [bottomDrawer, setBottomDrawer] = useState(false);
+  const [selectedPackage, setSelectedPackage] = useState({})
 
   useEffect(() => {
     for (let i = 0; i < events.length; i++) {
@@ -79,6 +92,12 @@ export default function VendorCheckout(props) {
   const handleDisqualDrawer = () => {
     setBottomDrawer(!bottomDrawer);
   }
+
+  const handleSelectPackage = (product, price) => {
+    setSelectedPackage({product,price});
+  }
+    console.log(selectedPackage);
+
 
   return (
     <Container className={classes.root}>
@@ -167,29 +186,50 @@ export default function VendorCheckout(props) {
             </Typography>
           </Grid>
         </Hidden>
-        <Grid container className={classes.root} spacing={2}>
-          <Grid item xs={6}>
-            <Typography paragraph align="left" variant="h5">
+
+        <Grid container 
+          alignContent='center'
+          className={classes.root} spacing={2}>
+          <Grid item xs={12} md={6}>
+            <Typography align="left" variant="h5">
               Vendor Event Packages 
             </Typography>
-            {/* <Button 
-              className={classes.vendorPackageButton}
-              variant="outlined"
-              onClick={handlePackageModal}>
-              <BusinessCenterIcon/> 
-              Vendor Events Packages 
-            </Button>  */}
           </Grid>
-          {/* <Grid item xs={6}>
-            <Button 
-              className={classes.vendorDisqualButton}
-              variant="outlined"
-              onClick={handleDisqualDrawer}>
-              <BlockIcon/> 
-              Vendor Disqualifying Items
-            </Button> 
-          </Grid> */}
-          <PackageTabs />
+        </Grid>
+
+        <Grid container 
+          className={classes.root} spacing={3} >
+          <Grid item xs={12} md={7}>
+            <PackageTabs handleSelectPackage={handleSelectPackage} />
+          </Grid>
+
+          <Hidden smDown>
+            <Grid item md={4}>
+              {selectedPackage.product 
+                ? 
+                  <>
+                    <Typography variant='body1'>Selected: {selectedPackage.product.name}</Typography>
+                    <Typography paragraph>
+                      ${selectedPackage.price / 100}
+                    </Typography>
+                    <Button fullWidth
+                      variant='outlined'
+                      onClick={() => alert('start checkout')}
+                      className={classes.checkoutButton}>Proceed to checkout</Button>
+                  </>
+                : null
+              }
+            </Grid>
+          </Hidden>
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <Typography align="right">
+            <IconButton onClick={handleDisqualDrawer}>
+              <WarningIcon color='error' fontSize='large' />
+            </IconButton>
+            see disqualifying items
+          </Typography>
         </Grid>
       </Grid>
       
