@@ -17,6 +17,7 @@ import WarningIcon from '@material-ui/icons/Warning';
 // import VendorPackageModal from './VendorPackageModal';
 import VendorDisqualDrawer from './VendorDisqualDrawer';
 import PackageTabs from './PackageTabs';
+import CheckoutDrawer from './CheckoutDrawer';
 // import GoogleMapReact from 'google-map-react';
 
 const useStyles = makeStyles((theme) => ({
@@ -70,6 +71,7 @@ export default function VendorCheckout(props) {
   const [content, setContent] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
   const [bottomDrawer, setBottomDrawer] = useState(false);
+  const [checkoutDrawer, setCheckoutDrawer] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState({})
 
   useEffect(() => {
@@ -79,7 +81,6 @@ export default function VendorCheckout(props) {
         break;
       } 
     }
-    console.log(content)
     if (props.location.state === null) {
       navigate('dashboard'); 
     }
@@ -98,8 +99,21 @@ export default function VendorCheckout(props) {
     setSelectedPackage({product,price});
   }
 
-  const handleCheckout = async () => {
-    console.log(await stripe.findUser(props.user.email))
+  const handleCheckoutDrawer = async () => {
+    try {
+      // let user = await stripe.findUser(props.user.email);
+      // console.log(user)
+      // if (user === null) {
+      //   let newUser = await stripe.createUser(props.user.email);
+      //   console.log('new user created: ', newUser);
+      // }
+      // console.log('user found: ', user); 
+      let user = await stripe.findOrCreateUser(props.user.email);
+      console.log('user found or created: ', user);
+      setCheckoutDrawer(!checkoutDrawer);
+    } catch (err) {
+      console.error(err); 
+    }
   }
 
   return (
@@ -217,7 +231,7 @@ export default function VendorCheckout(props) {
                     </Typography>
                     <Button fullWidth
                       variant='outlined'
-                      onClick={handleCheckout}
+                      onClick={handleCheckoutDrawer}
                       className={classes.checkoutButton}>Proceed to checkout</Button>
                   </>
                 : null
@@ -247,7 +261,11 @@ export default function VendorCheckout(props) {
         products={products}
         open={modalOpen} handlePackageModal={handlePackageModal} /> */}
       <VendorDisqualDrawer 
-        open={bottomDrawer} handleDisqualDrawer={handleDisqualDrawer} />
+        open={bottomDrawer} 
+        handleDisqualDrawer={handleDisqualDrawer} />
+      <CheckoutDrawer
+        open={checkoutDrawer} 
+        handleCheckoutDrawer={handleCheckoutDrawer}></CheckoutDrawer>
     </Container> 
   )
 }
