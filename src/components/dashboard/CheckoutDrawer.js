@@ -15,7 +15,6 @@ const stripePromise = loadStripe(`${process.env.STRIPE_PK_TEST}`);
 const useStyles = makeStyles({
   root: {
     flexGrow: 1, 
-    padding: '1em',
     color: 'rgb(90,90,90)'
   },
   list: {

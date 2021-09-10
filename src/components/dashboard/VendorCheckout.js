@@ -53,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
     color: 'rgb(212,34,34)',
   },
   checkoutButton: {
-    // backgroundColor: '#1561ad',
     borderColor: '#1561ad',
     color: '#1561ad',
     borderWidth: '2px',
@@ -264,7 +263,8 @@ export default function VendorCheckout(props) {
         open={bottomDrawer} 
         handleDisqualDrawer={handleDisqualDrawer} />
       <CheckoutDrawer
-        open={checkoutDrawer} 
+        // open={checkoutDrawer} 
+        open={true}
         handleCheckoutDrawer={handleCheckoutDrawer}></CheckoutDrawer>
     </Container> 
   )

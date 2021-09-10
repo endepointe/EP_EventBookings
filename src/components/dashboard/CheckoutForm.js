@@ -9,9 +9,12 @@ import CardSection from './CardSection';
 
 const useStyles = makeStyles({
   root: {
-    flexGrow: 1, 
-    width: 400,
+    // flexGrow: 1, 
   },
+  center: {
+    backgroundColor: 'black',
+    color: 'white', 
+  }
 });
 
 
@@ -45,15 +48,21 @@ export default function CheckoutForm() {
   };
 
   return (
-    <Grid container>
+    // <Grid container 
+    //   direction='column'
+    //   justifyContent='center' className={classes.root}>
+    <>
       <Grid item xs={12}>
-        <form className={classes.root} onSubmit={handleSubmit}>
-          <CardSection />
-          <button disabled={!stripe}>
-            Submit Payment
-          </button>
-        </form>
+        <CardSection />
       </Grid>
-    </Grid>
+      <Grid container>
+        <Button 
+          variant='contained' 
+          className={classes.center}
+          onClick={handleSubmit} disabled={!stripe}>
+          Submit Payment
+        </Button>
+      </Grid>
+    </>
   );
 }
