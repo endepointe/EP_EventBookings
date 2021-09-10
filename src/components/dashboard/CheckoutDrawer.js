@@ -13,10 +13,6 @@ import CheckoutForm from './CheckoutForm';
 const stripePromise = loadStripe(`${process.env.STRIPE_PK_TEST}`);
 
 const useStyles = makeStyles({
-  root: {
-    flexGrow: 1, 
-    color: 'rgb(90,90,90)'
-  },
   list: {
     width: '90%',
     maxWidth: 450,

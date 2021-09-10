@@ -239,13 +239,34 @@ export default function VendorCheckout(props) {
           </Hidden>
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} sm={7}>
           <Typography align="right">
             <IconButton onClick={handleDisqualDrawer}>
               <WarningIcon color='error' fontSize='large' />
             </IconButton>
             see disqualifying items
           </Typography>
+        </Grid>
+
+        <Grid item xs={12} md={10}>
+          <Hidden mdUp>
+            <Grid item md={4}>
+              {selectedPackage.product 
+                ? 
+                  <>
+                    <Typography variant='body1'>Selected: {selectedPackage.product.name}</Typography>
+                    <Typography paragraph>
+                      ${selectedPackage.price / 100}
+                    </Typography>
+                    <Button fullWidth
+                      variant='outlined'
+                      onClick={handleCheckoutDrawer}
+                      className={classes.checkoutButton}>Proceed to checkout</Button>
+                  </>
+                : null
+              }
+            </Grid>
+          </Hidden>
         </Grid>
       </Grid>
       
@@ -263,8 +284,8 @@ export default function VendorCheckout(props) {
         open={bottomDrawer} 
         handleDisqualDrawer={handleDisqualDrawer} />
       <CheckoutDrawer
-        // open={checkoutDrawer} 
-        open={true}
+        open={checkoutDrawer} 
+        // open={true}
         handleCheckoutDrawer={handleCheckoutDrawer}></CheckoutDrawer>
     </Container> 
   )

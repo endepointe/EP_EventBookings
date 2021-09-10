@@ -3,20 +3,18 @@ import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 import {
   Button,
   Grid,
+  Hidden,
 } from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import CardSection from './CardSection';
 
 const useStyles = makeStyles({
-  root: {
-    // flexGrow: 1, 
+  buttonContainer: {
   },
-  center: {
-    backgroundColor: 'black',
-    color: 'white', 
+  submitButton: {
+    left: 22 // temporary until issue with StripeElement + MUI Button is fixed
   }
 });
-
 
 export default function CheckoutForm() {
   const classes = useStyles();
@@ -48,21 +46,26 @@ export default function CheckoutForm() {
   };
 
   return (
-    // <Grid container 
-    //   direction='column'
-    //   justifyContent='center' className={classes.root}>
-    <>
-      <Grid item xs={12}>
-        <CardSection />
-      </Grid>
-      <Grid container>
-        <Button 
-          variant='contained' 
-          className={classes.center}
-          onClick={handleSubmit} disabled={!stripe}>
-          Submit Payment
-        </Button>
-      </Grid>
-    </>
+    <Grid container 
+      direction='column'
+      spacing={2}>
+        <Grid item xs={12}>
+          <CardSection />
+        </Grid>
+        <Grid item xs={12} className={classes.buttonContainer}>
+          <Button 
+            variant='contained'
+            fullWidth
+            className={classes.submitButton}
+            onClick={handleSubmit} disabled={!stripe}>
+            Submit Payment
+          </Button>
+        </Grid>
+        <Hidden lgUp>
+          <Grid item xs={12}>
+            hidden lgUP
+          </Grid>
+        </Hidden>
+    </Grid>
   );
 }

@@ -3,9 +3,9 @@
 */
 import React from 'react';
 import {
-  IconButton,
   Typography,
-  Grid
+  Grid,
+  InputLabel,
 } from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import {CardElement} from '@stripe/react-stripe-js';
@@ -16,10 +16,14 @@ const useStyles = makeStyles({
   // If the widh setting were missing in CheckoutDrawer, the width
   // here would have to be set to a static value. 
   root: {
+    margin: '0 auto',
     width: '100vw',
     maxWidth: 450, // must be <= width in CheckoutDrawer
   },
   cardElement: {
+    margin: '0 auto',  //
+    width: '420px',     //
+    maxWidth: '420px', // center within root div
     height: '40px',
     padding: '10px 12px',
     color: '#32325d',
@@ -46,16 +50,14 @@ function CardSection() {
   const classes = useStyles();
 
   return (
-    <Grid container 
-      justifyContent='center'
-      className={classes.root}>
-      <Grid item xs={11}>
-        <label>
-          <Typography variant='body1'>Card details</Typography>
-          <CardElement className={classes.cardElement} />
-        </label>
-      </Grid>
-    </Grid>
+    <div className={classes.root}>
+    {/* <Grid item xs={12}> */}
+      <InputLabel>
+        <Typography variant='body1'>Card details</Typography>
+        <CardElement className={classes.cardElement} />
+      </InputLabel>
+    {/* </Grid>  */}
+    </div>
   );
 };
 export default CardSection;

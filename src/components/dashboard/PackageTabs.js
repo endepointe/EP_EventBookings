@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '2em',
     backgroundColor: theme.palette.background.paper,
     width: '100%',
-    maxWidth: 660,
+    maxWidth: 996,
   },
   packageMetadata: {
     padding: '1.6em', 
