@@ -5,7 +5,8 @@ const cookieParser = require('cookie-parser');
 const users = require('./routes/users/crud');
 const hubspot = require('./routes/hubspot/crud');
 const eventbrite = require('./routes/eventbrite/crud');
-const createStripeCustomer = require('./routes/stripe/customer/create')
+const createStripeCustomer = require('./routes/stripe/customer/create');
+const findStripeCustomer = require('./routes/stripe/customer/find');
 const stripeProducts = require('./routes/stripe/products/crud');
 const app = express();
 const port = 8001;
@@ -21,6 +22,7 @@ app.use(cors(corsOptions));
 app.use('/users', users);
 app.use('/hubspot', hubspot);
 app.use('/eventbrite', eventbrite);
+app.use('/stripe/customer/find', findStripeCustomer);
 app.use('/stripe/customer/create', createStripeCustomer);
 app.use('/stripe/products/', stripeProducts);
 

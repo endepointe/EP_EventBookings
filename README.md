@@ -27,6 +27,7 @@ Redux with Auth0 wrapRootElement:
 https://stackoverflow.com/questions/60234736/multiple-gatsby-wraprootelement-implementing-auth0-and-redux
 
 Stripe PaymentIntent:
+-create a charge now but capture funds later (7 day max)
 https://stripe.com/docs/payments/capture-later
 
 

@@ -64,6 +64,11 @@ const useStyles = makeStyles((theme) => ({
   },
   selectPackageButton: {
     backgroundColor: '#2bb441',
+    color: '#efefef',
+    '&:hover': {
+      backgroundColor: '#1aa330',
+      color: '#efefef', 
+    }
   }
 }));
 

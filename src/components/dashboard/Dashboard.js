@@ -197,8 +197,12 @@ const Dashboard = (props) => {
         <div className={classes.toolbar} />
         <Router>
           <EventList path="/dashboard/events" />
-          <Account path="/dashboard/account"/>
-          <VendorCheckout path="/dashboard/vendor-checkout"/>
+          <Account 
+            user={props.user}
+            path="/dashboard/account"/>
+          <VendorCheckout 
+            user={props.user}
+            path="/dashboard/vendor-checkout"/>
         </Router>
       </main>
     </div>

@@ -1,6 +1,7 @@
 import React, {useEffect,useState} from 'react'
 // see note in the ./event_data/events.js file
 import {events} from './event_data/events';
+import stripe from '../../utils/stripe';
 import {navigate} from '@reach/router';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -96,8 +97,10 @@ export default function VendorCheckout(props) {
   const handleSelectPackage = (product, price) => {
     setSelectedPackage({product,price});
   }
-    console.log(selectedPackage);
 
+  const handleCheckout = async () => {
+    console.log(await stripe.findUser(props.user.email))
+  }
 
   return (
     <Container className={classes.root}>
@@ -188,7 +191,6 @@ export default function VendorCheckout(props) {
         </Hidden>
 
         <Grid container 
-          alignContent='center'
           className={classes.root} spacing={2}>
           <Grid item xs={12} md={6}>
             <Typography align="left" variant="h5">
@@ -198,7 +200,8 @@ export default function VendorCheckout(props) {
         </Grid>
 
         <Grid container 
-          className={classes.root} spacing={3} >
+          justifyContent='space-evenly'
+          className={classes.root} spacing={1} >
           <Grid item xs={12} md={7}>
             <PackageTabs handleSelectPackage={handleSelectPackage} />
           </Grid>
@@ -214,7 +217,7 @@ export default function VendorCheckout(props) {
                     </Typography>
                     <Button fullWidth
                       variant='outlined'
-                      onClick={() => alert('start checkout')}
+                      onClick={handleCheckout}
                       className={classes.checkoutButton}>Proceed to checkout</Button>
                   </>
                 : null
