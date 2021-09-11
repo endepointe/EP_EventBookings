@@ -33,7 +33,9 @@ export default function CheckoutDrawer(props) {
       onKeyDown={props.handleCheckoutDrawer}
     >
       <Elements stripe={stripePromise}>
-        <CheckoutForm/>
+        <CheckoutForm 
+          selectedPackage={props.selectedPackage}
+          user={props.user} cx={props.cx} />
       </Elements>
     </div>
   );

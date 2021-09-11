@@ -72,8 +72,10 @@ export default function VendorCheckout(props) {
   const [bottomDrawer, setBottomDrawer] = useState(false);
   const [checkoutDrawer, setCheckoutDrawer] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState({})
+  const [cx, setCx] = useState({});
 
   useEffect(() => {
+    console.log('user: ', props.user)
     for (let i = 0; i < events.length; i++) {
       if (events[i].id === event.id ) {
         setContent(events[i].content);
@@ -100,15 +102,9 @@ export default function VendorCheckout(props) {
 
   const handleCheckoutDrawer = async () => {
     try {
-      // let user = await stripe.findUser(props.user.email);
-      // console.log(user)
-      // if (user === null) {
-      //   let newUser = await stripe.createUser(props.user.email);
-      //   console.log('new user created: ', newUser);
-      // }
-      // console.log('user found: ', user); 
       let user = await stripe.findOrCreateUser(props.user.email);
       console.log('user found or created: ', user);
+      setCx(user[0])
       setCheckoutDrawer(!checkoutDrawer);
     } catch (err) {
       console.error(err); 
@@ -285,7 +281,9 @@ export default function VendorCheckout(props) {
         handleDisqualDrawer={handleDisqualDrawer} />
       <CheckoutDrawer
         open={checkoutDrawer} 
-        // open={true}
+        selectedPackage={selectedPackage}
+        user={props.user}
+        cx={cx}
         handleCheckoutDrawer={handleCheckoutDrawer}></CheckoutDrawer>
     </Container> 
   )

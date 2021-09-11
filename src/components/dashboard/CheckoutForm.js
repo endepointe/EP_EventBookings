@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import CardSection from './CardSection';
+import stripe_util from '../../utils/stripe'; 
 
 const useStyles = makeStyles({
   buttonContainer: {
@@ -16,10 +17,12 @@ const useStyles = makeStyles({
   }
 });
 
-export default function CheckoutForm() {
+export default function CheckoutForm(props) {
   const classes = useStyles();
   const stripe = useStripe();
   const elements = useElements();
+
+  console.log('attach cx: ', props.cx);
 
   const handleSubmit = async (event) => {
     // We don't want to let default form submission happen here,
@@ -37,12 +40,14 @@ export default function CheckoutForm() {
       card: elements.getElement(CardElement),
       billing_details: {
         // Include any additional collected billing details.
-        name: 'Jenny Rosen',
+        name: props.user.name,
       },
+      // customer: props.cx.id
     });
+    result.payment_amount = props.selectedPackage.price;
 
     console.log('create payment method result: ', result);
-    // stripePaymentMethodHandler(result);
+    stripe_util.stripePaymentMethodHandler(result);
   };
 
   return (

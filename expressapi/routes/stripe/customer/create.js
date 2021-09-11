@@ -8,7 +8,6 @@ router.post('/', async (req, res) => {
 		const customer = await stripe.customers.create({
 			email: req.body.email,
 		})
-		console.log('create cx req: ', customer);
 		res.send(customer);
 	} catch (err) {
 		console.error(err);	

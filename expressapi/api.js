@@ -8,6 +8,7 @@ const eventbrite = require('./routes/eventbrite/crud');
 const createStripeCustomer = require('./routes/stripe/customer/create');
 const findStripeCustomer = require('./routes/stripe/customer/find');
 const stripeProducts = require('./routes/stripe/products/crud');
+const stripePayments = require('./routes/stripe/payments/pay')
 const app = express();
 const port = 8001;
 
@@ -25,6 +26,7 @@ app.use('/eventbrite', eventbrite);
 app.use('/stripe/customer/find', findStripeCustomer);
 app.use('/stripe/customer/create', createStripeCustomer);
 app.use('/stripe/products/', stripeProducts);
+app.use('/stripe/payments/', stripePayments);
 
 app.get('/', async (req,res) => {
 	res.json({msg:'api route: /'})
