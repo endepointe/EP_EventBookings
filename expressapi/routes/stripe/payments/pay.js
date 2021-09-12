@@ -8,12 +8,13 @@ router.post('/pay', async (req, res) => {
     let intent;
     if (req.body.payment_method_id) {
       intent = await stripe.paymentIntents.create({
+        payment_method_types: ['card'],
         payment_method: req.body.payment_method_id,
         amount: req.body.payment_amount,
         currency: 'usd',
         confirmation_method: 'manual',
-        // customer: req.body.customer,
-        setup_future_usage: 'off_session',
+        customer: req.body.customer,
+        setup_future_usage: 'off_session', // attach cx to pm
         confirm: true, 
         capture_method: 'manual',// authorize now, capture later (7days)
       });
@@ -22,6 +23,10 @@ router.post('/pay', async (req, res) => {
         req.body.payment_intent_id
       );
     }
+    const pm = await stripe.paymentMethods.attach(
+      intent.payment_method, {customer: intent.customer} 
+    );
+    console.log(pm);
     res.send(_generateResponse(intent));
   } catch (err) {
     console.error(err); 
@@ -30,19 +35,27 @@ router.post('/pay', async (req, res) => {
 });
 
 const _generateResponse = (intent) => {
+  console.log('intent: ', intent);
+  console.log('intent.payment_method: ', intent.payment_method)
   if (
     intent.status === 'requires_action' &&
     intent.next_action.type === 'use_stripe_sdk' 
   ) {
+    console.log('attach customer object to pi')
     return {
       requires_action: true,
       payment_intent_client_secret: intent.client_secret 
     };
   } else if (intent.status === 'succeeded') {
-    console.log('attach customer object to pi')
+    console.log('pi succeeded')
     return {
       success: true 
     } 
+  } else if (intent.status === 'requires_capture') {
+    return {
+      success: true,
+      msg: 'your payment will be processed after vendor review',
+    }
   } else {
     return {error: 'Invalid PaymentIntent status'} 
   }

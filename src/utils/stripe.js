@@ -93,6 +93,7 @@ async function stripePaymentMethodHandler(result) {
       }) 
     }).then((result) => {
       result.json().then((json) => {
+        console.log(json)
         _handleServerResponse(json); 
         // console.log(json);
       })
@@ -117,6 +118,7 @@ async function _handleServerResponse(response) {
 }
 
 function _handleStripeJsResult(result) {
+  console.log(result)
   if (result.error) {
     return result.error; 
   } else {

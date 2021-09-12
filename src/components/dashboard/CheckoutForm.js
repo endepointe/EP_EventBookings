@@ -23,6 +23,7 @@ export default function CheckoutForm(props) {
   const elements = useElements();
 
   console.log('attach cx: ', props.cx);
+  // console.log('props.user: ', props.user);
 
   const handleSubmit = async (event) => {
     // We don't want to let default form submission happen here,
@@ -41,13 +42,18 @@ export default function CheckoutForm(props) {
       billing_details: {
         // Include any additional collected billing details.
         name: props.user.name,
+        email: props.user.email,
       },
       // customer: props.cx.id
     });
+
     result.payment_amount = props.selectedPackage.price;
+    result.customer_id = props.cx.id;
+
+    stripe_util.stripePaymentMethodHandler(result);
 
     console.log('create payment method result: ', result);
-    stripe_util.stripePaymentMethodHandler(result);
+    
   };
 
   return (
