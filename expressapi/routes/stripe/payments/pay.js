@@ -1,9 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const stripe = require('stripe')(`${process.env.STRIPE_SK_TEST}`);
+const {v4: uuidv4} = require('uuid');
+const {validate} = require('uuid');
 
 router.post('/pay', async (req, res) => {
-  console.log(req.body.payment_method_id, req.body.payment_amount)
+  let uniqueKey = uuidv4();
+  while (!validate(uniqueKey)) {
+    uniqueKey = uuidv4(); 
+  }
   try {
     let intent;
     if (req.body.payment_method_id) {
@@ -17,16 +22,18 @@ router.post('/pay', async (req, res) => {
         setup_future_usage: 'off_session', // attach cx to pm
         confirm: true, 
         capture_method: 'manual',// authorize now, capture later (7days)
+        description: req.body.description,
+      }, {
+        idempotencyKey: uniqueKey, 
       });
     } else if (req.body.payment_intent_id) {
       intent = await stripe.paymentIntents.confirm(
         req.body.payment_intent_id
       );
     }
-    const pm = await stripe.paymentMethods.attach(
+    await stripe.paymentMethods.attach(
       intent.payment_method, {customer: intent.customer} 
     );
-    console.log(pm);
     res.send(_generateResponse(intent));
   } catch (err) {
     console.error(err); 
@@ -36,12 +43,12 @@ router.post('/pay', async (req, res) => {
 
 const _generateResponse = (intent) => {
   console.log('intent: ', intent);
-  console.log('intent.payment_method: ', intent.payment_method)
+  // console.log('intent.payment_method: ', intent.payment_method)
   if (
     intent.status === 'requires_action' &&
     intent.next_action.type === 'use_stripe_sdk' 
   ) {
-    console.log('attach customer object to pi')
+    console.log('pi requires action')
     return {
       requires_action: true,
       payment_intent_client_secret: intent.client_secret 
@@ -52,9 +59,10 @@ const _generateResponse = (intent) => {
       success: true 
     } 
   } else if (intent.status === 'requires_capture') {
+    console.log('capture pi in stripe dashboard')
     return {
       success: true,
-      msg: 'your payment will be processed after vendor review',
+      msg: 'Thank you. Your payment will be processed after vendor review.',
     }
   } else {
     return {error: 'Invalid PaymentIntent status'} 

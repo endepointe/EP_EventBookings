@@ -24,6 +24,7 @@
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
     "pg-promise": "^10.11.0",
-    "stripe": "^8.174.0"
+    "stripe": "^8.174.0",
+    "uuid": "^8.3.2"
   }
 }

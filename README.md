@@ -30,7 +30,8 @@ Stripe PaymentIntent:
 -create a charge now but capture funds later (7 day max)
 https://stripe.com/docs/payments/capture-later
 
-
+Idempotency keys:
+https://github.com/uuidjs/uuid
 
 mount unmount components:
 https://stackoverflow.com/questions/54954385/react-useeffect-causing-cant-perform-a-react-state-update-on-an-unmounted-comp

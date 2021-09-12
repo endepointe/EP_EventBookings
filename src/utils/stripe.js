@@ -90,12 +90,11 @@ async function stripePaymentMethodHandler(result) {
         payment_method_id: result.paymentMethod.id, 
         payment_amount: result.payment_amount,
         customer: result.customer_id,
+        description: result.description,
       }) 
     }).then((result) => {
       result.json().then((json) => {
-        console.log(json)
         _handleServerResponse(json); 
-        // console.log(json);
       })
     }).catch((err) => {
       console.error(err); 
@@ -113,12 +112,12 @@ async function _handleServerResponse(response) {
     ).then(_handleStripeJsResult);
   } else {
     // show success message
-    console.log('attach cx to pi')
+    console.log(response)
+    return response; 
   }
 }
 
 function _handleStripeJsResult(result) {
-  console.log(result)
   if (result.error) {
     return result.error; 
   } else {

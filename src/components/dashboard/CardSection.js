@@ -20,9 +20,12 @@ const useStyles = makeStyles({
     width: '100vw',
     maxWidth: 450, // must be <= width in CheckoutDrawer
   },
+  cardDetails: {
+    paddingLeft: 22,
+  },
   cardElement: {
     margin: '0 auto',  //
-    width: '420px',     //
+    width: '100%',     //
     maxWidth: '420px', // center within root div
     height: '40px',
     padding: '10px 12px',
@@ -51,12 +54,12 @@ function CardSection() {
 
   return (
     <div className={classes.root}>
-    {/* <Grid item xs={12}> */}
       <InputLabel>
-        <Typography variant='body1'>Card details</Typography>
+        <div className={classes.cardDetails}>
+          <Typography variant='body1'>Card details</Typography>
+        </div>
         <CardElement className={classes.cardElement} />
       </InputLabel>
-    {/* </Grid>  */}
     </div>
   );
 };
