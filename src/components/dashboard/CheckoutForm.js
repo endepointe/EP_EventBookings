@@ -109,7 +109,7 @@ export default function CheckoutForm(props) {
     }
     result.description = JSON.stringify(description); 
 
-    stripe_util.stripePaymentMethodHandler(result);
+    console.log(await stripe_util.stripePaymentMethodHandler(result));
   };
 
   return (
