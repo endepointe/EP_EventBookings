@@ -9,6 +9,7 @@ import EmojiEventsSharpIcon from '@material-ui/icons/EmojiEventsSharp';
 import {makeStyles} from '@material-ui/core/styles';
 import CardSection from './CardSection';
 import stripe_util from '../../utils/stripe'; 
+import stripeLogo from '../../assets/powered_by_stripe_blurple_300x68.png';
 
 const useStyles = makeStyles({
   container: {
@@ -142,18 +143,25 @@ export default function CheckoutForm(props) {
         </Button>
       </Grid>
       <Grid container justifyContent="center">
-      <Grid 
-        item xs={10}>
-        <Typography variant='caption' display='block' gutterBottom>
-          You are authorizing Company Name to capture the amount above.
-        </Typography>
-        <Typography variant='caption' display='block' gutterBottom> 
-          You may see a temporary deduction on your account. This is a hold placed on the funds listed above and does not indicate an actual charge on your account.
-        </Typography>
-        <Typography variant='caption' display='block' gutterBottom> 
-          Your card will not be charged until we have reviewed the business you are providing at the event.
-        </Typography> 
+        <Grid 
+          item xs={10}>
+          <Typography variant='caption' display='block' gutterBottom>
+            You are authorizing Company Name to capture the amount above.
+          </Typography>
+          <Typography variant='caption' display='block' gutterBottom> 
+            You may see a temporary deduction on your account. This is a hold placed on the funds listed above and does not indicate an actual charge on your account.
+          </Typography>
+          <Typography variant='caption' display='block' gutterBottom> 
+            Your card will not be charged until we have reviewed the business you are providing at the event.
+          </Typography> 
+        </Grid>
       </Grid>
+      <Grid item xs={12}>
+        <Typography display='block' align='center'>
+          <a href="https://stripe.com/" target="_blank">
+            <img src={stripeLogo} alt="powered-by-stripe" />
+          </a>
+        </Typography>
       </Grid>
     </Grid>
   );
