@@ -9,7 +9,6 @@ import {
 } from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import {CardElement} from '@stripe/react-stripe-js';
-import * as styles from '../styles/Styles.module.css';
 
 const useStyles = makeStyles({
   // root style works due to the width setting in <CheckoutDrawer.
@@ -58,8 +57,10 @@ function CardSection() {
         <div className={classes.cardDetails}>
           <Typography variant='body1'>Billing Details</Typography>
         </div>
-        <div style={{paddingLeft: 20}}>
-        <input className={classes.cardElement} />
+        <div style={{paddingLeft: 16}}>
+          <input 
+            placeholder='Name'
+            style={{fontSize: '1em'}} className={classes.cardElement}/>
         </div>
       </InputLabel>
       <InputLabel>

@@ -39,7 +39,7 @@ export default function CheckoutDrawer(props) {
           className={classes.listLarge}
           role="presentation"
           onClick={props.handeCheckoutDrawer}
-          onKeyDown={props.handleCheckoutDrawer}
+          // onKeyDown={props.handleCheckoutDrawer}
         >
           <Elements stripe={stripePromise}>
             <CheckoutForm 
@@ -54,7 +54,7 @@ export default function CheckoutDrawer(props) {
           className={classes.listSmall}
           role="presentation"
           onClick={props.handeCheckoutDrawer}
-          onKeyDown={props.handleCheckoutDrawer}
+          // onKeyDown={props.handleCheckoutDrawer}
         >
           <Elements stripe={stripePromise}>
             <CheckoutForm 
