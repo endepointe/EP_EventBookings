@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const EventList = () => {
   const events = useSelector(getAllEvents);
+  console.log(events)
   const classes = useStyles();
   const [openModal, setOpenModal] = useState(false);
   

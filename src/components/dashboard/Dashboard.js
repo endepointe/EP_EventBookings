@@ -22,6 +22,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import NavToolBar from './NavToolBar';
 import {EventList} from './EventList';
 import VendorCheckout from './VendorCheckout';
+import vgaLogo from '../../assets/vga_logo_300x269.png';
 
 // for layout ideas until components are made
 let Account = () => <div>Account Page</div>
@@ -50,6 +51,12 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       display: 'none',
     },
+  },
+  logo: {
+    width: drawerWidth,
+  },
+  logoContainer: {
+    marginBottom: '1em',
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
@@ -92,10 +99,14 @@ const Dashboard = (props) => {
 
   const drawer = (
     <div>
+      <div className={classes.logoContainer}>
+        <ReachLink to="/">
+          <img 
+            className={classes.logo}
+            src={vgaLogo} alt="veterans-grow-america-home-page" />
+        </ReachLink>      
+      </div>
       {/* <div className={classes.toolbar} /> */}
-      <div>put a logo here</div>
-      <div>put a logo here</div>
-      <div>put a logo here</div>
       <Divider />
       <List>
         <ReachLink 
