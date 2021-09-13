@@ -6,6 +6,7 @@ import {
   Typography,
   Grid,
   InputLabel,
+  Divider,
 } from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import {CardElement} from '@stripe/react-stripe-js';
@@ -17,7 +18,7 @@ const useStyles = makeStyles({
   root: {
     margin: '0 auto',
     width: '100vw',
-    maxWidth: 450, // must be <= width in CheckoutDrawer
+    // maxWidth: 450, // must be <= width in CheckoutDrawer
   },
   cardDetails: {
     paddingLeft: 22,
@@ -25,7 +26,7 @@ const useStyles = makeStyles({
   cardElement: {
     margin: '0 auto',  //
     width: '100%',     //
-    maxWidth: '420px', // center within root div
+    // maxWidth: '420px', // center within root div
     height: '40px',
     padding: '10px 12px',
     color: '#32325d',
@@ -48,28 +49,13 @@ const useStyles = makeStyles({
 })
 
 // error object is made available to provide user feedback.
-function CardSection() {
+function CardSection(props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <InputLabel>
-        <div className={classes.cardDetails}>
-          <Typography variant='body1'>Billing Details</Typography>
-        </div>
-        <div style={{paddingLeft: 16}}>
-          <input 
-            placeholder='Name'
-            style={{fontSize: '1em'}} className={classes.cardElement}/>
-        </div>
-      </InputLabel>
-      <InputLabel>
-        <div className={classes.cardDetails}>
-          <Typography variant='body1'>Card details</Typography>
-        </div>
-        <CardElement className={classes.cardElement} />
-      </InputLabel>
-    </div>
+    <CardElement 
+      onChange={(e)=>props.onChange(e)}
+      className={classes.cardElement} /> 
   );
 };
 export default CardSection;

@@ -11,14 +11,9 @@ import CheckoutForm from './CheckoutForm';
 const stripePromise = loadStripe(`${process.env.STRIPE_PK_TEST}`);
 
 const useStyles = makeStyles({
-  // list: {
-  //   width: '90%',
-  //   maxWidth: 450,
-  // }
   listLarge: {
     width: 450,
     overflow: 'hidden',
-    // maxWidth: 450,
   },
   listSmall: {
     width: '100%',

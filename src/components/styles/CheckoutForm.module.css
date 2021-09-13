@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 input,
 button {
   -webkit-appearance: none;
@@ -5,6 +9,34 @@ button {
   appearance: none;
   outline: none;
   border-style: none;
+}
+
+/* html {
+  background-color: #6772e5;
+  font-size: 16px;
+  font-family: Roboto, Open Sans, Segoe UI, sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  text-rendering: optimizeLegibility;
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+} */
+
+#root {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.AppWrapper {
+  width: 500px;
+  height: 400px;
+  position: relative;
 }
 
 @keyframes fade {
@@ -26,10 +58,10 @@ button {
   margin: 0 15px 20px;
   padding: 0;
   border-style: none;
-  background-color: #7795f8;
+  background-color: #fff;
   will-change: opacity, transform;
   box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 #829fff;
+    inset 0 1px 0 #eee;
   border-radius: 4px;
 }
 
@@ -38,7 +70,9 @@ button {
   display: flex;
   -ms-flex-align: center;
   align-items: center;
-  margin-left: 0px;
+  margin-left: 15px;
+  height: 50px;
+  border-top: 1px solid #fff;
 }
 
 .FormRow:first-child {
@@ -49,7 +83,7 @@ button {
   width: 15%;
   min-width: 70px;
   padding: 11px 0;
-  color: #c4f0ff;
+  color: #111;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -72,13 +106,13 @@ button {
   font-size: 16px;
   width: 100%;
   padding: 11px 15px 11px 0;
-  color: #fff;
+  color: #111;
   background-color: transparent;
   animation: 1ms void-animation-out;
 }
 
 .FormRowInput::placeholder {
-  color: #87bbfd;
+  color: #111;
 }
 
 .StripeElement--webkit-autofill {
@@ -96,9 +130,9 @@ button {
   width: calc(100% - 30px);
   height: 40px;
   margin: 40px 15px 0;
-  background-color: #f6a4eb;
+  background-color: #1561ad;
   box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 #ffb9f6;
+    inset 0 1px 0 #1561ad;
   border-radius: 4px;
   color: #fff;
   font-weight: 600;
@@ -107,10 +141,14 @@ button {
   will-change: transform, background-color, box-shadow;
 }
 
+.SubmitButton:hover {
+  background-color: #5e94ca;
+}
+
 .SubmitButton:active {
-  background-color: #d782d9;
+  background-color: #1561ad;
   box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 #e298d8;
+    inset 0 1px 0 #1561ad;
   transform: scale(0.99);
 }
 
@@ -124,7 +162,7 @@ button {
 .SubmitButton:disabled {
   opacity: 0.5;
   cursor: default;
-  background-color: #7795f8;
+  background-color: #cbd1e6;
   box-shadow: none;
 }
 
