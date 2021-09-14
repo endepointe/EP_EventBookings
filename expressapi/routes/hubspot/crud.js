@@ -68,6 +68,40 @@ router.post('/create', async (req, res) => {
 	}
 });
 
+router.post('/find/user', async (req,res) => {
+	console.log('find email: ', req.body.email);
+	const contactId = req.body.email;
+	const properties = [
+		"firstname",
+		"lastname",
+		"email",
+		"phone",
+		"branch_of_service_affiliation",
+		"military_status",
+		"company",
+		"website",
+		"description_of_business",
+		"twitter_profile",
+		"instagram",
+		"facebook_profile",
+		"linkedin_profile",
+	];
+	const associations = undefined;
+	const archived = false;
+	const idProperty = 'email';
+	
+	try {
+		const apiResponse = await hubspotClient.crm.contacts.basicApi.getById(contactId, properties, associations, archived, idProperty);
+		console.log(JSON.stringify(apiResponse.body, null, 2));
+		res.send(apiResponse.body);
+	} catch (e) {
+		e.message === 'HTTP request failed'
+			? console.error(JSON.stringify(e.response, null, 2))
+			: console.error(e)
+		res.send({msg: 'oops, something went wrong'})
+	}
+})
+
 router.get('/read', async (req, res) => {
 	const limit = 10;
 	const after = undefined;

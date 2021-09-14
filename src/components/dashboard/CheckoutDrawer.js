@@ -25,6 +25,7 @@ const useStyles = makeStyles({
 // replace redish background with a stop icon
 
 export default function CheckoutDrawer(props) {
+  console.log(props);
   const classes = useStyles();
 
   const list = () => (

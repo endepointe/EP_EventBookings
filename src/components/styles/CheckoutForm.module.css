@@ -83,7 +83,7 @@ body {
   width: 15%;
   min-width: 70px;
   padding: 11px 0;
-  color: #111;
+  color: #a7a7a7;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -103,16 +103,16 @@ body {
 }
 
 .FormRowInput {
-  font-size: 16px;
+  font-size: 15px;
   width: 100%;
   padding: 11px 15px 11px 0;
-  color: #111;
+  color: #a7a7a7;
   background-color: transparent;
   animation: 1ms void-animation-out;
 }
 
 .FormRowInput::placeholder {
-  color: #111;
+  color: #a7a7a7;
 }
 
 .StripeElement--webkit-autofill {

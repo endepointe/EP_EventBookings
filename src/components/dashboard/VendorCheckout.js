@@ -1,4 +1,5 @@
 import React, {useEffect,useState} from 'react'
+import {useSelector} from 'react-redux';
 // see note in the ./event_data/events.js file
 import {events} from './event_data/events';
 import stripe from '../../utils/stripe';
@@ -46,6 +47,10 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '0',
     paddingRight: '1.8rem', 
   },
+  selectedPackage: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
   vendorPackageButton: {
     color: 'rgb(21,97,173)',
   },
@@ -75,7 +80,7 @@ export default function VendorCheckout(props) {
   const [cx, setCx] = useState({});
 
   useEffect(() => {
-    console.log('user: ', props.user)
+    console.log('state user: ', props.user);
     for (let i = 0; i < events.length; i++) {
       if (events[i].id === event.id ) {
         setContent(events[i].content);
@@ -209,27 +214,32 @@ export default function VendorCheckout(props) {
         </Grid>
 
         <Grid container 
-          justifyContent='space-evenly'
-          className={classes.root} spacing={1} >
+          justifyContent='space-between'
+          className={classes.root} spacing={4} >
           <Grid item xs={12} md={7}>
             <PackageTabs handleSelectPackage={handleSelectPackage} />
           </Grid>
 
           <Hidden smDown>
-            <Grid item md={4}>
+            <Grid item md={5}>
               {selectedPackage.product 
                 ? 
-                  <>
-                    <Typography variant='body1'>Selected: {selectedPackage.product.name}</Typography>
-                    <Typography paragraph>
+                  <div className={classes.selectedPackage}>
+                    <Typography 
+                      variant='body1'>Selected: {selectedPackage.product.name}</Typography>
+                    <Typography 
+                      paragraph>
                       ${selectedPackage.price / 100}
                     </Typography>
                     <Button fullWidth
                       variant='outlined'
                       onClick={handleCheckoutDrawer}
                       className={classes.checkoutButton}>Proceed to checkout</Button>
-                  </>
-                : null
+                  </div>
+                : 
+                  <div className={classes.selectedPackage}>
+                    <Typography variant='body1'>Select a package</Typography>
+                  </div>
               }
             </Grid>
           </Hidden>

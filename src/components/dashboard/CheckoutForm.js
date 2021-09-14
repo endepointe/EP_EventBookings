@@ -107,8 +107,8 @@ const CheckoutForm = (props) => {
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [billingDetails, setBillingDetails] = useState({
     email: props.user.email,
-    phone: props.cx.phone,
-    name: props.user.name 
+    phone: props.user.phone,
+    name: props.user.firstname + ' ' + props.user.lastname,
   });
   // console.log('props.cx: ', props.cx);
   // console.log('props.user: ', props.user);
