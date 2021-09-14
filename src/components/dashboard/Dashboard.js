@@ -54,9 +54,12 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     width: drawerWidth,
+    flex: 1,
   },
   logoContainer: {
     marginBottom: '1em',
+    display: 'flex',
+    justifyContent: 'center',
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
