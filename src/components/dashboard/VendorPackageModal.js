@@ -1,16 +1,12 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import { PersonPinSharp } from '@material-ui/icons';
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+import {
+  Grid,
+  Modal,
+  Typography
+ } from '@material-ui/core';
 
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
   return {
     top: `50%`,
     left: `50%`,
@@ -23,26 +19,41 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     width: '100%',
     maxWidth: '768px',
-    height: '80%',
+    height: '96%',
     maxHeight: '97vh',
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    overflowY: 'auto',
   },
 }));
 
-export default function EventListModal(props) {
+export default function VendorPackageModal(props) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
+  const [modalStyle] = useState(getModalStyle);
+
+  useEffect(() => {
+    console.log(props.products);
+  });
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">{props.event.name}</h2>
-      <p id="simple-modal-description">
-        {props.event.summary}
-      </p>
+      <Typography id="simple-modal-title">Event Packages</Typography>
+      <Typography id="simple-modal-description">
+        Choose one:
+      </Typography>
+      <div>
+        {props.products.map((product, idx) => (
+          <div key={idx}>
+            <Typography>{product.product.name}</Typography>
+            {Object.entries(product.product.metadata).map((item, i) => (
+              <Typography key={i}>{item[1]}</Typography> 
+            ))}
+          </div> 
+        ))}
+      </div>
     </div>
   );
 
@@ -50,7 +61,7 @@ export default function EventListModal(props) {
     <div>
       <Modal
         open={props.open}
-        onClose={props.toggleModal}
+        onClose={props.handlePackageModal}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >

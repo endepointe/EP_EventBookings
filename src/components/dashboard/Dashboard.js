@@ -1,4 +1,6 @@
 import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {loadUser} from '../../state/userSlice';
 import { Router, Link as ReachLink } from "@reach/router"
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
@@ -22,6 +24,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import NavToolBar from './NavToolBar';
 import {EventList} from './EventList';
 import VendorCheckout from './VendorCheckout';
+import vgaLogo from '../../assets/vga_logo_200x179.png';
 
 // for layout ideas until components are made
 let Account = () => <div>Account Page</div>
@@ -50,6 +53,14 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       display: 'none',
     },
+  },
+  logo: {
+    // flex: 1,
+  },
+  logoContainer: {
+    marginBottom: '0',
+    display: 'flex',
+    justifyContent: 'center',
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
@@ -81,9 +92,43 @@ const Dashboard = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
 
   useEffect(() => {
     // console.log(props.user);
+
+    async function findHubspotUser() {
+      let res = await fetch(`${process.env.EXPRESS_API_HOST}/hubspot/find/user`,{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({email: 'endepointe@gmail.com'})
+      })
+      // console.log('find user: ', await res.json());
+      let User = await res.json();
+
+      dispatch(loadUser(
+				User.properties.firstname,
+				User.properties.lastname,
+				User.properties.email,
+				User.properties.phone,
+				User.properties.branch_of_service_affiliation,
+				User.properties.military_status,
+				User.properties.company,
+				User.properties.website,
+				User.properties.description_of_business,
+				User.properties.twitter_profile,
+				User.properties.instagram,
+				User.properties.facebook_profile,
+				User.properties.linkedin_profile
+      ))
+    }
+    // if a user has not been loaded into state yet...
+    if (user.email.length === 0) {
+      findHubspotUser();
+    }
   });
 
   const handleDrawerToggle = () => {
@@ -92,10 +137,14 @@ const Dashboard = (props) => {
 
   const drawer = (
     <div>
+      <div className={classes.logoContainer}>
+        <ReachLink to="/">
+          <img 
+            className={classes.logo}
+            src={vgaLogo} alt="veterans-grow-america-home-page" />
+        </ReachLink>      
+      </div>
       {/* <div className={classes.toolbar} /> */}
-      <div>put a logo here</div>
-      <div>put a logo here</div>
-      <div>put a logo here</div>
       <Divider />
       <List>
         <ReachLink 
@@ -105,25 +154,25 @@ const Dashboard = (props) => {
             <ListItemIcon>
               <EventIcon /> 
             </ListItemIcon>
-            <ListItemText primary={'Find Events'} />
+            <ListItemText primary={'Events'} />
           </ListItem>
         </ReachLink>
       </List>
       <Divider />
       <List>
-        <ListItem button>
+        {/* <ListItem button>
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
           <ListItemText primary={'Files'} />
-        </ListItem>
+        </ListItem> */}
 
-          <ListItem button>
+        {/* <ListItem button>
           <ListItemIcon>
             <MailIcon />
           </ListItemIcon>
           <ListItemText primary={'Messages'} />
-        </ListItem>
+        </ListItem> */}
 
         <ReachLink 
           className={classes.reachLink}
@@ -197,8 +246,11 @@ const Dashboard = (props) => {
         <div className={classes.toolbar} />
         <Router>
           <EventList path="/dashboard/events" />
-          <Account path="/dashboard/account"/>
-          <VendorCheckout path="/dashboard/vendor-checkout"/>
+          <Account 
+            path="/dashboard/account"/>
+          <VendorCheckout 
+            user={user}
+            path="/dashboard/vendor-checkout"/>
         </Router>
       </main>
     </div>

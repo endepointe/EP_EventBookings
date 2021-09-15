@@ -18,9 +18,9 @@ const DashboardComponent = (props) => {
       console.log('props.user.email: ', props.user.email);
       let exists = await userExists(props.user.email);
       console.log('exists: ', exists);
-      if (!exists &&  
+      if (!exists){ // &&  
       //if(await userExists(props.user.email) === false &&
-        isAuthenticated()) {
+        // isAuthenticated()) {
         handleOpenUserForm();
       }
       return;
@@ -28,6 +28,10 @@ const DashboardComponent = (props) => {
     checkUserRegistration();
     
   }, [props.user.email]);
+
+  useEffect(() => {
+  
+  })
 
   const handleOpenUserForm = () => {
     setOpenUserForm(!openUserForm);

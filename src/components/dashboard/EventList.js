@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState} from 'react';
 import { useSelector } from 'react-redux';
 import {getAllEvents} from '../../state/eventListSlice';
 import EventCard from './EventCard';
@@ -23,13 +23,10 @@ const useStyles = makeStyles((theme) => ({
 
 export const EventList = () => {
   const events = useSelector(getAllEvents);
+  console.log(events)
   const classes = useStyles();
   const [openModal, setOpenModal] = useState(false);
   
-  useEffect(() => {
-    console.log(events);
-  }, [events]);
-
   const toggleModal = () => {
     setOpenModal(!openModal);
   }

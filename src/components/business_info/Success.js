@@ -28,28 +28,30 @@ const Success = ({ state, closeUserForm }) => {
       async function hs() {
         console.log(state.data)
         // 1. create a new hubspot user
-        // try {
-        //   let hubspotResponse = await fetch(`${process.env.EXPRESS_API_HOST}/hubspot/create`, 
-        //     {
-        //       method: 'POST', 
-        //       headers: {
-        //         'Content-Type': 'application/json',
-        //       },
-        //       body: JSON.stringify(state.data)
-        //     });
+        try {
+          let hubspotResponse = await fetch(`${process.env.EXPRESS_API_HOST}/hubspot/create`, 
+            {
+              method: 'POST', 
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(state.data)
+            });
 
           // create a test user. the hubspot user creation works
           try {
-            //let hubspotUser = await hubspotResponse.json();
-            let hubspotUser = {
-              id: 1234, 
-              properties: {
-                email: state.data.email, 
-                phone: '1234567890',
-                firstname: 'ftest',
-                lastname: 'ltest',
-              }
-            }
+            let hubspotUser = await hubspotResponse.json();
+
+            // test user
+            // let hubspotUser = {
+            //   id: 1234, 
+            //   properties: {
+            //     email: state.data.email, 
+            //     phone: '1234567890',
+            //     firstname: 'ftest',
+            //     lastname: 'ltest',
+            //   }
+            // }
 
             //////////////////////
             // save to local db //
@@ -85,10 +87,10 @@ const Success = ({ state, closeUserForm }) => {
           } catch(err) { // 2nd catch
             console.error(err); 
           }
-        // } catch (err) { // 1st catch
-        //   console.error(err);
-        //   return false;
-        // }
+        } catch (err) { // 1st catch
+          console.error(err);
+          return false;
+        }
       }
       hs().then((res) => {
         if (res === true) {

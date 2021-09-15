@@ -7,7 +7,7 @@
 
 const events = [
   {
-    id: 167122091675,
+    id: '167122091675',
     content: [
       "This event is Free to attend, everyone is welcome to support local veteran entrepreneurs, shop quality goods and services.",
       "This event will showcase 30 of the best veteran, military & spouse-owned businesses under one roof.",
@@ -17,14 +17,16 @@ const events = [
     ],
   },
   {
-    id: 167392835477,
+    id: '167392835477',
     content: [
-      'paragragh 1',
-      'paragragh 2',
+      "This event is Free to attend, everyone is welcome to support local veteran entrepreneurs, shop quality goods and services.",
+      "This event will showcase 30 of the best veteran, military & spouse-owned businesses under one roof.",
+      "Jewelry | Woodworking | Health & Wellness | Home Improvement | Apparel | Food |Luxury Fragrances | Roasted to Order Coffee and More",
+      "Get your tickets to Engage, Support, Grow... Free and open to the public.",
+      "You don't have to be a Veteran to support Veteran Businesses. Get your FREE ticket to support the local veteran-owned businesses. Bring your family and share this event with a friend.",
     ],
   },
 ]
-
 
 /*
 Sponsor Vendor - $9000 (Open to any organization Must Have Significant Military Discount or Program to be considered )
