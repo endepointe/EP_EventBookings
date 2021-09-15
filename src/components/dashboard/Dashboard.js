@@ -126,7 +126,8 @@ const Dashboard = (props) => {
       ))
     }
     // if a user has not been loaded into state yet...
-    if (user.email.length === 0) {
+    // if (user.email.length === 0) {
+    if (!user) {
       findHubspotUser();
     }
   });

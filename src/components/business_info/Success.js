@@ -26,16 +26,29 @@ const Success = ({ state, closeUserForm }) => {
     setTimeout(() => {
       // also save user data to psql db for future login check
       async function hs() {
-        console.log(state.data)
+        let fd = new FormData();
+        Object.entries(state.data).map((item, idx) => {
+          if (item[0] !== 'forms') {
+            fd.append(item[0], item[1])
+          } else {
+            Object.entries(state.data.forms).map((pdf, idx) => {
+              fd.append(pdf[0], pdf[1]);
+            });
+          }
+        })
+
+        for (var value of fd.values()) {
+          console.log(value);
+        }
         // 1. create a new hubspot user
         try {
           let hubspotResponse = await fetch(`${process.env.EXPRESS_API_HOST}/hubspot/create`, 
             {
               method: 'POST', 
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(state.data)
+              // headers: {
+              //   'Content-Type': 'application/json',
+              // },
+              body: new URLSearchParams(fd) // JSON.stringify(state.data)
             });
 
           // create a test user. the hubspot user creation works

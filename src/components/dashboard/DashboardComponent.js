@@ -29,10 +29,6 @@ const DashboardComponent = (props) => {
     
   }, [props.user.email]);
 
-  useEffect(() => {
-  
-  })
-
   const handleOpenUserForm = () => {
     setOpenUserForm(!openUserForm);
   }

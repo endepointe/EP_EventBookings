@@ -42,6 +42,13 @@ const useStyles = makeStyles({
       color: '#efefef', 
     }
   },
+  stripeLogo: {
+    // might use this position
+    // position: 'absolute',
+    // bottom: 10,
+    // left: 0,
+    // right: 0,
+  }
 });
 
 const Field = ({
@@ -269,7 +276,9 @@ const CheckoutForm = (props) => {
           </SubmitButton>
         </form>
       </Grid>
-      <Grid container justifyContent="center">
+      <Grid container 
+        spacing={3}
+        direction="column" alignItems="center" justifyContent="space-between">
         <Grid 
           item xs={10}>
           <Typography variant='caption' display='block' gutterBottom>
@@ -283,7 +292,9 @@ const CheckoutForm = (props) => {
           </Typography> 
         </Grid>
       </Grid>
-      <Grid item xs={12}>
+      <Grid 
+        className={classes.stripeLogo}
+        item xs={12}>
         <Typography display='block' align='center'>
           <a href="https://stripe.com/" target="_blank">
             <img src={stripeLogo} alt="powered-by-stripe" />
