@@ -82,7 +82,7 @@ const Success = ({ state, closeUserForm }) => {
                 }
               } catch (err) { // 3rd catch
                 console.error(err); 
-              }
+              } 
             }
           } catch(err) { // 2nd catch
             console.error(err); 
