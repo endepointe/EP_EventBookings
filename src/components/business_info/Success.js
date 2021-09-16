@@ -48,7 +48,7 @@ const Success = ({ state, closeUserForm }) => {
               // headers: {
               //   'Content-Type': 'application/json',
               // },
-              body: new URLSearchParams(fd) // JSON.stringify(state.data)
+              body: fd//new URLSearchParams(fd) // JSON.stringify(state.data)
             });
 
           // create a test user. the hubspot user creation works

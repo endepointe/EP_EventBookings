@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const request = require('request')
+const fs = require('fs');
 const hubspot = require('@hubspot/api-client');
 const hubspotClient = new hubspot.Client({apiKey: process.env.HUBSPOT_API_KEY})
+const multer = require('multer');
+const upload = multer();
 
 // Hubspot Contact Properties
 /*
@@ -30,9 +33,11 @@ const hubspotClient = new hubspot.Client({apiKey: process.env.HUBSPOT_API_KEY})
 
 // if res.body.status === error then return res.body.message
 // https://developers.hubspot.com/docs/api/crm/contacts
-router.post('/create', async (req, res) => {
+router.post('/create', upload.any(), async (req, res) => {
 
+	console.log(upload);
 	console.log('req.body: ', req.body);
+	console.log('req.files: ', req.files)
 
 	const properties = {
 		"firstname": req.body.firstName,
@@ -50,8 +55,6 @@ router.post('/create', async (req, res) => {
 		"linkedin_profile": req.body.linkedin,
 	};
 
-	let forms = [];
-	console.log(JSON.stringify(req.body.visitorPass))
 	// Object.entries(req.body.forms).map((pdf, idx) => {
 	// 	console.log(pdf)
 	// 	forms.push(pdf);
@@ -75,30 +78,29 @@ router.post('/create', async (req, res) => {
 		console.log(apiResponse.body);
 
 		// send the files to the files endpoint
-		// var postUrl = 'https://api.hubapi.com/filemanager/api/v3/files/upload?hapikey=demo';
+		var postUrl = `https://api.hubapi.com/filemanager/api/v3/files/upload?hapikey=${process.env.HUBSPOT_API_KEY}`;
 
-		// var filename = 'example_file.txt';
+		var filename = 'example_file.txt';
 
-		// var fileOptions = {
-		// 		access: 'PUBLIC_INDEXABLE',
-		// 		ttl: 'P3M',
-		// 		overwrite: false,
-		// 		duplicateValidationStrategy: 'NONE',
-		// 		duplicateValidationScope: 'ENTIRE_PORTAL'
-		// };
+		var fileOptions = {
+				access: 'PRIVATE',
+				ttl: 'P3M',
+				overwrite: true,
+				duplicateValidationStrategy: 'NONE',
+				duplicateValidationScope: 'ENTIRE_PORTAL'
+		};
 
-		// var formData = {
-		// 		file: fs.createReadStream(filename),
-		// 		options: JSON.stringify(fileOptions),
-		// 		folderPath: 'docs'
-		// };
+		var formData = {
+				file: req.files[0].originalname,
+				options: JSON.stringify(fileOptions),
+		};
 
-		// request.post({
-		// 		url: postUrl,
-		// 		formData: formData
-		// }, function optionalCallback(err, httpResponse, body){
-		// 		return console.log(err, httpResponse.statusCode, body);
-		// });
+		request.post({
+				url: postUrl,
+				formData: formData
+		}, function optionalCallback(err, res, body){
+				return console.log(err, res, body);
+		});
 
 		// attach the uploaded form ids to the contact
 		// var options = { method: 'post',
