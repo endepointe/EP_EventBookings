@@ -96,7 +96,7 @@ const Dashboard = (props) => {
   const user = useSelector(state => state.user);
 
   useEffect(() => {
-    // console.log(props.user);
+    console.log(props.user);
 
     async function findHubspotUser() {
       let res = await fetch(`${process.env.EXPRESS_API_HOST}/hubspot/find/user`,{
@@ -104,33 +104,34 @@ const Dashboard = (props) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({email: 'endepointe@gmail.com'})
+        body: JSON.stringify({email: props.user.email})
       })
-      // console.log('find user: ', await res.json());
       let User = await res.json();
-
-      dispatch(loadUser(
-				User.properties.firstname,
-				User.properties.lastname,
-				User.properties.email,
-				User.properties.phone,
-				User.properties.branch_of_service_affiliation,
-				User.properties.military_status,
-				User.properties.company,
-				User.properties.website,
-				User.properties.description_of_business,
-				User.properties.twitter_profile,
-				User.properties.instagram,
-				User.properties.facebook_profile,
-				User.properties.linkedin_profile
-      ))
+      console.log("find user: ", User);
+      if (!User.error) {
+        dispatch(loadUser(
+          User.data.properties.firstname,
+          User.data.properties.lastname,
+          User.data.properties.email,
+          User.data.properties.phone,
+          User.data.properties.branch_of_service_affiliation,
+          User.data.properties.military_status,
+          User.data.properties.company,
+          User.data.properties.website,
+          User.data.properties.description_of_business,
+          User.data.properties.twitter_profile,
+          User.data.properties.instagram,
+          User.data.properties.facebook_profile,
+          User.data.properties.linkedin_profile
+        ))
+      }
     }
     // if a user has not been loaded into state yet...
     // if (user.email.length === 0) {
     if (!user) {
       findHubspotUser();
     }
-  });
+  }, [props.user]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
