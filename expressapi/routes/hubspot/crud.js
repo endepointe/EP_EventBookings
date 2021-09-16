@@ -51,10 +51,12 @@ router.post('/create', async (req, res) => {
 	};
 
 	let forms = [];
-	Object.entries(req.body.forms).map((pdf, idx) => {
-		console.log(pdf)
-		forms.push(pdf);
-	})
+	console.log(JSON.stringify(req.body.visitorPass))
+	// Object.entries(req.body.forms).map((pdf, idx) => {
+	// 	console.log(pdf)
+	// 	forms.push(pdf);
+	// })
+
 	// const forms = {
 	// 	"aafes_application_form": {},
 	// 	"aafes_visitor_form": {},
@@ -70,7 +72,7 @@ router.post('/create', async (req, res) => {
 
 	try {
 		const apiResponse = await hubspotClient.crm.contacts.basicApi.create(simplePublicObjectInput);
-		console.log(apiResponse.body.forms.visitorPass);
+		console.log(apiResponse.body);
 
 		// send the files to the files endpoint
 		// var postUrl = 'https://api.hubapi.com/filemanager/api/v3/files/upload?hapikey=demo';
