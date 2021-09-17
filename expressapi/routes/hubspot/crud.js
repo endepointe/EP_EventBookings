@@ -3,46 +3,16 @@ const router = express.Router();
 const hubspot = require('@hubspot/api-client');
 const hubspotClient = new hubspot.Client({apiKey: process.env.HUBSPOT_API_KEY})
 // const {Buffer} = require('buffer');
-// const fs = require('fs');
-// const https = require('https');
+const FormData = require('form-data');
+const fs = require('fs');
+const https = require('https');
 const fileUpload = require('express-fileupload');
 router.use('/create/', fileUpload({
 	safeFileNames: true,
 	preserveExtension: true,
 	useTempFiles: true,
-	tempFileDir: 'vendor_docs'
+	tempFileDir: 'vendor_docs/'
 })); 
-
-//https://expressjs.com/en/guide/using-middleware.html#middleware.router
-//https://github.com/richardgirges/express-fileupload#readme
-// const multer = require('multer');
-// const upload = multer.diskStorage({
-// 	dest: 'vendor_docs/',
-// });
-
-// Hubspot Contact Properties
-/*
-	firstname,
-	lastname,
-	email,
-	phone,
-	branch_of_service_affiliation,
-	military_status,
-	company,
-	website,
-	description_of_business,
-	twitter_profile,
-	instagram,
-	facebook_profile,
-	linkedin_profile,
-	aafes_application_form,
-	aafes_visitor_form,
-	w9,
-	photo_release_form,
-	company_logo,
-	proof_of_veteran_or_military_spouse_status,
-	vendor_head_shot,
-*/
 
 let	fields = [
 	{name: 'aafes', maxCount: 1},
@@ -57,51 +27,17 @@ let	fields = [
 // if res.body.status === error then return res.body.message
 // https://developers.hubspot.com/docs/api/crm/contacts
 router.post('/create', async (req, res) => {
+	const form = new FormData();
 	console.log('req.files', req.files);
-	console.log('req.files.aafes.name: ', req.files.aafes.name);
+	Object.entries(req.files).map((file, idx) => {
+		form.append(file[0], fs.createReadStream(file[1].tempFilePath));
+		console.log(file)
+	})
+	console.log('form data: ', form);
+	// send the files to the files endpoint
 
-		// send the files to the files endpoint
-		/*
-			https://developers.hubspot.com/docs/api/files/files
-
-			https://knowledge.hubspot.com/files/upload-files-to-use-in-your-hubspot-content?_ga=2.74385296.340498727.1631802112-2025909848.1628381899
-			
-			https://legacydocs.hubspot.com/docs/methods/files/v3/upload_new_file
-
-			let	fields = [
-				{name: 'aafes', maxCount: 1},
-				{name: 'w9', maxCount: 1},
-				{name: 'visitorPass', maxCount: 1},
-				{name: 'photoRelease', maxCount: 1},
-				{name: 'companyLogo', maxCount: 1},
-				{name: 'proofOfStatus', maxCount: 1},
-				{name: 'vendorHeadshot', maxCount: 1},
-			]
-			folderId: '55439703921'
-			process.env.HUBSPOT_API_KEY
-			{
-				fieldname string,
-				originalname: string
-				encoding: '7bit',
-				mimetype: 'application/pdf',
-				buffer Buffer
-				size int
-			}
-		*/
 	let postUrl = `https://api.hubapi.com/filemanager/api/v3/files/upload?hapikey=${process.env.HUBSPOT_API_KEY}`;
 
-	let fileOptions = {
-			access: 'PRIVATE',
-			ttl: 'P3M',
-			overwrite: true,
-			duplicateValidationStrategy: 'NONE',
-			duplicateValidationScope: 'ENTIRE_PORTAL'
-	};
-
-	// var formData = {
-	// 		file: fs.createReadStream(`./vendor_docs/${req.files.aafes.name}`),
-	// 		options: JSON.stringify(fileOptions),
-	// };
 	const properties = {
 		"firstname": req.body.firstName,
 		"lastname": req.body.lastName,
@@ -228,3 +164,63 @@ const properties = [
 })
 
 module.exports = router;
+
+// Hubspot Contact Properties
+/*
+	firstname,
+	lastname,
+	email,
+	phone,
+	branch_of_service_affiliation,
+	military_status,
+	company,
+	website,
+	description_of_business,
+	twitter_profile,
+	instagram,
+	facebook_profile,
+	linkedin_profile,
+	aafes_application_form,
+	aafes_visitor_form,
+	w9,
+	photo_release_form,
+	company_logo,
+	proof_of_veteran_or_military_spouse_status,
+	vendor_head_shot,
+*/
+
+/*
+	https://developers.hubspot.com/docs/api/files/files
+
+	https://knowledge.hubspot.com/files/upload-files-to-use-in-your-hubspot-content?_ga=2.74385296.340498727.1631802112-2025909848.1628381899
+	
+	https://legacydocs.hubspot.com/docs/methods/files/v3/upload_new_file
+
+	let	fields = [
+		{name: 'aafes', maxCount: 1},
+		{name: 'w9', maxCount: 1},
+		{name: 'visitorPass', maxCount: 1},
+		{name: 'photoRelease', maxCount: 1},
+		{name: 'companyLogo', maxCount: 1},
+		{name: 'proofOfStatus', maxCount: 1},
+		{name: 'vendorHeadshot', maxCount: 1},
+	]
+	folderId: '55439703921'
+	process.env.HUBSPOT_API_KEY
+	{
+		fieldname string,
+		originalname: string
+		encoding: '7bit',
+		mimetype: 'application/pdf',
+		buffer Buffer
+		size int
+	}
+*/
+
+//https://expressjs.com/en/guide/using-middleware.html#middleware.router
+//https://github.com/richardgirges/express-fileupload#readme
+// const multer = require('multer');
+// const upload = multer.diskStorage({
+// 	dest: 'vendor_docs/',
+// });
+
