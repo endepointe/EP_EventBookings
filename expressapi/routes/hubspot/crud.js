@@ -2,11 +2,23 @@ const express = require('express');
 const router = express.Router();
 const hubspot = require('@hubspot/api-client');
 const hubspotClient = new hubspot.Client({apiKey: process.env.HUBSPOT_API_KEY})
-const {Buffer} = require('buffer');
-const fs = require('fs');
-const https = require('https');
-const multer = require('multer');
-const upload = multer();
+// const {Buffer} = require('buffer');
+// const fs = require('fs');
+// const https = require('https');
+const fileUpload = require('express-fileupload');
+router.use('/create', /*fileUpload({
+	useTempFiles: true,
+	tempFileDir: '/vendor_docs/'
+})*/ function (req, res,next) {
+	console.log('hit the middleware');
+	next();
+});
+//https://expressjs.com/en/guide/using-middleware.html#middleware.router
+//https://github.com/richardgirges/express-fileupload#readme
+// const multer = require('multer');
+// const upload = multer.diskStorage({
+// 	dest: 'vendor_docs/',
+// });
 
 // Hubspot Contact Properties
 /*
@@ -32,10 +44,56 @@ const upload = multer();
 	vendor_head_shot,
 */
 
+let	fields = [
+	{name: 'aafes', maxCount: 1},
+	{name: 'w9', maxCount: 1},
+	{name: 'visitorPass', maxCount: 1},
+	{name: 'photoRelease', maxCount: 1},
+	{name: 'companyLogo', maxCount: 1},
+	{name: 'proofOfStatus', maxCount: 1},
+	{name: 'vendorHeadshot', maxCount: 1},
+];
+
 // if res.body.status === error then return res.body.message
 // https://developers.hubspot.com/docs/api/crm/contacts
-router.post('/create', upload.any(), async (req, res) => {
+router.post('/create', async (req, res) => {
+	console.log('req.files', req.files);
+	// console.log('req.files[0].buffer: ', typeof req.files[0].buffer.toString());
 
+		// send the files to the files endpoint
+		/*
+			https://developers.hubspot.com/docs/api/files/files
+
+			https://knowledge.hubspot.com/files/upload-files-to-use-in-your-hubspot-content?_ga=2.74385296.340498727.1631802112-2025909848.1628381899
+			
+			https://legacydocs.hubspot.com/docs/methods/files/v3/upload_new_file
+
+		let	fields = [
+					{name: 'aafes', maxCount: 1},
+					{name: 'w9', maxCount: 1},
+					{name: 'visitorPass', maxCount: 1},
+					{name: 'photoRelease', maxCount: 1},
+					{name: 'companyLogo', maxCount: 1},
+					{name: 'proofOfStatus', maxCount: 1},
+					{name: 'vendorHeadshot', maxCount: 1},
+				]
+		*/
+
+
+	// console.log('buf: ', buf, typeof buf);
+
+		/*
+	folderId: '55439703921'
+	process.env.HUBSPOT_API_KEY
+			{
+				fieldname string,
+				originalname: string
+				encoding: '7bit',
+				mimetype: 'application/pdf',
+				buffer Buffer
+				size int
+			}
+	*/
 
 	const properties = {
 		"firstname": req.body.firstName,
@@ -69,31 +127,6 @@ router.post('/create', upload.any(), async (req, res) => {
 		const apiResponse = await hubspotClient.crm.contacts.basicApi.create(simplePublicObjectInput);
 		console.log(apiResponse.body);
 
-		// send the files to the files endpoint
-		/*
-			https://developers.hubspot.com/docs/api/files/files
-https://knowledge.hubspot.com/files/upload-files-to-use-in-your-hubspot-content?_ga=2.74385296.340498727.1631802112-2025909848.1628381899
-https://legacydocs.hubspot.com/docs/methods/files/v3/upload_new_file
-		*/
-	console.log(upload);
-	console.log('req.body: ', req.body);
-	console.log('req.files', req.files);
-	console.log('req.files[0].buffer: ', typeof req.files[0].buffer.toString());
-// console.log('buf: ', buf, typeof buf);
-	/*
-folderId: '55439703921'
-process.env.HUBSPOT_API_KEY
-		{
-			fieldname string,
-			originalname: string
-			encoding: '7bit',
-			mimetype: 'application/pdf',
-			buffer Buffer
-			size int
-		}
-	*/
-
-d
 		// attach the uploaded form ids to the contact
 		// var options = { method: 'post',
 		// url: 'https://api.hubapi.com/engagements/v1/engagements',
