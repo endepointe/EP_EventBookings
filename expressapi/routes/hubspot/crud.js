@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const request = require('request')
-const fs = require('fs');
 const hubspot = require('@hubspot/api-client');
 const hubspotClient = new hubspot.Client({apiKey: process.env.HUBSPOT_API_KEY})
+const https = require('https');
 const multer = require('multer');
 const upload = multer();
 
@@ -38,7 +37,16 @@ router.post('/create', upload.any(), async (req, res) => {
 	console.log(upload);
 	console.log('req.body: ', req.body);
 	console.log('req.files: ', req.files)
-
+	/*
+		{
+			fieldname string,
+			originalname: string
+			encoding: '7bit',
+			mimetype: 'application/pdf',
+			buffer Buffer
+			size int
+		}
+	*/
 	const properties = {
 		"firstname": req.body.firstName,
 		"lastname": req.body.lastName,
@@ -72,35 +80,17 @@ router.post('/create', upload.any(), async (req, res) => {
 
 	const simplePublicObjectInput = { properties };
 
-
 	try {
 		const apiResponse = await hubspotClient.crm.contacts.basicApi.create(simplePublicObjectInput);
 		console.log(apiResponse.body);
 
 		// send the files to the files endpoint
-		var postUrl = `https://api.hubapi.com/filemanager/api/v3/files/upload?hapikey=${process.env.HUBSPOT_API_KEY}`;
-
-		var filename = 'example_file.txt';
-
-		var fileOptions = {
-				access: 'PRIVATE',
-				ttl: 'P3M',
-				overwrite: true,
-				duplicateValidationStrategy: 'NONE',
-				duplicateValidationScope: 'ENTIRE_PORTAL'
-		};
-
-		var formData = {
-				file: req.files[0].originalname,
-				options: JSON.stringify(fileOptions),
-		};
-
-		request.post({
-				url: postUrl,
-				formData: formData
-		}, function optionalCallback(err, res, body){
-				return console.log(err, res, body);
-		});
+		//${process.env.HUBSPOT_API_KEY}`;
+		/*
+			https://developers.hubspot.com/docs/api/files/files
+https://knowledge.hubspot.com/files/upload-files-to-use-in-your-hubspot-content?_ga=2.74385296.340498727.1631802112-2025909848.1628381899
+https://legacydocs.hubspot.com/docs/methods/files/v3/upload_new_file
+		*/
 
 		// attach the uploaded form ids to the contact
 		// var options = { method: 'post',
