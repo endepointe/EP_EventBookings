@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const hubspot = require('@hubspot/api-client');
 const hubspotClient = new hubspot.Client({apiKey: process.env.HUBSPOT_API_KEY})
+const {Buffer} = require('buffer');
+const fs = require('fs');
 const https = require('https');
 const multer = require('multer');
 const upload = multer();
@@ -34,19 +36,7 @@ const upload = multer();
 // https://developers.hubspot.com/docs/api/crm/contacts
 router.post('/create', upload.any(), async (req, res) => {
 
-	console.log(upload);
-	console.log('req.body: ', req.body);
-	console.log('req.files: ', req.files)
-	/*
-		{
-			fieldname string,
-			originalname: string
-			encoding: '7bit',
-			mimetype: 'application/pdf',
-			buffer Buffer
-			size int
-		}
-	*/
+
 	const properties = {
 		"firstname": req.body.firstName,
 		"lastname": req.body.lastName,
@@ -62,11 +52,6 @@ router.post('/create', upload.any(), async (req, res) => {
 		"facebook_profile": req.body.facebook,
 		"linkedin_profile": req.body.linkedin,
 	};
-
-	// Object.entries(req.body.forms).map((pdf, idx) => {
-	// 	console.log(pdf)
-	// 	forms.push(pdf);
-	// })
 
 	// const forms = {
 	// 	"aafes_application_form": {},
@@ -85,13 +70,30 @@ router.post('/create', upload.any(), async (req, res) => {
 		console.log(apiResponse.body);
 
 		// send the files to the files endpoint
-		//${process.env.HUBSPOT_API_KEY}`;
 		/*
 			https://developers.hubspot.com/docs/api/files/files
 https://knowledge.hubspot.com/files/upload-files-to-use-in-your-hubspot-content?_ga=2.74385296.340498727.1631802112-2025909848.1628381899
 https://legacydocs.hubspot.com/docs/methods/files/v3/upload_new_file
 		*/
+	console.log(upload);
+	console.log('req.body: ', req.body);
+	console.log('req.files', req.files);
+	console.log('req.files[0].buffer: ', typeof req.files[0].buffer.toString());
+// console.log('buf: ', buf, typeof buf);
+	/*
+folderId: '55439703921'
+process.env.HUBSPOT_API_KEY
+		{
+			fieldname string,
+			originalname: string
+			encoding: '7bit',
+			mimetype: 'application/pdf',
+			buffer Buffer
+			size int
+		}
+	*/
 
+d
 		// attach the uploaded form ids to the contact
 		// var options = { method: 'post',
 		// url: 'https://api.hubapi.com/engagements/v1/engagements',
