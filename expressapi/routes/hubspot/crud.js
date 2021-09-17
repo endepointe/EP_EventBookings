@@ -6,13 +6,13 @@ const hubspotClient = new hubspot.Client({apiKey: process.env.HUBSPOT_API_KEY})
 // const fs = require('fs');
 // const https = require('https');
 const fileUpload = require('express-fileupload');
-router.use('/create', /*fileUpload({
+router.use('/create/', fileUpload({
+	safeFileNames: true,
+	preserveExtension: true,
 	useTempFiles: true,
-	tempFileDir: '/vendor_docs/'
-})*/ function (req, res,next) {
-	console.log('hit the middleware');
-	next();
-});
+	tempFileDir: 'vendor_docs'
+})); 
+
 //https://expressjs.com/en/guide/using-middleware.html#middleware.router
 //https://github.com/richardgirges/express-fileupload#readme
 // const multer = require('multer');
@@ -58,7 +58,7 @@ let	fields = [
 // https://developers.hubspot.com/docs/api/crm/contacts
 router.post('/create', async (req, res) => {
 	console.log('req.files', req.files);
-	// console.log('req.files[0].buffer: ', typeof req.files[0].buffer.toString());
+	console.log('req.files.aafes.name: ', req.files.aafes.name);
 
 		// send the files to the files endpoint
 		/*
@@ -68,23 +68,17 @@ router.post('/create', async (req, res) => {
 			
 			https://legacydocs.hubspot.com/docs/methods/files/v3/upload_new_file
 
-		let	fields = [
-					{name: 'aafes', maxCount: 1},
-					{name: 'w9', maxCount: 1},
-					{name: 'visitorPass', maxCount: 1},
-					{name: 'photoRelease', maxCount: 1},
-					{name: 'companyLogo', maxCount: 1},
-					{name: 'proofOfStatus', maxCount: 1},
-					{name: 'vendorHeadshot', maxCount: 1},
-				]
-		*/
-
-
-	// console.log('buf: ', buf, typeof buf);
-
-		/*
-	folderId: '55439703921'
-	process.env.HUBSPOT_API_KEY
+			let	fields = [
+				{name: 'aafes', maxCount: 1},
+				{name: 'w9', maxCount: 1},
+				{name: 'visitorPass', maxCount: 1},
+				{name: 'photoRelease', maxCount: 1},
+				{name: 'companyLogo', maxCount: 1},
+				{name: 'proofOfStatus', maxCount: 1},
+				{name: 'vendorHeadshot', maxCount: 1},
+			]
+			folderId: '55439703921'
+			process.env.HUBSPOT_API_KEY
 			{
 				fieldname string,
 				originalname: string
@@ -93,8 +87,21 @@ router.post('/create', async (req, res) => {
 				buffer Buffer
 				size int
 			}
-	*/
+		*/
+	let postUrl = `https://api.hubapi.com/filemanager/api/v3/files/upload?hapikey=${process.env.HUBSPOT_API_KEY}`;
 
+	let fileOptions = {
+			access: 'PRIVATE',
+			ttl: 'P3M',
+			overwrite: true,
+			duplicateValidationStrategy: 'NONE',
+			duplicateValidationScope: 'ENTIRE_PORTAL'
+	};
+
+	// var formData = {
+	// 		file: fs.createReadStream(`./vendor_docs/${req.files.aafes.name}`),
+	// 		options: JSON.stringify(fileOptions),
+	// };
 	const properties = {
 		"firstname": req.body.firstName,
 		"lastname": req.body.lastName,
