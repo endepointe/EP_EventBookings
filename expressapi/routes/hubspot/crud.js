@@ -2,10 +2,8 @@ const express = require('express');
 const router = express.Router();
 const hubspot = require('@hubspot/api-client');
 const hubspotClient = new hubspot.Client({apiKey: process.env.HUBSPOT_API_KEY})
-// const {Buffer} = require('buffer');
-const FormData = require('form-data');
 const fs = require('fs');
-const https = require('https');
+const request = require('request');
 const fileUpload = require('express-fileupload');
 router.use('/create/', fileUpload({
 	safeFileNames: true,
@@ -14,30 +12,53 @@ router.use('/create/', fileUpload({
 	tempFileDir: 'vendor_docs/'
 })); 
 
-let	fields = [
-	{name: 'aafes', maxCount: 1},
-	{name: 'w9', maxCount: 1},
-	{name: 'visitorPass', maxCount: 1},
-	{name: 'photoRelease', maxCount: 1},
-	{name: 'companyLogo', maxCount: 1},
-	{name: 'proofOfStatus', maxCount: 1},
-	{name: 'vendorHeadshot', maxCount: 1},
-];
-
 // if res.body.status === error then return res.body.message
 // https://developers.hubspot.com/docs/api/crm/contacts
 router.post('/create', async (req, res) => {
-	const form = new FormData();
+	const forms = []
 	console.log('req.files', req.files);
 	Object.entries(req.files).map((file, idx) => {
-		form.append(file[0], fs.createReadStream(file[1].tempFilePath));
+		// form.append(file[0], fs.createReadStream(file[1].tempFilePath));
 		console.log(file)
+		forms.push(file);
 	})
-	console.log('form data: ', form);
+	console.log('forms data: ', forms);
 	// send the files to the files endpoint
-
+	///*
 	let postUrl = `https://api.hubapi.com/filemanager/api/v3/files/upload?hapikey=${process.env.HUBSPOT_API_KEY}`;
-
+	var fileOptions = {
+    access: 'PRIVATE',
+    ttl: 'P3M',
+    overwrite: false,
+    duplicateValidationStrategy: 'NONE',
+    duplicateValidationScope: 'ENTIRE_PORTAL'
+	};
+	let i = 0;
+	while (i !== forms.length) {
+		var formData = {
+			file: fs.createReadStream(forms[i][1].tempFilePath),
+			options: JSON.stringify(fileOptions),
+			folderId: '55439703921',
+			fileName: forms[i][1].name,
+		};
+		request.post({
+			url: postUrl,
+			formData: formData,
+		// }, function optionalCallback(err, httpResponse, body){
+		// 		if (httpResponse.statusCode === 200) {
+		// 			i += 1;
+		// 		}
+		// 		if (i === forms.length) {
+		// 			return ;
+		// 		}
+		// 		console.log(err, httpResponse.statusCode, body);
+		});
+		i++;
+	}
+	// perform cleanup of vendor_doc/
+	//*/
+	// attach the uploaded form ids to the contact
+		
 	const properties = {
 		"firstname": req.body.firstName,
 		"lastname": req.body.lastName,
@@ -54,46 +75,11 @@ router.post('/create', async (req, res) => {
 		"linkedin_profile": req.body.linkedin,
 	};
 
-	// const forms = {
-	// 	"aafes_application_form": {},
-	// 	"aafes_visitor_form": {},
-	// 	"w9": {},
-	// 	"photo_release_form": {},
-	// 	"company_logo": {},
-	// 	"proof_of_veteran_or_military_spouse_status": {},
-	// 	"vendor_head_shot": {},
-	// };
-
 	const simplePublicObjectInput = { properties };
 
 	try {
 		const apiResponse = await hubspotClient.crm.contacts.basicApi.create(simplePublicObjectInput);
 		console.log(apiResponse.body);
-
-		// attach the uploaded form ids to the contact
-		// var options = { method: 'post',
-		// url: 'https://api.hubapi.com/engagements/v1/engagements',
-		// qs: { hapikey: process.env.hubspot_api_key },
-		// headers: 
-		// {'content-type': 'application/json' },
-		// body: 
-		// { engagement: 
-		// 		{ active: true,
-		// 			//ownerid: 1, // used for assigned_to field, optional
-		// 			type: 'note',
-		// 			timestamp: Date.now() },
-		// 	associations: 
-		// 		{ contactids: [ apiResponse.body.id ],
-		// 			companyids: [],
-		// 			dealids: [],
-		// 			ownerids: [] },
-		// 	attachments: forms,
-		// 	metadata: { body: 'note body' } },
-		// json: true };
-		// request(options, function (error, response, body) {
-		// 	if (error) throw new error(error);
-		// 	console.log(body);
-		// });
 
 		// send the user data to front-end
 		res.send(JSON.stringify(apiResponse.body, null, 2))
@@ -165,6 +151,30 @@ const properties = [
 
 module.exports = router;
 
+		// attach the uploaded form ids to the contact
+		// var options = { method: 'post',
+		// url: 'https://api.hubapi.com/engagements/v1/engagements',
+		// qs: { hapikey: process.env.hubspot_api_key },
+		// headers: 
+		// {'content-type': 'application/json' },
+		// body: 
+		// { engagement: 
+		// 		{ active: true,
+		// 			//ownerid: 1, // used for assigned_to field, optional
+		// 			type: 'note',
+		// 			timestamp: Date.now() },
+		// 	associations: 
+		// 		{ contactids: [ apiResponse.body.id ],
+		// 			companyids: [],
+		// 			dealids: [],
+		// 			ownerids: [] },
+		// 	attachments: forms,
+		// 	metadata: { body: 'note body' } },
+		// json: true };
+		// request(options, function (error, response, body) {
+		// 	if (error) throw new error(error);
+		// 	console.log(body);
+		// });
 // Hubspot Contact Properties
 /*
 	firstname,
@@ -216,7 +226,43 @@ module.exports = router;
 		size int
 	}
 */
+	/*
+	let postUrl = `https://api.hubapi.com/filemanager/api/v3/files/upload?hapikey=${process.env.HUBSPOT_API_KEY}`;
 
+	const fileOptions = {
+    access: 'PUBLIC_INDEXABLE',
+    ttl: 'P3M',
+    overwrite: false,
+    duplicateValidationStrategy: 'NONE',
+    duplicateValidationScope: 'ENTIRE_PORTAL'
+	};
+	const formData = {
+		file: fs.createReadStream(forms[0][1].tempFilePath),
+		options: JSON.stringify(fileOptions),
+		folderId: '55439703921',
+		fileName: forms[0][1].name,
+	};
+	const options = {
+		hostname: 'api.hubapi.com',
+		port: 443,
+		path: `/filemanager/api/v3/files/upload?hapikey=${process.env.HUBSPOT_API_KEY}`,
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/pdf'
+		}
+	}
+	const hreq = https.request(options, res => {
+		console.log(`statusCode: ${res}`)
+		res.on('data', d => {
+			process.stdout.write(d)
+		})
+	})
+	hreq.on('error', error => {
+		console.error(error)
+	})
+	hreq.write(JSON.stringify(formData));
+	hreq.end();
+	*/
 //https://expressjs.com/en/guide/using-middleware.html#middleware.router
 //https://github.com/richardgirges/express-fileupload#readme
 // const multer = require('multer');
