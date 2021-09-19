@@ -34,7 +34,9 @@ router.post('/create', async (req, res) => {
     duplicateValidationScope: 'ENTIRE_PORTAL'
 	};
 	let i = 0;
-	while (i !== forms.length) {
+	let fileId = [];
+	console.log('forms.length: ', forms.length);
+	while (i < forms.length) {
 		var formData = {
 			file: fs.createReadStream(forms[i][1].tempFilePath),
 			options: JSON.stringify(fileOptions),
@@ -44,20 +46,48 @@ router.post('/create', async (req, res) => {
 		request.post({
 			url: postUrl,
 			formData: formData,
-		// }, function optionalCallback(err, httpResponse, body){
-		// 		if (httpResponse.statusCode === 200) {
-		// 			i += 1;
-		// 		}
-		// 		if (i === forms.length) {
-		// 			return ;
-		// 		}
-		// 		console.log(err, httpResponse.statusCode, body);
+		}, function optionalCallback(err, httpResponse, body){
+			console.log(err, httpResponse.statusCode, body);
+			console.log(typeof body);
+			let data = JSON.parse(body);
+			console.log(typeof data, data);
+			let objects = data['objects'];
+			let obj = objects[0];
+			let id = obj['id'];
+			fileId.push(id);
+			return console.log('fileId: ', fileId);
 		});
 		i++;
 	}
+	
+	// attach the file id to the customer object
+	// var attachmentOptions = { method: 'post',
+	// url: 'https://api.hubapi.com/engagements/v1/engagements',
+	// qs: { hapikey: process.env.hubspot_api_key },
+	// headers: 
+	// {'content-type': 'application/json' },
+	// body: 
+	// { engagement: 
+	// 		{ active: true,
+	// 			//ownerid: 1, // used for assigned_to field, optional
+	// 			type: 'note',
+	// 			timestamp: Date.now() },
+	// 	associations: 
+	// 		{ contactids: [ apiResponse.body.id ],
+	// 			companyids: [],
+	// 			dealids: [],
+	// 			ownerids: [] },
+	// 	attachments: [/*{id: 123}*/],
+	// 	metadata: { body: 'note body' } },
+	// json: true };
+	// request(attachmentOptions, function (error, response, body) {
+	// 	if (error) throw new error(error);
+	// 	console.log(body);
+	// });
+	// delete the file from vendor_docs/
+
 	// perform cleanup of vendor_doc/
 	//*/
-	// attach the uploaded form ids to the contact
 		
 	const properties = {
 		"firstname": req.body.firstName,
@@ -269,4 +299,6 @@ module.exports = router;
 // const upload = multer.diskStorage({
 // 	dest: 'vendor_docs/',
 // });
-
+/*
+{"objects":[{"id":55532933242,"portal_id":3822557,"name":"BLANK_AAFES_Application-1","size":1265172,"height":null,"width":null,"encoding":null,"type":"DOCUMENT","extension":"pdf","cloud_key":"hubfs/3822557/vendor_verification_documents/BLANK_AAFES_Application-1.pdf","s3_url":"http://cdn1.hubspot.com/hubfs/3822557/vendor_verification_documents/BLANK_AAFES_Application-1.pdf","friendly_url":"https://cdn2.hubspot.net/hubfs/3822557/vendor_verification_documents/BLANK_AAFES_Application-1.pdf","alt_key":"hubfs/3822557/vendor_verification_documents/blank_aafes_application-1","alt_key_hash":"dc16852dcdc4e09cc483f89e52af24ff","title":"BLANK_AAFES_Application-1","meta":{"url_scheme":"SIMPLIFIED","allows_anonymous_access":false,"expires_at":1639800311304,"indexable":false},"created":1631937911330,"updated":1631937911330,"deleted_at":0,"folder_id":55439703921,"hidden":false,"cloud_key_hash":"423af67b2d5a6e5cd1a64e66312f05ba","archived":false,"created_by":null,"deleted_by":null,"replaceable":true,"default_hosting_url":"https://cdn2.hubspot.net/hubfs/3822557/vendor_verification_documents/BLANK_AAFES_Application-1.pdf","teams":[],"url":"https://cdn2.hubspot.net/hubfs/3822557/vendor_verification_documents/BLANK_AAFES_Application-1.pdf","is_indexable":false,"cdn_purge_embargo_time":null,"file_hash":"312bf5cf1136e0d0226522f71ad12b58"}]}
+*/
