@@ -17,11 +17,11 @@ router.use('/create/', fileUpload({
 router.post('/create', async (req, res) => {
 	const forms = []
 	console.log('req.files', req.files);
-	Object.entries(req.files).map((file, idx) => {
-		// form.append(file[0], fs.createReadStream(file[1].tempFilePath));
-		console.log(file)
-		forms.push(file);
-	})
+	// Object.entries(req.files).map((file, idx) => {
+	// 	// form.append(file[0], fs.createReadStream(file[1].tempFilePath));
+	// 	console.log(file)
+	// 	forms.push(file);
+	// })
 	console.log('forms data: ', forms);
 	// send the files to the files endpoint
 	///*
@@ -35,30 +35,30 @@ router.post('/create', async (req, res) => {
 	};
 	let i = 0;
 	let fileId = [];
-	console.log('forms.length: ', forms.length);
-	while (i < forms.length) {
-		var formData = {
-			file: fs.createReadStream(forms[i][1].tempFilePath),
-			options: JSON.stringify(fileOptions),
-			folderId: '55439703921',
-			fileName: forms[i][1].name,
-		};
-		request.post({
-			url: postUrl,
-			formData: formData,
-		}, function optionalCallback(err, httpResponse, body){
-			console.log(err, httpResponse.statusCode, body);
-			console.log(typeof body);
-			let data = JSON.parse(body);
-			console.log(typeof data, data);
-			let objects = data['objects'];
-			let obj = objects[0];
-			let id = obj['id'];
-			fileId.push(id);
-			return console.log('fileId: ', fileId);
-		});
-		i++;
-	}
+	// console.log('forms.length: ', forms.length);
+	// while (i < forms.length) {
+	// 	var formData = {
+	// 		file: fs.createReadStream(forms[i][1].tempFilePath),
+	// 		options: JSON.stringify(fileOptions),
+	// 		folderId: '55439703921',
+	// 		fileName: forms[i][1].name,
+	// 	};
+	// 	request.post({
+	// 		url: postUrl,
+	// 		formData: formData,
+	// 	}, function optionalCallback(err, httpResponse, body){
+	// 		console.log(err, httpResponse.statusCode, body);
+	// 		console.log(typeof body);
+	// 		let data = JSON.parse(body);
+	// 		console.log(typeof data, data);
+	// 		let objects = data['objects'];
+	// 		let obj = objects[0];
+	// 		let id = obj['id'];
+	// 		fileId.push(id);
+	// 		return console.log('fileId: ', fileId);
+	// 	});
+	// 	i++;
+	// }
 	
 	// attach the file id to the customer object
 	// var attachmentOptions = { method: 'post',
