@@ -2,7 +2,7 @@ import * as React from "react"
 import { useState } from 'react';
 import { Link } from 'gatsby';
 import Layout from "../components/layout";
-import SphereVideo from "../assets/video.mp4";
+// import SphereVideo from "../assets/video.mp4";
 import * as styles from "../components/styles/index.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -34,9 +34,9 @@ const LandingPage = () => {
 						icon={faBars} />   
 				</header>
 
-				<video muted loop autoPlay>
+				{/* <video muted loop autoPlay>
 					<source src={SphereVideo} /> 
-				</video>
+				</video> */}
 				{/* Video by Pressmaster from Pexels */}
 
 				<div className={styles.overlay}></div>
